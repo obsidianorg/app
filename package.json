@@ -20,6 +20,7 @@
     "superagent": "^0.21.0"
   },
   "devDependencies": {
+    "gulp": "^3.8.10",
     "reactify": "^0.17.1"
   },
   "scripts": {

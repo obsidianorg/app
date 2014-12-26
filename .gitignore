@@ -1,3 +1,5 @@
 src/renderer/js/_bundle.js
 
+node_modules/.bin/gulp
+node_modules/gulp
 node_modules/reactify
