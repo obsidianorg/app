@@ -12,11 +12,15 @@ gulp.task('build', ['build-atom-app'], function() {
   var filePaths = PLATFORMS.map(function(platform) {
     if (platform.indexOf('win32') != -1)
       return path.resolve(path.join(RELEASE_PATH, ATOM_VERSION, platform, 'atom.exe'))
-    else if (platform.indexOf('darwin') != -1)
-      return path.resolve(path.join(RELEASE_PATH, ATOM_VERSION, platform, 'Atom.app'))
+    // https://github.com/atom/atom-shell/issues/960
+    //else if (platform.indexOf('darwin') != -1)
+    //  return path.resolve(path.join(RELEASE_PATH, ATOM_VERSION, platform, 'Atom.app'))
+    else
+      return ''
   })
 
   filePaths.forEach(function(fp) {
+    if (!fp) return
     fs.rename(fp, fp.replace(/atom/i, 'Obsidian'), Function())
   })
 })
