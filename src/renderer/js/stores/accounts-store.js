@@ -1,5 +1,6 @@
 var EventEmitter = require('events').EventEmitter
 var util = require('util')
+var blackCoinInfo = require('coininfo')('BC')
 var CoinKey = require('coinkey')
 var _ = require('lodash')
 var AccountConstants = require('../constants/account-constants')
@@ -10,16 +11,10 @@ var AppDispatcher = require('../dispatcher/app-dispatcher')
 //todo: encrypt
 var _accounts = {}
 
-//todo: refactor into coininfo
-var BC = {
-  public: 0x19,
-  private: 0x19 + 0x80
-}
-
 var CHANGE_EVENT = 'change'
 
 function create(name) {
-  var ck = CoinKey.createRandom(BC)
+  var ck = CoinKey.createRandom(blackCoinInfo.versions)
 
   //todo: encrypt
   _accounts[ck.publicAddress] = {
