@@ -1,3 +1,9 @@
+/*
+  palettes to consider:
+    Golden Divide: http://www.colourlovers.com/palette/755661/Golden_Divide
+    
+
+*/
 
 @import url(http://fonts.googleapis.com/css?family=Ruda:400,700,900);
 
@@ -15,6 +21,7 @@ body {
 
 .top-plus i {
   font-size: 24px;
+  color: #000;
 }
 
 #container {
@@ -26,7 +33,7 @@ body {
   width: 150px;
   height: 100%;
   position: fixed;
-  background: #424a5d;
+  background: #333;
 }
 
 #sidebar ul li {
@@ -59,16 +66,8 @@ ul.sidebar-menu li a{
   text-decoration: none;
   display: block;
   padding: 15px 0 15px 10px;
-  font-size: 12px;
+  font-size: 18px;
   outline: none;
-  -webkit-transition: all 0.3s ease;
-  transition: all 0.3s ease;
-}
-
-ul.sidebar-menu li a.active, ul.sidebar-menu li a:hover, ul.sidebar-menu li a:focus {
-  background: #68dff0;
-  color: #fff;
-  display: block;
   -webkit-transition: all 0.3s ease;
   transition: all 0.3s ease;
 }
@@ -109,7 +108,7 @@ ul.sidebar-menu li a.active i {
 }
 
 .header {
-  background: #68dff0;
+  background: #ffd700;
   color: #fff;
   padding: 10px 0;
 }
