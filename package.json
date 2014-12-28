@@ -21,6 +21,7 @@
     "fs-extra": "^0.13.0",
     "lodash": "^2.4.1",
     "react": "^0.12.2",
+    "react-bootstrap": "^0.13.0",
     "secure-random": "^1.1.1",
     "superagent": "^0.21.0"
   },
