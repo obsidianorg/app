@@ -1,3 +1,5 @@
+// NOT USED ANYMORE
+
 var request = require('superagent')
 
 var URL = 'http://blkchain.info/api/address/'
