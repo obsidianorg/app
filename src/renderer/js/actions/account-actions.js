@@ -15,6 +15,13 @@ var AccountActions = {
       actionType: AccountConstants.ACCOUNT_SEND,
       data: data
     })
+  },
+
+  updateAmounts: function() {
+    AppDispatcher.handleViewAction({
+      actionType: AccountConstants.ACCOUNT_UPDATE_AMOUNTS,
+      data: null
+    })
   }
 }
 
