@@ -1,4 +1,5 @@
 node_modules/**/.jepso-ci.json
+node_modules/**/.min-wd
 node_modules/**/.npmignore
 node_modules/**/.travis.yml
 node_modules/**/.zuul.yml
