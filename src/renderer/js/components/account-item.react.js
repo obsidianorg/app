@@ -1,4 +1,5 @@
 var React = require('react')
+var AccountSend = require('./account-send.react')
 
 var AccountItem = React.createClass({
   render: function() {
@@ -10,6 +11,9 @@ var AccountItem = React.createClass({
         <div className="data">
           <span>{ account.address }</span>
           <span className="pull-right">{ account.amount } BC</span>
+        </div>
+        <div>
+          <AccountSend account={this.props.account} />
         </div>
       </div>
     )
