@@ -1,3 +1,4 @@
+node_modules/**/.bin
 node_modules/**/.jepso-ci.json
 node_modules/**/.min-wd
 node_modules/**/.npmignore
