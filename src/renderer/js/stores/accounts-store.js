@@ -6,6 +6,7 @@ var S = require('string')
 var _ = require('lodash')
 var AccountConstants = require('../constants/account-constants')
 var AppDispatcher = require('../dispatcher/app-dispatcher')
+var blockchain = require('../blockchain')
 
 'use strict'
 
@@ -24,6 +25,21 @@ function create(name) {
   }))
 }
 
+function updateAmounts() {
+  blockchain.addresses.summary(AccountStore.addresses, function(err, results) {
+    if (err) return
+    results.forEach(function(res) {
+      var acc = JSON.parse(window.localStorage.getItem('account:' + res.address))
+      // todo, change to ratoshis
+      acc.amount = res.balance / 1e8
+      window.localStorage.setItem('account:' + res.address, JSON.stringify(acc))
+    })
+  
+    // todo, research flux async
+    AccountStore.emitChange()
+  })
+}
+
 var AccountStore = {}
 _.mixin(AccountStore, EventEmitter.prototype)
 EventEmitter.call({})
@@ -39,6 +55,13 @@ Object.defineProperty(AccountStore, 'accounts', {
       }
     }
     return accounts
+  }
+})
+
+Object.defineProperty(AccountStore, 'addresses', {
+  enumerable: true, configurable: true,
+  get: function() {
+    return _.pluck(AccountStore.accounts, 'address') 
   }
 })
 
@@ -63,6 +86,10 @@ AppDispatcher.register(function(payload) {
       if (text !== '') create(text)
       break
     
+    case AccountConstants.ACCOUNT_UPDATE_AMOUNTS:
+      updateAmounts(action.data)
+      break
+
     default:
       return true
   }

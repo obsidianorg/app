@@ -3,6 +3,7 @@ var Sidebar = require('./sidebar.react')
 var Accounts = require('./accounts.react')
 var Header = require('./header.react')
 var AccountStore = require('../stores/accounts-store')
+var AccountActions = require('../actions/account-actions')
 
 function getAccountsState() {
   return {
@@ -12,6 +13,7 @@ function getAccountsState() {
 
 var App = React.createClass({
   getInitialState: function() {
+    AccountActions.updateAmounts()
     return getAccountsState()
   },
 
