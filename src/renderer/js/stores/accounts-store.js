@@ -3,10 +3,12 @@ var util = require('util')
 var blackCoinInfo = require('coininfo')('BC')
 var CoinKey = require('coinkey')
 var S = require('string')
+var Transaction = require('cointx').Transaction
 var _ = require('lodash')
 var AccountConstants = require('../constants/account-constants')
 var AppDispatcher = require('../dispatcher/app-dispatcher')
 var blockchain = require('../blockchain')
+var txUtils = require('../blockchain/txutils')
 
 'use strict'
 
@@ -27,7 +29,7 @@ function create(name) {
 
 function updateAmounts() {
   blockchain.addresses.summary(AccountStore.addresses, function(err, results) {
-    if (err) return
+    if (err) return console.error(err)
     results.forEach(function(res) {
       var acc = JSON.parse(window.localStorage.getItem('account:' + res.address))
       // todo, change to ratoshis
@@ -38,6 +40,58 @@ function updateAmounts() {
     // todo, research flux async
     AccountStore.emitChange()
   })
+}
+
+function send(data) {
+  // amount to send
+  var amountRat = parseFloat(data.amount) * 1e8
+  if (!amountRat)
+    return console.error('amount to send: ' + amountRat + ' invalid')
+  
+  // receiver
+  var receiverAddress = data.address
+  if (!receiverAddress)
+    return console.error('receiver address ' + receiverAddress + ' invalid')
+
+  // tx fee
+  var feeRat = 10000
+
+  var key = new CoinKey.fromWif(data.account.wif)
+
+  blockchain.addresses.unspents(data.account.address, function(err, unspents) {
+    if (err) return console.error(err)
+    
+    // amount we actually have
+    var walletBalance = unspents.reduce(function(amount, unspent) { 
+      return unspent.value + amount
+    }, 0)
+
+    if (amountRat > (walletBalance - feeRat))
+      return console.error('\n  %s  \n', 'Not enough money to send.')
+
+    var tx = new Transaction()
+
+    unspents.forEach(function(unspent) {
+      tx.addInput(unspent.txId, unspent.vout)
+    })
+
+    tx.addOutput(txUtils.addressToOutputScript(receiverAddress), amountRat)
+
+    // only receive change if there is actually change to receive
+    if (walletBalance - amountRat - feeRat > 0)
+      tx.addOutput(txUtils.addressToOutputScript(key.publicAddress), walletBalance - amountRat - feeRat)
+
+    tx.ins.forEach(function(input, index) {
+      txUtils.sign(tx, index, key)
+    })
+
+    blockchain.transactions.propagate(tx.toHex(), function(err, data) {
+      if (err) return console.error(err)
+      console.dir(data)
+      updateAmounts()
+    })
+  })
+
 }
 
 var AccountStore = {}
@@ -86,6 +140,10 @@ AppDispatcher.register(function(payload) {
       if (text !== '') create(text)
       break
     
+    case AccountConstants.ACCOUNT_SEND:
+      send(action.data)
+      break
+
     case AccountConstants.ACCOUNT_UPDATE_AMOUNTS:
       updateAmounts(action.data)
       break
