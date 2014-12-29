@@ -8,6 +8,13 @@ var AccountActions = {
       actionType: AccountConstants.ACCOUNT_CREATE,
       text: text
     })
+  },
+
+  send: function(data) {
+    AppDispatcher.handleViewAction({
+      actionType: AccountConstants.ACCOUNT_SEND,
+      data: data
+    })
   }
 }
 
