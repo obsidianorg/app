@@ -1,5 +1,7 @@
+var assert = require('assert')
 var cs = require('coinstring')
 var blackCoinInfo = require('coininfo')('BC')
+var bufferutils = require('./cointx/bufferutils')
 var ecdsa = require('ecdsa')
 var scripts = require('cointx').scripts
 var Script = require('cointx').Script
@@ -16,6 +18,68 @@ function sign(tx, index, keyPair) {
   var signature = ecdsa.serializeSig(ecdsa.sign(new Buffer(hash), keyPair.privateKey))
   signature.push(Transaction.SIGHASH_ALL)
   tx.setInputScript(index, Script.fromChunks([new Buffer(signature), keyPair.publicKey]))
+}
+
+function parseFromHex(hex) {
+  var buffer = new Buffer(hex, 'hex')
+
+  var offset = 0
+  function readSlice(n) {
+    offset += n
+    return buffer.slice(offset - n, offset)
+  }
+  function readUInt32() {
+    var i = buffer.readUInt32LE(offset)
+    offset += 4
+    return i
+  }
+  function readUInt64() {
+    var i = bufferutils.readUInt64LE(buffer, offset)
+    offset += 8
+    return i
+  }
+  function readVarInt() {
+    var vi = bufferutils.readVarInt(buffer, offset)
+    offset += vi.size
+    return vi.number
+  }
+
+  var tx = new Transaction()
+  tx.version = readUInt32()
+  tx.time = readUInt32()
+
+  var vinLen = readVarInt()
+  for (var i = 0; i < vinLen; ++i) {
+    var hash = readSlice(32)
+    var vout = readUInt32()
+    var scriptLen = readVarInt()
+    var script = readSlice(scriptLen)
+    var sequence = readUInt32()
+
+    tx.ins.push({
+      hash: hash,
+      index: vout,
+      script: Script.fromBuffer(script),
+      sequence: sequence
+    })
+  }
+
+  var voutLen = readVarInt()
+  for (i = 0; i < voutLen; ++i) {
+    var value = readUInt64()
+    var scriptLen = readVarInt()
+    var script = readSlice(scriptLen)
+
+    tx.outs.push({
+      value: value,
+      script: Script.fromBuffer(script)
+    })
+  }
+
+  tx.locktime = readUInt32()
+  assert.equal(offset, buffer.length, 'Transaction has unexpected data')
+
+  return tx
 }
 
 function serializeToHex(tx) {
@@ -79,6 +143,7 @@ function serializeToHex(tx) {
 
 module.exports = {
   addressToOutputScript: addressToOutputScript,
+  parseFromHex: parseFromHex,
   sign: sign,
   serializeToHex: serializeToHex
 }
