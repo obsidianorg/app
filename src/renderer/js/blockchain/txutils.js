@@ -18,7 +18,67 @@ function sign(tx, index, keyPair) {
   tx.setInputScript(index, Script.fromChunks([new Buffer(signature), keyPair.publicKey]))
 }
 
+function serializeToHex(tx) {
+  var txInSize = tx.ins.reduce(function(a, x) {
+    return a + (40 + bufferutils.varIntSize(x.script.buffer.length) + x.script.buffer.length)
+  }, 0)
+
+  var txOutSize = tx.outs.reduce(function(a, x) {
+    return a + (8 + bufferutils.varIntSize(x.script.buffer.length) + x.script.buffer.length)
+  }, 0)
+
+  var buffer = new Buffer(
+    12 +
+    bufferutils.varIntSize(tx.ins.length) +
+    bufferutils.varIntSize(tx.outs.length) +
+    txInSize +
+    txOutSize
+  )
+
+  var offset = 0
+  function writeSlice(slice) {
+    slice.copy(buffer, offset)
+    offset += slice.length
+  }
+  function writeUInt32(i) {
+    buffer.writeUInt32LE(i, offset)
+    offset += 4
+  }
+  function writeUInt64(i) {
+    bufferutils.writeUInt64LE(buffer, i, offset)
+    offset += 8
+  }
+  function writeVarInt(i) {
+    var n = bufferutils.writeVarInt(buffer, i, offset)
+    offset += n
+  }
+
+  writeUInt32(tx.version)
+  writeUInt32(tx.time)
+  writeVarInt(tx.ins.length)
+
+  tx.ins.forEach(function(txin) {
+    writeSlice(txin.hash)
+    writeUInt32(txin.index)
+    writeVarInt(txin.script.buffer.length)
+    writeSlice(txin.script.buffer)
+    writeUInt32(txin.sequence)
+  })
+
+  writeVarInt(tx.outs.length)
+  tx.outs.forEach(function(txout) {
+    writeUInt64(txout.value)
+    writeVarInt(txout.script.buffer.length)
+    writeSlice(txout.script.buffer)
+  })
+
+  writeUInt32(tx.locktime)
+
+  return buffer.toString('hex')
+}
+
 module.exports = {
   addressToOutputScript: addressToOutputScript,
-  sign: sign
+  sign: sign,
+  serializeToHex: serializeToHex
 }
