@@ -74,9 +74,19 @@ describe('txutils', function() {
 
   describe('> serialize / parse', function() {
     var txData0 = fixtures.valid[0]
-    
+
     it('should return itself after serialize and then parse', function() {
       assert.equal(txUtils.serializeToHex(txUtils.parseFromHex(txData0.hex)), txData0.hex)
+    })
+  })
+
+  describe('clone()', function() {
+    var txData0 = fixtures.valid[0]
+
+    it('should clone the tx', function() {
+      var tx1 = txUtils.parseFromHex(txData0.hex)
+      var tx2 = txUtils.clone(tx1)
+      assert.equal(txUtils.serializeToHex(tx2), txData0.hex)
     })
   })
 })

@@ -12,6 +12,31 @@ function addressToOutputScript(address) {
   return scripts.pubKeyHashOutput(new Buffer(pubKeyHash, 'hex'))
 }
 
+function clone(tx) {
+  var newTx = new Transaction()
+  newTx.version = tx.version
+  newTx.time = tx.time
+  newTx.locktime = tx.locktime
+
+  newTx.ins = tx.ins.map(function(txin) {
+    return {
+      hash: txin.hash,
+      index: txin.index,
+      script: txin.script,
+      sequence: txin.sequence
+    }
+  })
+
+  newTx.outs = tx.outs.map(function(txout) {
+    return {
+      script: txout.script,
+      value: txout.value
+    }
+  })
+
+  return newTx
+}
+
 function sign(tx, index, keyPair) {
   var prevOutScript = scripts.pubKeyHashOutput(keyPair.publicHash)
   var hash = tx.hashForSignature(index, prevOutScript, Transaction.SIGHASH_ALL)
@@ -143,6 +168,7 @@ function serializeToHex(tx) {
 
 module.exports = {
   addressToOutputScript: addressToOutputScript,
+  clone: clone,
   parseFromHex: parseFromHex,
   sign: sign,
   serializeToHex: serializeToHex
