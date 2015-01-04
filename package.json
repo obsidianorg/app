@@ -34,9 +34,11 @@
   "devDependencies": {
     "gulp": "^3.8.10",
     "gulp-atom": "0.0.5",
+    "jest-cli": "^0.2.1",
     "reactify": "^0.17.1"
   },
   "scripts": {
-    "browserify": "./node_modules/.bin/browserify -t reactify ./src/renderer/js/index.js -o ./src/renderer/js/_bundle.js"
+    "browserify": "./node_modules/.bin/browserify -t reactify ./src/renderer/js/index.js -o ./src/renderer/js/_bundle.js",
+    "test": "jest"
   }
 }
