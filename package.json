@@ -12,7 +12,7 @@
     "browserify": "^8.0.3",
     "bs58": "^2.0.1",
     "buffer": "^3.0.1",
-    "cb-insight": "0.0.3",
+    "cb-insight": "^0.1.0",
     "chalk": "^0.5.1",
     "coininfo": "^0.3.1",
     "coinkey": "^1.3.0",

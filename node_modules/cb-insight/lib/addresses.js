@@ -1,4 +1,5 @@
 var async = require('async')
+var Decimal = require('decimal.js')
 var request = require('superagent')
 
 function Addresses(url) {
@@ -55,9 +56,11 @@ Addresses.prototype.unspents = function(addresses, callback) {
       var data = res.body.map(function(utxo) {
         return {
           txId: utxo.txid,
-          confirmations: utxo.confirmations, //sometimes this is undefined
+          // sometimes this is undefined
+          confirmations: utxo.confirmations, 
           address: utxo.address,
-          value: utxo.amount * self._multiplier,
+          // curse you BitPay! Y u no like satoshis?
+          value: (new Decimal(utxo.amount)).times(self._multiplier).toNumber(),
           vout: utxo.vout
         }
       })

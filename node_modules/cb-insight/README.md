@@ -7,7 +7,7 @@ Common Blockchain wrapper for any [Bitpay Insight API](https://github.com/bitpay
 Common Blockchain
 ------------------
 
-Common Blockchian is a concept invented by Daniel Cousens to normalize the differences between Blockchain APIs so that you can easily switch APIs if you need to.
+Common Blockchain is a concept invented by Daniel Cousens to normalize the differences between Blockchain APIs so that you can easily switch APIs if you need to.
 
 
 ### Canonical Example
