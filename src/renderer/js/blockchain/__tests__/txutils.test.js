@@ -14,7 +14,7 @@ describe('txutils', function() {
 
     it('should properly serialize the first transaction', function() {
       var tx = new Transaction()
-      tx.time = txData0.time
+      tx.timestamp = txData0.timestamp
 
       var walletBalance = txData0.utxos.reduce(function(amount, unspent) { 
         return unspent.value + amount
@@ -47,7 +47,7 @@ describe('txutils', function() {
 
     it('should properly parse the first transaction', function() {
       var tx = txUtils.parseFromHex(txData0.hex)
-      assert.equal(tx.time, txData0.time)
+      assert.equal(tx.timestamp, txData0.timestamp)
       assert.equal(tx.locktime, 0)
       assert.equal(tx.ins.length, 1)
       assert.equal(tx.outs.length, 2)

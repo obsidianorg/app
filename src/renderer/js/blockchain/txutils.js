@@ -16,7 +16,7 @@ function addressToOutputScript(address) {
 function clone(tx) {
   var newTx = new Transaction()
   newTx.version = tx.version
-  newTx.time = tx.time
+  newTx.timestamp = tx.timestamp
   newTx.locktime = tx.locktime
 
   newTx.ins = tx.ins.map(function(txin) {
@@ -110,7 +110,7 @@ function parseFromHex(hex) {
 
   var tx = new Transaction()
   tx.version = readUInt32()
-  tx.time = readUInt32()
+  tx.timestamp = readUInt32()
 
   var vinLen = readVarInt()
   for (var i = 0; i < vinLen; ++i) {
@@ -182,7 +182,7 @@ function serializeToHex(tx) {
   }
 
   writeUInt32(tx.version)
-  writeUInt32(tx.time)
+  writeUInt32(tx.timestamp)
   writeVarInt(tx.ins.length)
 
   tx.ins.forEach(function(txin) {
