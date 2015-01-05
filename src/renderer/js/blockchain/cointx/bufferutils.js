@@ -1,5 +1,4 @@
 var assert = require('assert')
-var opcodes = require('./opcodes')
 
 // https://github.com/feross/buffer/blob/master/index.js#L1127
 function verifuint(value, max) {
@@ -7,48 +6,6 @@ function verifuint(value, max) {
   assert(value >= 0, 'specified a negative value for writing an unsigned value')
   assert(value <= max, 'value is larger than maximum value for type')
   assert(Math.floor(value) === value, 'value has a fractional component')
-}
-
-function pushDataSize(i) {
-  return i < opcodes.OP_PUSHDATA1 ? 1
-    : i < 0xff        ? 2
-    : i < 0xffff      ? 3
-    :                   5
-}
-
-function readPushDataInt(buffer, offset) {
-  var opcode = buffer.readUInt8(offset)
-  var number, size
-
-  // ~6 bit
-  if (opcode < opcodes.OP_PUSHDATA1) {
-    number = opcode
-    size = 1
-
-  // 8 bit
-  } else if (opcode === opcodes.OP_PUSHDATA1) {
-    number = buffer.readUInt8(offset + 1)
-    size = 2
-
-  // 16 bit
-  } else if (opcode === opcodes.OP_PUSHDATA2) {
-    number = buffer.readUInt16LE(offset + 1)
-    size = 3
-
-  // 32 bit
-  } else {
-    assert.equal(opcode, opcodes.OP_PUSHDATA4, 'Unexpected opcode')
-
-    number = buffer.readUInt32LE(offset + 1)
-    size = 5
-
-  }
-
-  return {
-    opcode: opcode,
-    number: number,
-    size: size
-  }
 }
 
 function readUInt64LE(buffer, offset) {
@@ -92,33 +49,6 @@ function readVarInt(buffer, offset) {
   }
 }
 
-function writePushDataInt(buffer, number, offset) {
-  var size = pushDataSize(number)
-
-  // ~6 bit
-  if (size === 1) {
-    buffer.writeUInt8(number, offset)
-
-  // 8 bit
-  } else if (size === 2) {
-    buffer.writeUInt8(opcodes.OP_PUSHDATA1, offset)
-    buffer.writeUInt8(number, offset + 1)
-
-  // 16 bit
-  } else if (size === 3) {
-    buffer.writeUInt8(opcodes.OP_PUSHDATA2, offset)
-    buffer.writeUInt16LE(number, offset + 1)
-
-  // 32 bit
-  } else {
-    buffer.writeUInt8(opcodes.OP_PUSHDATA4, offset)
-    buffer.writeUInt32LE(number, offset + 1)
-
-  }
-
-  return size
-}
-
 function writeUInt64LE(buffer, value, offset) {
   verifuint(value, 0x001fffffffffffff)
 
@@ -160,12 +90,9 @@ function writeVarInt(buffer, number, offset) {
 }
 
 module.exports = {
-  pushDataSize: pushDataSize,
-  readPushDataInt: readPushDataInt,
   readUInt64LE: readUInt64LE,
   readVarInt: readVarInt,
   varIntSize: varIntSize,
-  writePushDataInt: writePushDataInt,
   writeUInt64LE: writeUInt64LE,
   writeVarInt: writeVarInt
 }
