@@ -24,14 +24,14 @@ describe('txutils', function() {
         tx.addInput(unspent.txId, unspent.vout)
       })
 
-      var recvrPubKeyHashScript = txUtils.addressToOutputScript(txData0.receiver.address)
-      tx.addOutput(recvrPubKeyHashScript, txData0.amount)
+      var recvrPubKeyHashScript = txUtils.addressToOutputScript(txData0.outputs[0].address)
+      tx.addOutput(recvrPubKeyHashScript, txData0.outputs[0].value)
 
       // change output
       var senderPubKeyHashScript = txUtils.addressToOutputScript(txData0.sender.address) 
-      var change = walletBalance - txData0.amount - txData0.fee
-      assert.equal(change, txData0.change)
-      tx.addOutput(senderPubKeyHashScript, walletBalance - txData0.amount - txData0.fee)
+      var change = walletBalance - txData0.outputs[0].value - txData0.fee
+      assert.equal(change, txData0.outputs[1].value)
+      tx.addOutput(senderPubKeyHashScript, walletBalance - txData0.outputs[0].value - txData0.fee)
 
       tx.ins.forEach(function(input, index) {
         txUtils.sign(tx, index, key)
@@ -58,14 +58,14 @@ describe('txutils', function() {
       assert.equal(tx.ins[0].index, txData0.utxos[0].vout)
 
       // compare receiver
-      var recvrPubKeyHashScript = txUtils.addressToOutputScript(txData0.receiver.address)
+      var recvrPubKeyHashScript = txUtils.addressToOutputScript(txData0.outputs[0].address)
       assert.equal(tx.outs[0].script.toHex(), recvrPubKeyHashScript.toHex())
-      assert.equal(tx.outs[0].value, txData0.amount)
+      assert.equal(tx.outs[0].value, txData0.outputs[0].value)
 
       // compare change address
       var senderPubKeyHashScript = txUtils.addressToOutputScript(txData0.sender.address) 
       assert.equal(tx.outs[1].script.toHex(), senderPubKeyHashScript.toHex())
-      assert.equal(tx.outs[1].value, txData0.change)
+      assert.equal(tx.outs[1].value, txData0.outputs[1].value)
 
       // fee
       assert.equal(txData0.utxos[0].value - tx.outs[0].value - tx.outs[1].value,  txData0.fee)      
