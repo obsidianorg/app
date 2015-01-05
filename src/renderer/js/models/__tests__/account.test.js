@@ -31,6 +31,19 @@ describe('Account', function() {
       // clean up
       jest.dontMock('coinkey')
     })
-  })  
+  })
+
+  describe('createFromWif()', function() {
+    var acc0 = accountFixtures.valid[0]
+
+    it('should create from wallet import format (private key)', function() {
+      var Account = require('../account')
+      var account = Account.createFromWif('Spending', acc0.wif)
+      
+      assert.equal(account.wif, acc0.wif)
+      assert.equal(account.address, acc0.address)
+      assert.equal(account.id, 'account:' + acc0.address)
+    })
+  })
 })
 
