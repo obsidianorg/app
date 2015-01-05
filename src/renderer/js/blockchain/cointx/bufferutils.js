@@ -1,11 +1,12 @@
 var assert = require('assert')
+var util = require('util')
 
 // https://github.com/feross/buffer/blob/master/index.js#L1127
 function verifuint(value, max) {
   assert(typeof value === 'number', 'cannot write a non-number as a number')
   assert(value >= 0, 'specified a negative value for writing an unsigned value')
   assert(value <= max, 'value is larger than maximum value for type')
-  assert(Math.floor(value) === value, 'value has a fractional component')
+  assert(Math.floor(value) === value, util.format('value %d has a fractional component', value))
 }
 
 function readUInt64LE(buffer, offset) {

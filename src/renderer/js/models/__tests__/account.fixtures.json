@@ -1,0 +1,11 @@
+{
+  "valid": [
+    {
+      "name": "Spending",
+      "privateKey": "b7f8b65301e8212a4d3fc63ab7dbe4e2082993de1a0dc5cd4249774ec216ae30",
+      "address": "BETBBq8bbHnBsqA4wtgMT6egyQCDgD8z2P",
+      "wif": "Pjt6EzhBsSaWwsjtKmeJzi6D6ZdGPhhdW2MzVpvZZrqqwCrDxafs",
+      "amount": 0
+    }
+  ]
+}

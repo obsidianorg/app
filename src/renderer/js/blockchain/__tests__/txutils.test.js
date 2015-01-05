@@ -38,7 +38,32 @@ describe('txutils', function() {
       })
 
       assert.equal(txUtils.serializeToHex(tx), txData0.hex)
+    })
 
+    describe('> when iterating through all', function() {
+      it('should serialize', function() {
+        fixtures.valid.forEach(function(txFix) {
+          var key = CoinKey.fromWif(txFix.sender.wif)
+
+          var tx = new Transaction()
+          tx.timestamp = txFix.timestamp
+        
+          txFix.utxos.forEach(function(unspent) {
+            tx.addInput(unspent.txId, unspent.vout)
+          })
+
+          txFix.outputs.forEach(function(out) {
+            var pkHashScript = txUtils.addressToOutputScript(out.address)
+            tx.addOutput(pkHashScript, out.value)
+          })
+
+          tx.ins.forEach(function(input, index) {
+            txUtils.sign(tx, index, key)
+          })
+
+          assert.equal(txUtils.serializeToHex(tx), txFix.hex)
+        })
+      })
     })
   })
 

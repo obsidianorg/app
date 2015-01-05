@@ -1,0 +1,58 @@
+{
+  "valid": [
+    {
+      "sender": {
+        "wif": "Pjt6EzhBsSaWwsjtKmeJzi6D6ZdGPhhdW2MzVpvZZrqqwCrDxafs",
+        "address": "BETBBq8bbHnBsqA4wtgMT6egyQCDgD8z2P"
+      },
+      "outputs": [
+        {
+          "address": "BJiNHGYz4bmx4PwWtu6hZJCD76VQDyXFL3",
+          "value": 2000000000
+        },
+        {
+          "address": "BETBBq8bbHnBsqA4wtgMT6egyQCDgD8z2P",
+          "value": 6969800000
+        }
+      ],
+      "utxos": [
+        {
+          "txId": "134c039cdab4fb42e2afeb5ea5ebeae49cee01d3c2e0b7a07dda380a689cb340",
+          "confirmations": 3364,
+          "address": "BETBBq8bbHnBsqA4wtgMT6egyQCDgD8z2P",
+          "value": 8969810000,
+          "vout": 1
+        }
+      ], 
+      "fee": 10000,
+      "timestamp": 1420359729,
+      "txId": "6cbe01568d2e9ef2a66e88800ce98ec51180c8f58d7dd564791f8e70dfbc910e",
+      "hex": "0100000031f8a8540140b39c680a38da7da0b7e0c2d301ee9ce4eaeba55eebafe242fbb4da9c034c13010000006a4730440220034f8bd2c86a8c0b9611a2faffd8d58604b425eadeb74c40dba94717f793da88022067e3df55cc7737a9ab0d6e8845ee8fdf80834b9974f1ed7be9f7475bb7afc64d0121034842504ca0e3acdfb75b2c5055958e82db4aee55ddfe96d6ef01d27a111083ebffffffff0200943577000000001976a9149c75e951b2abdc3973bbdcd85295088d2b5e101b88ac40b56e9f010000001976a9146db5e881fd6a68a9f2221612a699fd35a3225c6b88ac00000000"
+    },
+    {
+      "sender": {
+        "wif": "Pjt6EzhBsSaWwsjtKmeJzi6D6ZdGPhhdW2MzVpvZZrqqwCrDxafs",
+        "address": "BETBBq8bbHnBsqA4wtgMT6egyQCDgD8z2P"
+      },
+      "outputs": [
+        {
+          "address": "BJiNHGYz4bmx4PwWtu6hZJCD76VQDyXFL3",
+          "value": 6969790000
+        }
+      ],
+      "utxos": [
+        {
+          "txId": "6cbe01568d2e9ef2a66e88800ce98ec51180c8f58d7dd564791f8e70dfbc910e",
+          "confirmations": 807,
+          "address": "BETBBq8bbHnBsqA4wtgMT6egyQCDgD8z2P",
+          "value": 6969800000,
+          "vout": 1
+        }
+      ], 
+      "fee": 10000,
+      "timestamp": 0,
+      "txId": "2419c2318847f77991458e8354c51350e38ad136c5721904675c1fb1e39f9fe6",
+      "hex": "0100000000000000010e91bcdf708e1f7964d57d8df5c88011c58ee90c80886ea6f29e2e8d5601be6c010000006b483045022100e94bc1ec1b52671707e98bcd9b208ee56b88cdf9b4a03f249b67998f4cf8b599022064aa97eacd7b4afc6d400802098798346713ed0d9541b47b438ff0a425c78e6a0121034842504ca0e3acdfb75b2c5055958e82db4aee55ddfe96d6ef01d27a111083ebffffffff01308e6e9f010000001976a9149c75e951b2abdc3973bbdcd85295088d2b5e101b88ac00000000"
+    }
+  ]
+}
