@@ -20,6 +20,7 @@
     "cointx": "^0.1.0",
     "crypto-binary": "^0.1.0",
     "crypto-browserify": "^3.8.0",
+    "decimal.js": "^4.0.1",
     "ecdsa": "^0.6.0",
     "eckey": "^0.8.0",
     "ecurve": "^1.0.0",
