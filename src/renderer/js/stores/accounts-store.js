@@ -1,6 +1,6 @@
 var EventEmitter = require('events').EventEmitter
 var util = require('util')
-var blackCoinInfo = require('coininfo')('BC')
+var blackCoinInfo = require('coininfo')('BLK')
 var CoinKey = require('coinkey')
 var S = require('string')
 var Transaction = require('cointx').Transaction
@@ -85,11 +85,13 @@ function send(data) {
       txUtils.sign(tx, index, key)
     })
 
-    blockchain.transactions.propagate(tx.toHex(), function(err, data) {
+    var hex = txUtils.serializeToHex(tx)
+
+    /*blockchain.transactions.propagate(tx.toHex(), function(err, data) {
       if (err) return console.error(err)
       console.dir(data)
       updateAmounts()
-    })
+    })*/
   })
 
 }

@@ -1,6 +1,6 @@
 var ci = require('coininfo')
 var CoinKey = require('coinkey')
-var blackCoinInfo = ci('BC')
+var blackCoinInfo = ci('BLK')
 
 function create(name) {
   var ck = CoinKey.createRandom(blackCoinInfo.versions)

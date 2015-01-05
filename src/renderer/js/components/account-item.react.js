@@ -10,7 +10,7 @@ var AccountItem = React.createClass({
         <h4><i className="fa fa-angle-right"></i> { account.name }</h4>
         <div className="data">
           <span>{ account.address }</span>
-          <span className="pull-right">{ account.amount } BC</span>
+          <span className="pull-right">{ account.amount } BLK</span>
         </div>
         <div>
           <AccountSend account={this.props.account} />

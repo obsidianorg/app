@@ -1,6 +1,6 @@
 var assert = require('assert')
 var cs = require('coinstring')
-var blackCoinInfo = require('coininfo')('BC')
+var blackCoinInfo = require('coininfo')('BLK')
 var bufferutils = require('./cointx/bufferutils')
 var crypto = require('./cointx/crypto')
 var ecdsa = require('ecdsa')

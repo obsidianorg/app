@@ -4,7 +4,7 @@ var assert = require.requireActual('assert')
 var CoinKey = require.requireActual('coinkey')
 var ci = require.requireActual('coininfo')
 var accountFixtures = require.requireActual('./account.fixtures')
-var blackCoinInfo = ci('BC')
+var blackCoinInfo = ci('BLK')
 
 describe('create()', function() {
   var _acc1 = accountFixtures.valid[0]
