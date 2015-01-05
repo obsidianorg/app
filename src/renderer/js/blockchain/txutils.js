@@ -70,7 +70,9 @@ function hashForSignature(tx, inIndex, prevOutScript, hashType) {
   var hashTypeBuffer = new Buffer(4)
   hashTypeBuffer.writeInt32LE(hashType, 0)
 
-  var buffer = Buffer.concat([txTmp.toBuffer(), hashTypeBuffer])
+  // todo, implement a new TX class or serializeToBuffer
+  var txTmpBuffer = new Buffer(serializeToHex(txTmp), 'hex')
+  var buffer = Buffer.concat([txTmpBuffer, hashTypeBuffer])
   return crypto.hash256(buffer)
 }
 
