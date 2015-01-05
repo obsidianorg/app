@@ -2,6 +2,7 @@ var assert = require('assert')
 var cs = require('coinstring')
 var blackCoinInfo = require('coininfo')('BC')
 var bufferutils = require('./cointx/bufferutils')
+var crypto = require('./cointx/crypto')
 var ecdsa = require('ecdsa')
 var scripts = require('cointx').scripts
 var Script = require('cointx').Script
@@ -37,9 +38,45 @@ function clone(tx) {
   return newTx
 }
 
+function hashForSignature(tx, inIndex, prevOutScript, hashType) {
+  assert.equal(typeof inIndex, 'number')
+  assert.equal(typeof hashType, 'number')
+  assert(prevOutScript.constructor.name === 'Script')
+
+  assert(inIndex >= 0, 'Invalid vin index')
+  assert(inIndex < tx.ins.length, 'Invalid vin index')
+
+  var txTmp = clone(tx)
+  var OP_CODESEPARATOR = 171
+  var hashScript = prevOutScript.without(OP_CODESEPARATOR)
+
+  // Blank out other inputs' signatures
+  txTmp.ins.forEach(function(txin) {
+    txin.script = Script.EMPTY
+  })
+  txTmp.ins[inIndex].script = hashScript
+
+  var hashTypeModifier = hashType & 0x1f
+  if (hashTypeModifier === Transaction.SIGHASH_NONE) {
+    assert(false, 'SIGHASH_NONE not yet supported')
+  } else if (hashTypeModifier === Transaction.SIGHASH_SINGLE) {
+    assert(false, 'SIGHASH_SINGLE not yet supported')
+  }
+
+  if (hashType & Transaction.SIGHASH_ANYONECANPAY) {
+    assert(false, 'SIGHASH_ANYONECANPAY not yet supported')
+  }
+
+  var hashTypeBuffer = new Buffer(4)
+  hashTypeBuffer.writeInt32LE(hashType, 0)
+
+  var buffer = Buffer.concat([txTmp.toBuffer(), hashTypeBuffer])
+  return crypto.hash256(buffer)
+}
+
 function sign(tx, index, keyPair) {
   var prevOutScript = scripts.pubKeyHashOutput(keyPair.publicHash)
-  var hash = tx.hashForSignature(index, prevOutScript, Transaction.SIGHASH_ALL)
+  var hash = hashForSignature(tx, index, prevOutScript, Transaction.SIGHASH_ALL)
   var signature = ecdsa.serializeSig(ecdsa.sign(new Buffer(hash), keyPair.privateKey))
   signature.push(Transaction.SIGHASH_ALL)
   tx.setInputScript(index, Script.fromChunks([new Buffer(signature), keyPair.publicKey]))
@@ -169,6 +206,7 @@ function serializeToHex(tx) {
 module.exports = {
   addressToOutputScript: addressToOutputScript,
   clone: clone,
+  hashForSignature: hashForSignature,
   parseFromHex: parseFromHex,
   sign: sign,
   serializeToHex: serializeToHex
