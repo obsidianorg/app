@@ -5,6 +5,7 @@ var CoinKey = require('coinkey')
 var S = require('string')
 var Transaction = require('cointx').Transaction
 var _ = require('lodash')
+var Account = require('../models/account')
 var AccountConstants = require('../constants/account-constants')
 var AppDispatcher = require('../dispatcher/app-dispatcher')
 var blockchain = require('../blockchain')
@@ -15,16 +16,11 @@ var txUtils = require('../blockchain/txutils')
 var CHANGE_EVENT = 'change'
 
 function create(name) {
+  var acc = Account.create(name)
   var ck = CoinKey.createRandom(blackCoinInfo.versions)
 
-  //todo: encrypt
-  window.localStorage.setItem('account:' + ck.publicAddress, JSON.stringify({
-    id: 'account:' + ck.publicAddress, //not positive if React requires 'id' in stores, don't think so, but need to doublecheck
-    wif: ck.privateWif,
-    address: ck.publicAddress,
-    name: name,
-    amount: 0
-  }))
+  // todo: encrypt
+  window.localStorage.setItem(acc.id, JSON.stringify(acc))
 }
 
 function updateAmounts() {
