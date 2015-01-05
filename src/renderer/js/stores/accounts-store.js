@@ -161,5 +161,6 @@ AppDispatcher.register(function(payload) {
 })
 
 window.AccountStore = AccountStore
+window.Account = Account
 
 module.exports = AccountStore
