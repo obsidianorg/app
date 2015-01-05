@@ -42,6 +42,7 @@
     "reactify": "^0.17.1"
   },
   "scripts": {
+    "atom": "/Applications/Atom.app/Contents/MacOS/Atom src/",
     "browserify": "./node_modules/.bin/browserify -t reactify ./src/renderer/js/index.js -o ./src/renderer/js/_bundle.js",
     "test": "jest"
   }
