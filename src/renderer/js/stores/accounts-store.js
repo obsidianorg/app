@@ -60,6 +60,9 @@ function send(data) {
 
   blockchain.addresses.unspents(data.account.address, function(err, unspents) {
     if (err) return console.error(err)
+
+    // needed for test fixtures occasionally
+    console.log(JSON.stringify(unspents, null, 2))
     
     // amount we actually have
     var walletBalance = unspents.reduce(function(amount, unspent) { 
@@ -70,6 +73,7 @@ function send(data) {
       return console.error('\n  %s  \n', 'Not enough money to send.')
 
     var tx = new Transaction()
+    tx.timestamp = Date.now() / 1000
 
     unspents.forEach(function(unspent) {
       tx.addInput(unspent.txId, unspent.vout)
@@ -86,6 +90,7 @@ function send(data) {
     })
 
     var hex = txUtils.serializeToHex(tx)
+    console.log(hex)
 
     /*blockchain.transactions.propagate(tx.toHex(), function(err, data) {
       if (err) return console.error(err)
