@@ -14,6 +14,7 @@ node_modules/buffer/test
 node_modules/gulp
 node_modules/gulp-atom-shell
 node_modules/gulp-atom
+node_modules/gulp-livereload
 node_modules/jest-cli
 node_modules/quire
 node_modules/reactify
