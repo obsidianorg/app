@@ -15,6 +15,7 @@ node_modules/gulp
 node_modules/gulp-atom-shell
 node_modules/gulp-atom
 node_modules/jest-cli
+node_modules/quire
 node_modules/reactify
 
 release

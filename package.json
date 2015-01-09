@@ -39,6 +39,7 @@
     "gulp": "^3.8.10",
     "gulp-atom": "0.0.5",
     "jest-cli": "^0.2.1",
+    "quire": "0.0.2",
     "reactify": "^0.17.1"
   },
   "scripts": {
