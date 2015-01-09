@@ -1,9 +1,9 @@
 jest.autoMockOff()
 
-var assert = require.requireActual('assert')
-var CoinKey = require.requireActual('coinkey')
-var ci = require.requireActual('coininfo')
-var accountFixtures = require.requireActual('./account.fixtures')
+var assert = require('assert')
+var CoinKey = require('coinkey')
+var ci = require('coininfo')
+var accountFixtures = require('./account.fixtures')
 var blackCoinInfo = ci('BLK')
 
 describe('Account', function() {
