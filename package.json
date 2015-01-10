@@ -9,7 +9,7 @@
   "dependencies": {
     "async": "^0.9.0",
     "bigi": "^1.4.0",
-    "browserify": "^8.0.3",
+    "browserify": "^8.1.0",
     "bs58": "^2.0.1",
     "buffer": "^3.0.1",
     "cb-insight": "^0.1.0",
@@ -39,9 +39,13 @@
     "gulp": "^3.8.10",
     "gulp-atom": "0.0.5",
     "gulp-livereload": "^3.2.0",
+    "gulp-util": "^3.0.2",
+    "gulp-watch": "^3.0.0",
     "jest-cli": "^0.2.1",
     "quire": "0.0.2",
-    "reactify": "^0.17.1"
+    "reactify": "^0.17.1",
+    "vinyl-source-stream": "^1.0.0",
+    "watchify": "^2.2.1"
   },
   "scripts": {
     "atom": "/Applications/Atom.app/Contents/MacOS/Atom src/",
