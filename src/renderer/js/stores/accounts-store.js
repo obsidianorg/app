@@ -15,14 +15,6 @@ var txUtils = require('../blockchain/txutils')
 
 var CHANGE_EVENT = 'change'
 
-function create(name) {
-  var acc = Account.create(name)
-  var ck = CoinKey.createRandom(blackCoinInfo.versions)
-
-  // todo: encrypt
-  window.localStorage.setItem(acc.id, JSON.stringify(acc))
-}
-
 function updateAmounts() {
   blockchain.addresses.summary(AccountStore.addresses, function(err, results) {
     if (err) return console.error(err)
@@ -138,11 +130,6 @@ AppDispatcher.register(function(payload) {
   var action = payload.action
 
   switch (action.actionType) {
-    case AccountConstants.ACCOUNT_CREATE:
-      text = action.text.trim()
-      if (text !== '') create(text)
-      break
-    
     case AccountConstants.ACCOUNT_SEND:
       send(action.data)
       break
