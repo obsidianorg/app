@@ -15,7 +15,7 @@ app.on('window-all-closed', function() {
 })
 
 app.on('ready', function() {
-  mainWindow = new BrowserWindow({width: 600, height: 800, show: false, resizable: false})
+  mainWindow = new BrowserWindow({width: 600, height: 800, show: false, resizable: true, frame: true})
 
   var indexPath = path.resolve(__dirname, '..', 'renderer', 'index.html')
   var indexUrl = url.format({protocol: 'file', pathname: indexPath, slashes: true})
