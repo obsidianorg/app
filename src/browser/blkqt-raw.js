@@ -17,16 +17,20 @@ function connect() {
   _client = new bitcoin.Client(RPC_DATA)
 }
 
-ipc.on('blkqt', function(event) {
-  var args = [].slice.call(arguments, 1)
-
+ipc.on('blkqt', function(event, obj) {
+  console.log('got a message')
   var callback = function(err, res) {
+    var msg = obj.msg + '-' + obj.token
     if (err) 
-      event.sender.send(err.message, null)
+      event.sender.send(msg, err.message, null)
     else
-      event.sender.send(null, res)
+      event.sender.send(msg, null, res)
   }
 
-  args.push(callback)
-  _client.cmd.call.apply(_client, args)
+  obj.args.push(callback)
+  _client.cmd.apply(_client, obj.args)
 })
+
+module.exports = {
+  connect: connect
+}
