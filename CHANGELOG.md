@@ -1,3 +1,8 @@
+0.0.3 / 2015-01-12
+------------------
+- BlackCoin-qt integration
+- livereload 
+
 0.0.2 / 2014-12-28
 ------------------
 - changed color scheme to black and gold
