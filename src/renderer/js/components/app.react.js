@@ -13,7 +13,7 @@ function getAccountsState() {
 
 var App = React.createClass({
   getInitialState: function() {
-    AccountActions.updateAmounts()
+    AccountActions.sync()
     return getAccountsState()
   },
 

@@ -9,6 +9,7 @@ var Account = require('../models/account')
 var AccountConstants = require('../constants/account-constants')
 var AppDispatcher = require('../dispatcher/app-dispatcher')
 var blockchain = require('../blockchain')
+var blkqt = require('../lib/blkqt')
 var txUtils = require('../blockchain/txutils')
 
 'use strict'
@@ -24,7 +25,36 @@ function getAccountsInLocalStorage() {
     }
   }
 
+  // largest balance first
+  accounts = _.sortBy(accounts, function(acc) {
+    return -acc.balance
+  })
+
   return accounts
+}
+
+function removeAccountsInLocalStorage() {
+  var accounts = getAccountsInLocalStorage()
+  Object.keys(accounts).forEach(function(id) {
+    window.localStorage.removeItem(id)
+  })
+}
+
+function sync() {
+  blkqt.getAccounts(function(err, accounts) {
+    if (err) return console.error(err)
+
+    // a bit inefficient to do this everytime
+    removeAccountsInLocalStorage()
+
+    accounts.forEach(function(account) {
+      var id = 'account:' + account.address
+      account.id = id
+      window.localStorage.setItem(id, JSON.stringify(account))
+    })
+
+    AccountStore.emitChange()
+  })
 }
 
 function updateAmounts() {
@@ -135,6 +165,10 @@ AppDispatcher.register(function(payload) {
   switch (action.actionType) {
     case AccountConstants.ACCOUNT_SEND:
       send(action.data)
+      break
+
+    case AccountConstants.ACCOUNT_SYNC:
+      sync(action.data)
       break
 
     case AccountConstants.ACCOUNT_UPDATE_AMOUNTS:

@@ -3,6 +3,7 @@ var AppDispatcher = require('../dispatcher/app-dispatcher')
 var AccountConstants = require('../constants/account-constants')
 
 var AccountActions = {
+  // unused ATM
   create: function(text) {
     AppDispatcher.handleViewAction({
       actionType: AccountConstants.ACCOUNT_CREATE,
@@ -17,6 +18,14 @@ var AccountActions = {
     })
   },
 
+  sync: function() {
+    AppDispatcher.handleViewAction({
+      actionType: AccountConstants.ACCOUNT_SYNC,
+      data: null
+    })
+  },
+
+  // unused ATM
   updateAmounts: function() {
     AppDispatcher.handleViewAction({
       actionType: AccountConstants.ACCOUNT_UPDATE_AMOUNTS,

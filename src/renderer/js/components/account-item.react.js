@@ -7,7 +7,7 @@ var AccountItem = React.createClass({
 
     return(
       <div className="panel" key={ account.id }>
-        <h4><i className="fa fa-angle-right"></i> { account.name }</h4>
+        <h4><i className="fa fa-angle-right"></i> { account.label }</h4>
         <div className="data">
           <span>{ account.address }</span>
           <span className="pull-right">{ account.balance } BLK</span>
