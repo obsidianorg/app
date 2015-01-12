@@ -72,8 +72,23 @@ function getUnspents(address, callback) {
   })
 }
 
+function getWif(address, callback) {
+  var data = {
+    msg: 'blkqt',
+    args: ['dumpprivkey', address]
+  }
+
+  sendIPC(data, function(err, address) {
+    if (err) 
+      callback(err)
+    else
+      callback(null, address)
+  })
+}
+
 module.exports = {
   getAccounts: getAccounts,
-  getUnspents: getUnspents
+  getUnspents: getUnspents,
+  getWif: getWif,
 }
 
