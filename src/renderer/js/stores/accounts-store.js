@@ -169,3 +169,7 @@ window.AccountStore = AccountStore
 window.Account = Account
 
 module.exports = AccountStore
+
+// todo, change => a bit hacky
+setInterval(sync, 10*1000)
+
