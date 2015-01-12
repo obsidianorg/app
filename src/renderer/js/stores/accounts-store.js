@@ -57,21 +57,6 @@ function sync() {
   })
 }
 
-function updateAmounts() {
-  blockchain.addresses.summary(AccountStore.addresses, function(err, results) {
-    if (err) return console.error(err)
-    results.forEach(function(res) {
-      var acc = JSON.parse(window.localStorage.getItem('account:' + res.address))
-      // todo, change to ratoshis
-      acc.amount = res.balance / 1e8
-      window.localStorage.setItem('account:' + res.address, JSON.stringify(acc))
-    })
-  
-    // todo, research flux async
-    AccountStore.emitChange()
-  })
-}
-
 function send(data) {
   // amount to send
   var amountRat = parseFloat(data.amount) * 1e8
@@ -169,10 +154,6 @@ AppDispatcher.register(function(payload) {
 
     case AccountConstants.ACCOUNT_SYNC:
       sync(action.data)
-      break
-
-    case AccountConstants.ACCOUNT_UPDATE_AMOUNTS:
-      updateAmounts(action.data)
       break
 
     default:
