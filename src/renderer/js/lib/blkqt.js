@@ -32,8 +32,8 @@ function getAccounts(callback) {
     if (err) return callback(err)
     var accounts = result.map(function(acc) {
       acc.label = acc.account
-      acc.balance = acc.amount
-      acc.balanceRat = (new Decimal(acc.balance)).times(1e8) 
+      //acc.balance = acc.amount
+      //acc.balanceRat = (new Decimal(acc.balance)).times(1e8) 
 
       delete acc.account
       delete acc.amount
@@ -43,8 +43,22 @@ function getAccounts(callback) {
 
       return acc
     })
-      
-    callback(null, result)
+
+    var accs = {}
+    accounts.forEach(function(acc) {
+      accs[acc.address] = acc
+      accs[acc.address].balance = 0
+      accs[acc.address].balanceRat = 0
+    })
+
+    getUnspents(null, function(err, unspents) {
+      unspents.forEach(function(utxo) {
+        accs[utxo.address].balance += utxo.amount
+        accs[utxo.address].balanceRat += utxo.amountRat
+      })
+    
+      callback(null, accounts)
+    })
   })
 }
 
@@ -58,7 +72,10 @@ function getUnspents(address, callback) {
     if (err) return callback(err)
     
     var utxos = result.filter(function(utxo) {
-      return utxo.address === address
+      if (address)
+        return utxo.address === address
+      else
+        return true
     }).map(function(utxo) {
       utxo.amountRat = (new Decimal(utxo.amount)).times(1e8)
       utxo.txId = utxo.txid
