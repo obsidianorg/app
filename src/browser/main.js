@@ -15,10 +15,21 @@ app.on('window-all-closed', function() {
 })
 
 app.on('ready', function() {
-  mainWindow = new BrowserWindow({width: 600, height: 800, show: false, resizable: true, frame: true})
+  mainWindow = new BrowserWindow({
+    width: 600, 
+    height: 800, 
+    show: false, 
+    resizable: true, 
+    frame: true
+  })
 
   var indexPath = path.resolve(__dirname, '..', 'renderer', 'index.html')
-  var indexUrl = url.format({protocol: 'file', pathname: indexPath, slashes: true})
+  var indexUrl = url.format({
+    protocol: 'file', 
+    pathname: indexPath, 
+    slashes: true
+  })
+  
   mainWindow.loadUrl(indexUrl)
 
   mainWindow.on('closed', function() {
@@ -30,7 +41,6 @@ app.on('ready', function() {
 
   mainWindow.show()
 })
-
 
 blkqt.connect()
 
