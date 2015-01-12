@@ -2,11 +2,13 @@ var EventEmitter = require('events').EventEmitter
 var util = require('util')
 var blackCoinInfo = require('coininfo')('BLK')
 var CoinKey = require('coinkey')
+var Decimal = require('decimal.js')
 var S = require('string')
 var Transaction = require('cointx').Transaction
 var _ = require('lodash')
 var Account = require('../models/account')
 var AccountConstants = require('../constants/account-constants')
+var alert = require('../lib/alert')
 var AppDispatcher = require('../dispatcher/app-dispatcher')
 var blockchain = require('../blockchain')
 var blkqt = require('../lib/blkqt')
@@ -59,59 +61,64 @@ function sync() {
 
 function send(data) {
   // amount to send
-  var amountRat = parseFloat(data.amount) * 1e8
-  if (!amountRat)
-    return console.error('amount to send: ' + amountRat + ' invalid')
-  
-  // receiver
+  try {
+    var amountRat = (new Decimal(data.amount)).times(1e8).toNumber()
+  } catch (err) {
+    return alert.showError('amount to send: "' + data.amount + '" invalid number')
+  }
+
+  // receiver, todo, validate address
   var receiverAddress = data.address
   if (!receiverAddress)
-    return console.error('receiver address ' + receiverAddress + ' invalid')
+    return alert.showError('receiver address "' + receiverAddress + '" invalid')
 
-  // tx fee
-  var feeRat = 10000
+  blkqt.getUnspents(data.account.address, function(err, unspents) {
+    if (err)
+      return alert.showError('unspents problem: ' + err.message)
 
-  var key = new CoinKey.fromWif(data.account.wif)
+    console.log('WIF')
+    blkqt.getWif(data.account.address, function(err, wif) {
+      if (err)
+        return alert.showError('wif problem: ' + err.message + '\n\nYou probably need to Unlock your wallet in BlackCoin-qt.')
+      
+       // tx fee
+      var feeRat = 10000
 
-  blockchain.addresses.unspents(data.account.address, function(err, unspents) {
-    if (err) return console.error(err)
+      var key = new CoinKey.fromWif(wif)
 
-    // needed for test fixtures occasionally
-    console.log(JSON.stringify(unspents, null, 2))
-    
-    // amount we actually have
-    var walletBalance = unspents.reduce(function(amount, unspent) { 
-      return unspent.value + amount
-    }, 0)
+      // amount we actually have
+      var walletBalance = unspents.reduce(function(amount, unspent) { 
+        return unspent.value + amount
+      }, 0)
 
-    if (amountRat > (walletBalance - feeRat))
-      return console.error('\n  %s  \n', 'Not enough money to send.')
+      if (amountRat > (walletBalance - feeRat))
+        return alert.showError('Not enough money to send.')
 
-    var tx = new Transaction()
-    tx.timestamp = Date.now() / 1000
+      var tx = new Transaction()
+      tx.timestamp = Date.now() / 1000
 
-    unspents.forEach(function(unspent) {
-      tx.addInput(unspent.txId, unspent.vout)
+      unspents.forEach(function(unspent) {
+        tx.addInput(unspent.txId, unspent.vout)
+      })
+
+      tx.addOutput(txUtils.addressToOutputScript(receiverAddress), amountRat)
+
+      // only receive change if there is actually change to receive
+      if (walletBalance - amountRat - feeRat > 0)
+        tx.addOutput(txUtils.addressToOutputScript(key.publicAddress), walletBalance - amountRat - feeRat)
+
+      tx.ins.forEach(function(input, index) {
+        txUtils.sign(tx, index, key)
+      })
+
+      var hex = txUtils.serializeToHex(tx)
+      
+      blkqt.submitTransaction(hex, function(err, txId) {
+        if (err)
+          return alert.showError('submit transaction error: ' + err.message)
+        console.dir(JSON.stringify(txId, null, 2))
+      })    
     })
-
-    tx.addOutput(txUtils.addressToOutputScript(receiverAddress), amountRat)
-
-    // only receive change if there is actually change to receive
-    if (walletBalance - amountRat - feeRat > 0)
-      tx.addOutput(txUtils.addressToOutputScript(key.publicAddress), walletBalance - amountRat - feeRat)
-
-    tx.ins.forEach(function(input, index) {
-      txUtils.sign(tx, index, key)
-    })
-
-    var hex = txUtils.serializeToHex(tx)
-    console.log(hex)
-
-    /*blockchain.transactions.propagate(tx.toHex(), function(err, data) {
-      if (err) return console.error(err)
-      console.dir(data)
-      updateAmounts()
-    })*/
   })
 
 }
