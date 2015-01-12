@@ -86,9 +86,24 @@ function getWif(address, callback) {
   })
 }
 
+function submitTransaction(rawTx, callback) {
+  var data = {
+    msg: 'blkqt',
+    args: ['sendrawtransaction', rawTx]
+  }
+
+  sendIPC(data, function(err, txId) {
+    if (err)
+      return callback(err)
+    else
+      return callback(null, txId)
+  })
+}
+
 module.exports = {
   getAccounts: getAccounts,
   getUnspents: getUnspents,
   getWif: getWif,
+  submitTransaction: submitTransaction
 }
 
