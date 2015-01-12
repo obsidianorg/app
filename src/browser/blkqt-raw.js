@@ -18,7 +18,6 @@ function connect() {
 }
 
 ipc.on('blkqt', function(event, obj) {
-  console.log('got a message')
   var callback = function(err, res) {
     var msg = obj.msg + '-' + obj.token
     if (err) 
