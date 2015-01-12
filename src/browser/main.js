@@ -44,3 +44,8 @@ app.on('ready', function() {
 
 blkqt.connect()
 
+// hacky messaging solution, switch to fancy html errors
+require('ipc').on('error', function(event, message) {
+  require('dialog').showErrorBox('Error', message)
+})
+
