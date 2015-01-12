@@ -2,7 +2,7 @@ var path = require('path')
 var url = require('url')
 var app = require('app')
 var BrowserWindow = require('browser-window')
-var blkqt = require('./blkqt')
+var blkqt = require('./blkqt-raw')
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the javascript object is GCed.
@@ -30,3 +30,7 @@ app.on('ready', function() {
 
   mainWindow.show()
 })
+
+
+blkqt.connect()
+
