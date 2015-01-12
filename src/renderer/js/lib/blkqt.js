@@ -62,6 +62,7 @@ function getUnspents(address, callback) {
     }).map(function(utxo) {
       utxo.amountRat = (new Decimal(utxo.amount)).times(1e8)
       utxo.txId = utxo.txid
+      utxo.value = utxo.amountRat
 
       delete utxo.txid
 
