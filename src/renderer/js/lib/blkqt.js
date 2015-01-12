@@ -38,6 +38,9 @@ function getAccounts(callback) {
       delete acc.account
       delete acc.amount
 
+      if (!acc.label)
+        acc.label = '(no label)'
+
       return acc
     })
       
