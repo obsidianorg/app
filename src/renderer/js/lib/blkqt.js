@@ -48,7 +48,32 @@ function getAccounts(callback) {
   })
 }
 
+function getUnspents(address, callback) {
+  var data = {
+    msg: 'blkqt',
+    args: ['listunspent', 0]
+  }
+
+  sendIPC(data, function(err, result) {
+    if (err) return callback(err)
+    
+    var utxos = result.filter(function(utxo) {
+      return utxo.address === address
+    }).map(function(utxo) {
+      utxo.amountRat = (new Decimal(utxo.amount)).times(1e8)
+      utxo.txId = utxo.txid
+
+      delete utxo.txid
+
+      return utxo
+    })
+
+    callback(null, utxos)
+  })
+}
+
 module.exports = {
-  getAccounts: getAccounts
+  getAccounts: getAccounts,
+  getUnspents: getUnspents
 }
 
