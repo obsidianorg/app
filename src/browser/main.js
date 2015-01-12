@@ -19,7 +19,7 @@ app.on('ready', function() {
     width: 650, 
     height: 800, 
     show: false, 
-    resizable: true, 
+    resizable: false, 
     frame: true
   })
 
