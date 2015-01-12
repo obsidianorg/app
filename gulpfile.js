@@ -54,7 +54,6 @@ gulp.task('watch-js', function() {
 })
 
 gulp.task('build-js', function() {
-  console.log('wtf')
   var gutil = require('gulp-util')
   var browserify = require('browserify')
   var path = require('path')
