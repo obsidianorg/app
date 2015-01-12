@@ -7,7 +7,6 @@ var Header = React.createClass({
       <header className="header">
         <div className="text-center">
           Accounts
-          <AccountAdd />
         </div>
       </header>
     )
