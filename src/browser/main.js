@@ -25,5 +25,8 @@ app.on('ready', function() {
     mainWindow = null
   })
 
+  // nothing needed here yet
+  mainWindow.webContents.on('did-finish-load', function() {})
+
   mainWindow.show()
 })
