@@ -1,6 +1,7 @@
 // thwart browserify, setting browser field doesn't
 // seem to work in watch scripts
 var ipc = require('i' + 'pc')
+var Decimal = require('decimal.js')
 
 function sendIPC(data, callback) {
   data.token = Date.now() + Math.random()
@@ -31,7 +32,13 @@ function getAccounts(callback) {
     if (err) return callback(err)
     var accounts = result.map(function(acc) {
       acc.label = acc.account
+      acc.balance = acc.amount
+      acc.balanceRat = (new Decimal(acc.balance)).times(1e8) 
+
       delete acc.account
+      delete acc.amount
+
+      return acc
     })
       
     callback(null, result)
