@@ -15,6 +15,18 @@ var txUtils = require('../blockchain/txutils')
 
 var CHANGE_EVENT = 'change'
 
+function getAccountsInLocalStorage() {
+  var accounts = {}
+  for (var i = 0; i < window.localStorage.length; ++i) {
+    var key = window.localStorage.key(i)
+    if (S(key).startsWith('account:')) {
+      accounts[key] = JSON.parse(window.localStorage.getItem(key))
+    }
+  }
+
+  return accounts
+}
+
 function updateAmounts() {
   blockchain.addresses.summary(AccountStore.addresses, function(err, results) {
     if (err) return console.error(err)
@@ -95,16 +107,7 @@ EventEmitter.call({})
 
 Object.defineProperty(AccountStore, 'accounts', {
   enumerable: true, configurable: true,
-  get: function() {
-    var accounts = {}
-    for (var i = 0; i < window.localStorage.length; ++i) {
-      var key = window.localStorage.key(i)
-      if (S(key).startsWith('account:')) {
-        accounts[key] = JSON.parse(window.localStorage.getItem(key))
-      }
-    }
-    return accounts
-  }
+  get: getAccountsInLocalStorage
 })
 
 Object.defineProperty(AccountStore, 'addresses', {
