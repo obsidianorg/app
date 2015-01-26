@@ -21,7 +21,7 @@
     "coinstring": "^2.2.0",
     "cointx": "^0.1.0",
     "crypto-binary": "^0.1.0",
-    "crypto-browserify": "^3.9.1",
+    "crypto-browserify": "^3.9.9",
     "decimal.js": "^4.0.1",
     "ecdsa": "^0.6.0",
     "eckey": "^0.8.0",
