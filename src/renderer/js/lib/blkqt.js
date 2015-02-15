@@ -3,6 +3,10 @@
 var ipc = require('i' + 'pc')
 var Decimal = require('decimal.js')
 
+// command references
+// http://we.lovebitco.in/bitcoin-qt/command-reference/
+// https://en.bitcoin.it/wiki/Original_Bitcoin_client/API_calls_list
+
 function sendIPC(data, callback) {
   data.token = Date.now() + Math.random()
   
