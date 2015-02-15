@@ -19,20 +19,20 @@ app.on('window-all-closed', function() {
 
 app.on('ready', function() {
   mainWindow = new BrowserWindow({
-    width: 650, 
-    height: 800, 
-    show: false, 
-    resizable: false, 
+    width: 650,
+    height: 800,
+    show: false,
+    resizable: false,
     frame: true
   })
 
   var indexPath = path.resolve(__dirname, '..', 'renderer', 'index.html')
   var indexUrl = url.format({
-    protocol: 'file', 
-    pathname: indexPath, 
+    protocol: 'file',
+    pathname: indexPath,
     slashes: true
   })
-  
+
   mainWindow.loadUrl(indexUrl)
 
   mainWindow.on('closed', function() {
