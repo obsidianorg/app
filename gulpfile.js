@@ -37,7 +37,7 @@ gulp.task('build-atom-app', function() {
   return gulpAtom({
     srcPath: './src',
     releasePath: RELEASE_PATH,
-    cachePath: '/tmp/atom-cache',
+    cachePath: '~/tmp/atom-cache',
     version: ATOM_VERSION,
     rebuild: false,
     platforms: PLATFORMS
