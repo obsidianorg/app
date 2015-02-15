@@ -3,6 +3,9 @@ var url = require('url')
 var app = require('app')
 var BrowserWindow = require('browser-window')
 var blkqt = require('./blkqt-raw')
+var blockListener = require('./block-listener')
+
+var _qtClient = blkqt.connect()
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the javascript object is GCed.
@@ -40,9 +43,17 @@ app.on('ready', function() {
   mainWindow.webContents.on('did-finish-load', function() {})
 
   mainWindow.show()
+
+  blockListener.createListener(function(blockHash) {
+    _qtClient.cmd('getblock', blockHash, function(err, blockData) {
+      if (err) return console.error(err)
+      console.dir(blockData.tx)
+    })
+  }).listen(14921)
 })
 
-blkqt.connect()
+
+
 
 // hacky messaging solution, switch to fancy html errors
 require('ipc').on('error', function(event, message) {

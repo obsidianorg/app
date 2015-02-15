@@ -15,6 +15,7 @@ var _client
 
 function connect() {
   _client = new bitcoin.Client(RPC_DATA)
+  return _client
 }
 
 ipc.on('blkqt', function(event, obj) {
