@@ -1,16 +1,9 @@
 var bitcoin = require('bitcoin')
 var ipc = require('ipc')
 var dialog = require('dialog')
+var config = require('../config')
 
-var RPC_DATA = {
-  host: 'localhost',
-  port: 15715,
-  // localhost only, this shouldn't matter too much
-  user: 'blackcoinrpc',
-  // ditto as above
-  pass: 'obsidian',
-  timeout: 30000
-}
+var RPC_DATA = config.qtClient
 
 var _client
 
