@@ -9,7 +9,7 @@ var Decimal = require('decimal.js')
 
 function sendIPC(data, callback) {
   data.token = Date.now() + Math.random()
-  
+
   if (callback) {
     var recpMsg = data.msg + '-' + data.token
     ipc.once(recpMsg, function() {
@@ -37,7 +37,7 @@ function getAccounts(callback) {
     var accounts = result.map(function(acc) {
       acc.label = acc.account
       //acc.balance = acc.amount
-      //acc.balanceRat = (new Decimal(acc.balance)).times(1e8) 
+      //acc.balanceRat = (new Decimal(acc.balance)).times(1e8)
 
       delete acc.account
       delete acc.amount
@@ -60,9 +60,21 @@ function getAccounts(callback) {
         accs[utxo.address].balance += utxo.amount
         accs[utxo.address].balanceRat += utxo.amountRat
       })
-    
+
       callback(null, accounts)
     })
+  })
+}
+
+function getRawTransaction(txId, callback) {
+  var data = {
+    msg: 'blkqt',
+    args: ['getrawtransaction', txId]
+  }
+
+  sendIPC(data, function(err, result) {
+    if (err) return callback(err)
+    callback(null, result)
   })
 }
 
@@ -74,7 +86,7 @@ function getUnspents(address, callback) {
 
   sendIPC(data, function(err, result) {
     if (err) return callback(err)
-    
+
     var utxos = result.filter(function(utxo) {
       if (address)
         return utxo.address === address
@@ -101,7 +113,7 @@ function getWif(address, callback) {
   }
 
   sendIPC(data, function(err, address) {
-    if (err) 
+    if (err)
       callback(err)
     else
       callback(null, address)
@@ -124,6 +136,7 @@ function submitTransaction(rawTx, callback) {
 
 module.exports = {
   getAccounts: getAccounts,
+  getRawTransaction: getRawTransaction,
   getUnspents: getUnspents,
   getWif: getWif,
   submitTransaction: submitTransaction
