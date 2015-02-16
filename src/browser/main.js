@@ -48,6 +48,7 @@ app.on('ready', function() {
     _qtClient.cmd('getblock', blockHash, function(err, blockData) {
       if (err) return console.error(err)
       console.dir(blockData.tx)
+     mainWindow.webContents.send('blockchain:tx:listen', blockData.tx)
     })
   }).listen(14921)
 })
