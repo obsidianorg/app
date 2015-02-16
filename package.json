@@ -57,5 +57,10 @@
   },
   "browser": {
     "ipc": false
+  },
+  "standard": {
+    "ignore": [
+      "src/renderer/js/_bundle.js"
+    ]
   }
 }
