@@ -44,7 +44,7 @@ body {
   position: relative;
 }
 
-ul.sidebar-menu, 
+ul.sidebar-menu,
 ul.sidebar-menu li {
   margin: -2px 0 0;
   padding: 0;
@@ -115,5 +115,6 @@ ul.sidebar-menu li a.active i {
   background: #ffd700;
   color: #fff;
   padding: 10px 0;
+  cursor: pointer;
 }
 
