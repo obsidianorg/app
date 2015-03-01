@@ -1,6 +1,7 @@
 var dialog = require('dialog')
 var path = require('path')
 var os = require('os')
+var util = require('util')
 
 function bitcoin() {
   var ost = os.type().toLowerCase()
@@ -22,18 +23,14 @@ function blackcoin() {
   }
 }
 
-function showFindDialog(browserWindow, callback) {
-  if (typeof browserWindow === 'function') {
-    callback = browserWindow
-    browserWindow = null
-  }
-
+function showFindDialog(params, callback) {
+  var title = util.format('Select %s-QT Location...', params.test ? 'Bitcoin' : 'BlackCoin')
   var options = {
-    title: 'Select BlackCoin-QT',
+    title:  title,
     properties: ['openFile']
   }
 
-  dialog.showOpenDialog(browserWindow, options, function(exeFile) {
+  dialog.showOpenDialog(params.browserWindow, options, function(exeFile) {
     if (!Array.isArray(exeFile)) {
       // probably undefined
       return callback(exeFile)
