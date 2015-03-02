@@ -1,6 +1,8 @@
 var fs = require('fs-extra')
 var path = require('path-extra')
+var exe = require('./exe')
 var qtconfig = require('./qtconfig')
+
 
 var SETTINGS_FILE = path.join(path.datadir('obsidian'), 'obsidian.conf.json')
 
@@ -11,10 +13,33 @@ function initSync() {
     // default: no test
     settings.test = false
     settings.blockCheckInterval = 60*1000
-    fs.outputJsonSync(SETTINGS_FILE, settings)
+    settings.exe = {
+      test: exe.qtapp(true),
+      prod: exe.qtapp(false)
+    }
   } else {
     settings = fs.readJsonSync(SETTINGS_FILE)
   }
+
+  settings.exe = settings.exe || {}
+
+  settings.saveSync = function() {
+    fs.outputJsonSync(SETTINGS_FILE, settings)
+  }
+
+  // 'exe' property won't be saved, which is what we want
+  Object.defineProperty(settings, 'exePath', {
+    enumerable: false,
+    get: function() {
+      return settings.test ? settings.exe.test : settings.exe.prod
+    },
+    set: function(newPath) {
+      if (settings.test) settings.exe.test = newPath
+      else settings.exe.prod = newPath
+    }
+  })
+
+  settings.saveSync()
 
   var qtconfig = readQtConfig(settings.test)
 
