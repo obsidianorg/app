@@ -67,20 +67,20 @@ gulp.task('new-build', function() {
   gulp.src(buildDir + '/src/**')
       .pipe(atomshell({
           version: '0.21.2',
-          productName: 'Obsidian',
-          productVersion: '0.0.4',
+          productName: pkg.productName,
+          productVersion: pkg.version,
           platform: 'win32'
       }))
-      .pipe(atomshell.zfsdest('./releases/app-win32.zip'))
+      .pipe(atomshell.zfsdest('./release/app-win32.zip'))
 
   gulp.src(buildDir + '/src/**')
     .pipe(atomshell({
         version: '0.21.2',
-        productName: 'Obsidian',
-        productVersion: '0.0.4',
+        productName: pkg.productName,
+        productVersion: pkg.version,
         platform: 'darwin'
     }))
-    .pipe(atomshell.zfsdest('./releases/app-darwin.zip'))
+    .pipe(atomshell.zfsdest('./release/app-darwin.zip'))
 })
 
 gulp.task('watch-js', function() {
