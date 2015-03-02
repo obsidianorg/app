@@ -34,7 +34,7 @@ function showFindDialog(params, callback) {
     properties: ['openFile']
   }
 
-  dialog.showOpenDialog(params.browserWindow, options, function(exeFile) {
+  function dialogCallback(exeFile) {
     if (!Array.isArray(exeFile)) {
       // probably undefined
       return callback(exeFile)
@@ -48,7 +48,13 @@ function showFindDialog(params, callback) {
     // macos only
     var base = path.basename(exeFile[0]).replace(path.extname(exeFile[0]), '')
     callback(path.join(exeFile[0], 'Contents', 'MacOS', base))
-  })
+  }
+
+  var args = [options, dialogCallback]
+  if (params.browserWindow)
+    args.unshift(params.browserWindow)
+
+  dialog.showOpenDialog.apply(dialog, args)
 }
 
 module.exports = {
