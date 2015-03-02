@@ -18,6 +18,11 @@ app.ready(function(app) {
   if (!fs.existsSync(cfg.settings.exePath)) {
     dialog.showErrorBox('Error', util.format("Can't find %s-qt. Please locate it.", cfg.settings.test ? 'Bitcoin' : 'BlackCoin'))
     exe.showFindDialog({test: cfg.settings.test}, function(newPath) {
+      if (!newPath) {
+        dialog.showErrorBox('Error', 'You must make a selection to continue.')
+        process.exit()
+      }
+
       cfg.settings.exePath = newPath
       cfg.settings.saveSync()
       start()
