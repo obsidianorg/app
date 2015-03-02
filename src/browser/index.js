@@ -1,11 +1,11 @@
 var dialog = require('dialog')
 var cp = require('child_process')
 var fs = require('fs')
+var ipc = require('ipc')
 var util = require('util')
 var app = require('./app')
 var connectingWindow = require('./connecting-window')
 var mainWindow = require('./main-window')
-var blkqt = require('./blkqt-raw')
 var blockListener = require('./block-listener')
 var settings = require('./settings')
 var exe = require('./settings/exe')
@@ -14,27 +14,28 @@ var spawn = cp.spawn
 
 var cfg = settings.initSync()
 
-if (!fs.existsSync(cfg.settings.exePath)) {
-  dialog.showError('Error', util.format("Can't find %s-qt. Please locate it.", cfg.settings.test ? 'Bitcoin' : 'BlackCoin'))
-  exe.showFindDialog({test: cfg.settings.test}, function(newPath) {
-    cfg.settings.exePath = newPath
-    cfg.settings.saveSync()
+app.ready(function(app) {
+  if (!fs.existsSync(cfg.settings.exePath)) {
+    dialog.showErrorBox('Error', util.format("Can't find %s-qt. Please locate it.", cfg.settings.test ? 'Bitcoin' : 'BlackCoin'))
+    exe.showFindDialog({test: cfg.settings.test}, function(newPath) {
+      cfg.settings.exePath = newPath
+      cfg.settings.saveSync()
+      start()
+    })
+  }
+  else {
     start()
-  })
-}
-else {
-  start()
-}
+  }
+})
+
 
 function start() {
-  app.ready(function(app) {
-    connectingWindow.initAndShow(cfg.settings.test, function (connectingWindow) {
-      verifyConnected(function(err) {
-        if (err) return dialog.showErrorBox('Error', "Can't connect to the QT client.")
-        connectingWindow.close()
+  connectingWindow.initAndShow(cfg.settings.test, function (connectingWindow) {
+    verifyConnected(function(err, rpcClient) {
+      if (err) return dialog.showErrorBox('Error', "Can't connect to the QT client.")
+      connectingWindow.close()
 
-        initMain()
-      })
+      initMain(rpcClient)
     })
   })
 }
