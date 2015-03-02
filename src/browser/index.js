@@ -65,22 +65,35 @@ function verifyConnected(callback) {
   }
 }
 
-function initMain() {
-  //var _qtClient = blkqt.connect()
+function initMain(rpcClient) {
+  installIPCforQT(rpcClient)
 
   mainWindow.initAndShow(function(mainWindow) {
-    /*blockListener.createListener(function(blockHash) {
-      _qtClient.cmd('getblock', blockHash, function(err, blockData) {
+    blockListener.createListener(function(blockHash) {
+      rpcClient.cmd('getblock', blockHash, function(err, blockData) {
         if (err) return console.error(err)
         console.dir(blockData.tx)
        mainWindow.webContents.send('blockchain:tx:listen', blockData.tx)
       })
-    }).listen(14921)*/
+    }).listen(14921)
   })
 }
 
+// so client JS can easily query RPC commands
+function installIPCforQT(rpcClient) {
+  ipc.on('blkqt', function(event, obj) {
+    var callback = function(err, res) {
+      var msg = obj.msg + '-' + obj.token
+      if (err)
+        event.sender.send(msg, err.message, null)
+      else
+        event.sender.send(msg, null, res)
+    }
 
-
+    obj.args.push(callback)
+    rpcClient.cmd.apply(rpcClient, obj.args)
+  })
+}
 
 // hacky messaging solution, switch to fancy html errors
 require('ipc').on('error', function(event, message) {
