@@ -2,11 +2,12 @@ var fs = require('fs-extra')
 var path = require('path')
 var gulp = require('gulp')
 var gulpAtom = require('gulp-atom')
+var atomshell = require('gulp-atom-shell')
 var livereload = require('gulp-livereload')
 var pkg = require('./package')
 
 var RELEASE_PATH = './release'
-var ATOM_VERSION = 'v0.20.2'
+var ATOM_VERSION = 'v0.21.2'
 var PLATFORMS = ['win32-ia32', 'darwin-x64']
 
 gulp.task('build', ['build-atom-app'], function() {
@@ -30,7 +31,7 @@ gulp.task('build-atom-app', function() {
   var atomPkg = {
     name: pkg.name,
     version: pkg.version,
-    main: './browser/main.js'
+    main: './browser/index.js'
   }
   fs.writeJsonSync('./src/package.json', atomPkg)
 
@@ -42,6 +43,44 @@ gulp.task('build-atom-app', function() {
     rebuild: false,
     platforms: PLATFORMS
   })
+})
+
+gulp.task('new-build', function() {
+  var buildDir = '/tmp/obsidian-build'
+
+  var atomPkg = {
+    name: pkg.name,
+    version: pkg.version,
+    main: './browser/index.js'
+  }
+  fs.writeJsonSync('./src/package.json', atomPkg)
+
+  if (fs.existsSync(buildDir))
+    fs.removeSync(buildDir)
+  fs.mkdirSync(buildDir)
+  fs.copySync('./src', path.join(buildDir, 'src'))
+
+  Object.keys(require('./package').dependencies).forEach(function(dep) {
+    fs.copySync(path.join('./node_modules', dep), path.join(buildDir, 'src', 'node_modules', dep))
+  })
+
+  gulp.src(buildDir + '/src/**')
+      .pipe(atomshell({
+          version: '0.21.2',
+          productName: 'Obsidian',
+          productVersion: '0.0.4',
+          platform: 'win32'
+      }))
+      .pipe(atomshell.zfsdest('./releases/app-win32.zip'))
+
+  gulp.src(buildDir + '/src/**')
+    .pipe(atomshell({
+        version: '0.21.2',
+        productName: 'Obsidian',
+        productVersion: '0.0.4',
+        platform: 'darwin'
+    }))
+    .pipe(atomshell.zfsdest('./releases/app-darwin.zip'))
 })
 
 gulp.task('watch-js', function() {
@@ -64,7 +103,7 @@ gulp.task('build-js', function() {
   var file = './src/renderer/js/index.js'
   //var opts = _.extend({debug: true}, watchify.args)
   var b = browserify({debug: true})
-  
+
   b.transform('reactify')
 
   b.add(file)
