@@ -4,7 +4,7 @@ var blockListener = require('./block-listener')
 
 var _qtClient = blkqt.connect()
 
-mainWindow.initAndShow(function(app, mainWindow) {
+mainWindow.initAndShow(function(mainWindow) {
   blockListener.createListener(function(blockHash) {
     _qtClient.cmd('getblock', blockHash, function(err, blockData) {
       if (err) return console.error(err)
