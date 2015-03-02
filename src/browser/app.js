@@ -8,7 +8,9 @@ function ready (callback) {
   })
 
   app.on('ready', function() {
-    callback(app)
+    setTimeout(function() {
+      callback(app)
+    }, 200)
   })
 }
 
