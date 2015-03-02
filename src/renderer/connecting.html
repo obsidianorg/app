@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title>Obsidian Wallet</title>
+
+<link href="styles/bootstrap.css" rel="stylesheet">
+<link href="styles/font-awesome.css" rel="stylesheet">
+<link href="styles/style.css" rel="stylesheet">
+
+<style>
+  html, body {
+    height: 100%;
+    background-color: #333;
+  }
+  body {
+    margin: 0;
+  }
+
+  .flex-container {
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  h2 {
+    color: gold;
+  }
+</style>
+
+<body>
+<div class="flex-container">
+  <div>
+    <h2 id="text">
+      Connecting to blackcoin-qt...
+    </h2>
+    <h2 style="font-size: 64px; text-align: center;">
+      <i class="fa fa-circle-o-notch fa-spin"></i>
+    </h2>
+  </div>
+</div>
+</body>
+
+<script>
+  if (window.location.hash === '#test')
+    document.getElementById('text').innerText = 'Connecting to bitcoin-qt...'
+</script>
