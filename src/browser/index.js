@@ -50,14 +50,10 @@ function start() {
 
 function verifyConnected(callback) {
   var started = false
-
-  var checker = setInterval(function() {
-    check()
-  }, 500)
+  var checker = setInterval(check, 1000)
 
   var to = setTimeout(function() {
-    clearInterval(checker)
-    return callback(new Error('Timeout trying to connect.'))
+    breakOut(new Error('Timeout trying to connect.'))
   }, 120*1000)
 
   function check() {
@@ -65,12 +61,16 @@ function verifyConnected(callback) {
       if (err && !started) {
         spawn(cfg.settings.exePath)
         started = true
-        return
       } else if (!err) {
-        clearInterval(checker)
-        return callback(null, rpcClient)
+        breakOut(null, rpcClient)
       }
     })
+  }
+
+  function breakOut(err, rpcClient) {
+    clearInterval(checker)
+    clearTimeout(to)
+    callback(err, rpcClient)
   }
 }
 
