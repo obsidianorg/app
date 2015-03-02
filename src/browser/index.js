@@ -37,7 +37,10 @@ app.ready(function(app) {
 function start() {
   connectingWindow.initAndShow(cfg.settings.test, function (connectingWindow) {
     verifyConnected(function(err, rpcClient) {
-      if (err) return dialog.showErrorBox('Error', "Can't connect to the QT client.")
+      if (err) {
+        dialog.showErrorBox('Error', "Can't connect to the QT client.")
+        process.exit()
+      }
       connectingWindow.close()
 
       initMain(rpcClient)
