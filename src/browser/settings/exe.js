@@ -23,6 +23,10 @@ function blackcoin() {
   }
 }
 
+function qtapp(isTest) {
+  return isTest ? bitcoin() : blackcoin()
+}
+
 function showFindDialog(params, callback) {
   var title = util.format('Select %s-QT Location...', params.test ? 'Bitcoin' : 'BlackCoin')
   var options = {
@@ -50,6 +54,7 @@ function showFindDialog(params, callback) {
 module.exports = {
   bitcoin: bitcoin,
   blackcoin: blackcoin,
+  qtapp: qtapp,
   showFindDialog: showFindDialog
 }
 
