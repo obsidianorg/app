@@ -56,7 +56,7 @@ function verifyConnected(callback) {
   }, 500)
 
   var to = setTimeout(function() {
-    clearInterval(check)
+    clearInterval(checker)
     return callback(new Error('Timeout trying to connect.'))
   }, 120*1000)
 
