@@ -16,7 +16,7 @@ var Header = React.createClass({
     return (
       <header className="header" onClick={this.handleClick}>
         <div className="text-center">
-          Accounts
+          || LOGO HERE ||
         </div>
       </header>
     )

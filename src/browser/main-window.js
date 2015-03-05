@@ -8,8 +8,8 @@ var mainWindow = null
 
 function initAndShow (callback) {
   mainWindow = new BrowserWindow({
-    width: 650,
-    height: 800,
+    width: 1000,
+    height: 400,
     show: false,
     resizable: false,
     frame: true
