@@ -56,8 +56,13 @@ function verifyConnected(callback) {
     breakOut(new Error('Timeout trying to connect.'))
   }, 120*1000)
 
+  var connectingToQt = false
   function check() {
+    if (connectingToQt) return
+
+    connectingToQt = true
     qtclient.connect(cfg.rpc, function(err, rpcClient) {
+      connectingToQt = false
       if (err && !started) {
         spawn(cfg.settings.exePath)
         started = true
