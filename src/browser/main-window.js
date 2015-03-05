@@ -12,7 +12,11 @@ function initAndShow (callback) {
     height: 400,
     show: false,
     resizable: false,
-    frame: true
+    frame: true,
+    'web-preferences': {
+      // mama don't need CORs now
+      'web-security': false
+    }
   })
 
   var indexPath = path.resolve(__dirname, '..', 'renderer', 'index.html')
