@@ -6,18 +6,20 @@ var Sidebar = React.createClass({
       <aside>
         <div id="sidebar">
           <ul className="sidebar-menu">
-            <li>
-              <a className="active" href="index.html">
-                <i className="fa fa-dashboard"></i>
-                <span>Accounts</span>
-              </a>
-            </li>
-            <li>
-              <a href="#" >
-                <i className="fa fa-cogs"></i>
-                <span>Settings</span>
-              </a>
-            </li>
+            {/*
+              <li>
+                <a className="active" href="index.html">
+                  <i className="fa fa-dashboard"></i>
+                  <span>Accounts</span>
+                </a>
+              </li>
+              <li>
+                <a href="#" >
+                  <i className="fa fa-cogs"></i>
+                  <span>Settings</span>
+                </a>
+              </li>
+            */}
           </ul>
         </div>
       </aside>
@@ -25,4 +27,4 @@ var Sidebar = React.createClass({
   }
 })
 
-module.exports = Sidebar    
+module.exports = Sidebar

@@ -4,6 +4,7 @@ var Accounts = require('./accounts.react')
 var Header = require('./header.react')
 var AccountStore = require('../stores/accounts-store')
 var AccountActions = require('../actions/account-actions')
+var SendForm = require('./send-form.react')
 
 function getAccountsState() {
   return {
@@ -30,10 +31,11 @@ var App = React.createClass({
     return (
       <div id="container" >
         <Sidebar />
-    
+
         <section id="main-content">
           <Header />
-          <Accounts data={ this.state.accounts }/>
+          <SendForm />
+          {/* <Accounts data={ this.state.accounts }/> */}
         </section>
       </div>
     )

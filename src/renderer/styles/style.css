@@ -34,7 +34,7 @@ body {
 }
 
 #sidebar {
-  width: 150px;
+  width: 50px;
   height: 100%;
   position: fixed;
   background: #333;
@@ -90,7 +90,7 @@ ul.sidebar-menu li a.active i {
 }
 
 #main-content {
-  margin-left: 150px;
+  margin-left: 50px;
 }
 
 .wrapper {
