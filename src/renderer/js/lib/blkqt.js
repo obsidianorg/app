@@ -66,6 +66,18 @@ function getAccounts(callback) {
   })
 }
 
+function getBlockCount(callback) {
+  var data = {
+    msg: 'blkqt',
+    args: ['getblockcount']
+  }
+
+  sendIPC(data, function(err, result) {
+    if (err) return callback(err)
+    callback(null, result)
+  })
+}
+
 function getRawTransaction(txId, callback) {
   var data = {
     msg: 'blkqt',
@@ -136,6 +148,7 @@ function submitTransaction(rawTx, callback) {
 
 module.exports = {
   getAccounts: getAccounts,
+  getBlockCount: getBlockCount,
   getRawTransaction: getRawTransaction,
   getUnspents: getUnspents,
   getWif: getWif,
