@@ -19,18 +19,10 @@ function load() {
   var skData = window.localStorage.getItem(LS_KEY)
   if (skData == null) {
     var sk = create(CoinKey.createRandom(), CoinKey.createRandom())
-    var data = {
-      scanPrivKey: sk.scanPrivKey,
-      scanPubKey: sk.scanPubKey,
-      payloadPrivKey: sk.payloadPrivKey,
-      payloadPubKey: sk.payloadPubKey,
-      version: STEALTH_CONSTANT
-    }
-
-    window.localStorage.setItem(LS_KEY, JSON.stringify(data))
+    window.localStorage.setItem(LS_KEY, sk.toJSON())
     return sk
   } else {
-    return new Stealth(JSON.parse(skData, json.revivers.buffer))
+    return Stealth.fromJSON(skData)
   }
 }
 
