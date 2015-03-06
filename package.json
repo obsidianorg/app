@@ -13,7 +13,7 @@
     "bluebird": "^2.6.2",
     "browserify": "^8.1.1",
     "bs58": "^2.0.1",
-    "buffer": "^3.0.2",
+    "buffer": "^3.0.3",
     "cb-insight": "^0.1.0",
     "chalk": "^0.5.1",
     "coininfo": "^0.3.1",
