@@ -48,7 +48,7 @@
     "gulp-watch": "^3.0.0",
     "jest-cli": "^0.2.1",
     "quire": "0.0.2",
-    "reactify": "^0.17.1",
+    "reactify": "^1.0.0",
     "vinyl-source-stream": "^1.0.0",
     "watchify": "^2.2.1"
   },
