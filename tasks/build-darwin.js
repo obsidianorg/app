@@ -27,7 +27,7 @@ gulp.task('build-darwin', ['asar-darwin'], function(done) {
   fs.removeSync(BUILD_ZIP_FILE)
   fs.removeSync(APP_DIR)
   fs.ensureDirSync('./release')
-  fs.move(OUT_DIR, FINAL_DIR, done)
+  fs.move(OUT_DIR, FINAL_DIR, {clobber: true}, done)
 })
 
 gulp.task('asar-darwin', ['unzip-darwin'], function() {
