@@ -80,14 +80,14 @@ function send(data) {
     blkqt.getWif(data.account.address, function(err, wif) {
       if (err)
         return alert.showError('wif problem: ' + err.message + '\n\nYou probably need to Unlock your wallet in BlackCoin-qt.')
-      
+
        // tx fee
       var feeRat = 10000
 
       var key = new CoinKey.fromWif(wif)
 
       // amount we actually have
-      var walletBalance = unspents.reduce(function(amount, unspent) { 
+      var walletBalance = unspents.reduce(function(amount, unspent) {
         return unspent.value + amount
       }, 0)
 
@@ -112,12 +112,12 @@ function send(data) {
       })
 
       var hex = txUtils.serializeToHex(tx)
-      
+
       blkqt.submitTransaction(hex, function(err, txId) {
         if (err)
           return alert.showError('submit transaction error: ' + err.message)
         console.dir(JSON.stringify(txId, null, 2))
-      })    
+      })
     })
   })
 
@@ -135,7 +135,7 @@ Object.defineProperty(AccountStore, 'accounts', {
 Object.defineProperty(AccountStore, 'addresses', {
   enumerable: true, configurable: true,
   get: function() {
-    return _.pluck(AccountStore.accounts, 'address') 
+    return _.pluck(AccountStore.accounts, 'address')
   }
 })
 
