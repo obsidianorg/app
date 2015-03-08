@@ -1,5 +1,7 @@
+var fs = require('fs-extra')
 var gulp = require('gulp')
 var livereload = require('gulp-livereload')
+var pkg = require('../package')
 
 gulp.task('watch-js', function() {
   var watch = require('gulp-watch')
@@ -19,6 +21,9 @@ gulp.task('build-js', function() {
   var source = require('vinyl-source-stream')
   //var watchify = require('watchify')
   //var _ = require('lodash')
+
+  // need `browser` field for building
+  fs.writeJsonSync('./src/package.json', pkg)
 
   var file = './src/renderer/js/index.js'
   //var opts = _.extend({debug: true}, watchify.args)
