@@ -12,6 +12,7 @@ node_modules/browserify/test
 node_modules/buffer/bin
 node_modules/buffer/test
 node_modules/gulp
+node_modules/gulp-asar
 node_modules/gulp-atom-shell
 node_modules/gulp-atom
 node_modules/gulp-livereload
