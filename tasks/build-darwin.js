@@ -13,7 +13,7 @@ var OUT_DIR = path.join(TMP_DIR, 'obsidian')
 var BUILD_ZIP_FILE = path.join(TMP_DIR, 'app.zip')
 var RES_DIR = path.join(OUT_DIR, 'Obsidian.app/Contents/Resources/')
 var APP_DIR = RES_DIR + 'app/'
-var FINAL_DIR = './release/app-darwin'
+var FINAL_DIR = './release/obsidian-darwin'
 
 var ATOM_VERSION = '0.21.2'
 
