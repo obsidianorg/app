@@ -8,6 +8,8 @@ gulp.task('watch-js', function() {
   watch(['package.json', "src/**/*.js", "src/**/*.json", "!src/renderer/js/_bundle.js"], function() {
     return gulp.start("build-js")
   })
+
+  gulp.start("build-js")
 })
 
 gulp.task('build-js', function() {
