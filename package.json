@@ -52,9 +52,6 @@
     "vinyl-source-stream": "^1.0.0",
     "watchify": "^2.2.1"
   },
-  "scripts": {
-    "atom": "/Applications/Atom.app/Contents/MacOS/Atom src/"
-  },
   "browser": {
     "ipc": false
   },
