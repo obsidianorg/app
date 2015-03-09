@@ -7,7 +7,7 @@ gulp.task('watch-js', function() {
   var watch = require('gulp-watch')
   livereload.listen()
 
-  watch(['package.json', "src/**/*.js", "src/**/*.json", "!src/renderer/js/_bundle.js"], function() {
+  watch(['package.json', "src/**/*.js", "!src/renderer/js/_bundle.js"], function() {
     return gulp.start("build-js")
   })
 
