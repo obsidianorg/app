@@ -144,6 +144,20 @@ function getWif(address, callback) {
   })
 }
 
+function importWif(wif, label, callback) {
+  var data = {
+    msg: 'blkqt',
+    args: ['importprivkey', wif, label, 'false']
+  }
+
+  sendIPC(data, function(err) {
+    if (err)
+      callback(err)
+    else
+      callback(null)
+  })
+}
+
 function submitTransaction(rawTx, callback) {
   var data = {
     msg: 'blkqt',
@@ -165,6 +179,7 @@ module.exports = {
   getRawTransaction: getRawTransaction,
   getUnspents: getUnspents,
   getWif: getWif,
+  importWif: importWif,
   submitTransaction: submitTransaction
 }
 
