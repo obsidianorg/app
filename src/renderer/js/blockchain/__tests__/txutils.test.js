@@ -1,11 +1,9 @@
-jest.autoMockOff()
-
-var assert = require.requireActual('assert')
-var CoinKey = require.requireActual('coinkey')
-var cointx = require.requireActual('cointx')
+var assert = require('assert')
+var CoinKey = require('coinkey')
+var cointx = require('cointx')
 var Transaction = cointx.Transaction
-var txUtils = require.requireActual('../txutils')
-var fixtures = require.requireActual('./txutils.fixtures')
+var txUtils = require('../txutils')
+var fixtures = require('./txutils.fixtures')
 
 describe('txutils', function() {
   describe('serializeToHex()', function() {
