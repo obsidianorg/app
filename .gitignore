@@ -19,6 +19,7 @@ node_modules/gulp-livereload
 node_modules/gulp-util
 node_modules/gulp-watch
 node_modules/jest-cli
+node_modules/mocha
 node_modules/quire
 node_modules/reactify
 node_modules/vinyl-source-stream
