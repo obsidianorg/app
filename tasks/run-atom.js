@@ -19,7 +19,7 @@ gulp.task('run-atom', function() {
 
   var atom = spawn(ATOM_PATH, ['src/'])
   atom.stdout.on('data', function(data) {
-    gutil.log(data.toSring('hex'))
+    gutil.log(data.toString('utf8'))
   })
 
   atom.stderr.on('data', function(data) {
