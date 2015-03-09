@@ -78,6 +78,18 @@ function getBlockCount(callback) {
   })
 }
 
+function getNewAddress() {
+  var data = {
+    msg: 'blkqt',
+    args: ['getnewaddress']
+  }
+
+  sendIPC(data, function(err, result) {
+    if (err) return callback(err)
+    callback(null, result)
+  })
+}
+
 function getRawMempool(callback) {
   var data = {
     msg: 'blkqt',
@@ -175,6 +187,7 @@ function submitTransaction(rawTx, callback) {
 module.exports = {
   getAccounts: getAccounts,
   getBlockCount: getBlockCount,
+  getNewAddress: getNewAddress,
   getRawMempool: getRawMempool,
   getRawTransaction: getRawTransaction,
   getUnspents: getUnspents,
