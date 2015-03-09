@@ -16,7 +16,7 @@ describe('txutils', function() {
       var tx = new Transaction()
       tx.timestamp = txData0.timestamp
 
-      var walletBalance = txData0.utxos.reduce(function(amount, unspent) { 
+      var walletBalance = txData0.utxos.reduce(function(amount, unspent) {
         return unspent.value + amount
       }, 0)
 
@@ -28,7 +28,7 @@ describe('txutils', function() {
       tx.addOutput(recvrPubKeyHashScript, txData0.outputs[0].value)
 
       // change output
-      var senderPubKeyHashScript = txUtils.addressToOutputScript(txData0.sender.address) 
+      var senderPubKeyHashScript = txUtils.addressToOutputScript(txData0.sender.address)
       var change = walletBalance - txData0.outputs[0].value - txData0.fee
       assert.equal(change, txData0.outputs[1].value)
       tx.addOutput(senderPubKeyHashScript, walletBalance - txData0.outputs[0].value - txData0.fee)
@@ -47,7 +47,7 @@ describe('txutils', function() {
 
           var tx = new Transaction()
           tx.timestamp = txFix.timestamp
-        
+
           txFix.utxos.forEach(function(unspent) {
             tx.addInput(unspent.txId, unspent.vout)
           })
@@ -88,12 +88,12 @@ describe('txutils', function() {
       assert.equal(tx.outs[0].value, txData0.outputs[0].value)
 
       // compare change address
-      var senderPubKeyHashScript = txUtils.addressToOutputScript(txData0.sender.address) 
+      var senderPubKeyHashScript = txUtils.addressToOutputScript(txData0.sender.address)
       assert.equal(tx.outs[1].script.toHex(), senderPubKeyHashScript.toHex())
       assert.equal(tx.outs[1].value, txData0.outputs[1].value)
 
       // fee
-      assert.equal(txData0.utxos[0].value - tx.outs[0].value - tx.outs[1].value,  txData0.fee)      
+      assert.equal(txData0.utxos[0].value - tx.outs[0].value - tx.outs[1].value,  txData0.fee)
     })
   })
 
