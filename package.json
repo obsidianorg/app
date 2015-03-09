@@ -57,5 +57,8 @@
     "ignore": [
       "src/renderer/js/_bundle.js"
     ]
+  },
+  "scripts": {
+    "test": "find ./src/ -name *.test.js | xargs mocha"
   }
 }
