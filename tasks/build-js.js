@@ -14,7 +14,7 @@ gulp.task('watch-js', function() {
   gulp.start("build-js")
 })
 
-gulp.task('build-js', function() {
+gulp.task('build-js', function(done) {
   var gutil = require('gulp-util')
   var browserify = require('browserify')
   var path = require('path')
@@ -42,7 +42,10 @@ gulp.task('build-js', function() {
     })
 
     return b.bundle()
-      .on('error', gutil.log.bind(gutil, 'Browserify Error'))
+      .on('error', function(err) {
+        gutil.log('Browserify Error', err)
+        done()
+      })
       .pipe(source('_bundle.js'))
       .pipe(gulp.dest('./src/renderer/js/'))
       .pipe(livereload())
