@@ -78,7 +78,7 @@ function getBlockCount(callback) {
   })
 }
 
-function getNewAddress() {
+function getNewAddress(callback) {
   var data = {
     msg: 'blkqt',
     args: ['getnewaddress']
