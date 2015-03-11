@@ -1,7 +1,6 @@
-// thwart browserify, setting browser field doesn't
-// seem to work in watch scripts
-var ipc = require('i' + 'pc')
 var Decimal = require('decimal.js')
+var atom = require('../atom')
+var ipc = atom.ipc
 
 // command references
 // http://we.lovebitco.in/bitcoin-qt/command-reference/
