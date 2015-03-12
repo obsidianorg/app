@@ -1,0 +1,32 @@
+{
+  "getUnspents": {
+    "valid": [
+      {
+        "input": [
+          {
+            "account": "",
+            "address": "BT6QQu5qCmUnes1kWScadr1bVEX3zUuSQC",
+            "amount": 199.8,
+            "confirmations": 57879,
+            "scriptPubKey": "76a914f861d92106d2d49a940504c9bd51d1b6557054ba88ac",
+            "txid": "ab3eb7014e52320d1dde82c0d36950316b494399b5f1d3ad3a0ec1949bcc40f9",
+            "vout": 1
+          }
+        ],
+        "expected": [
+           {
+            "account": "",
+            "address": "BT6QQu5qCmUnes1kWScadr1bVEX3zUuSQC",
+            "amount": 199.8,
+            "confirmations": 57883,
+            "scriptPubKey": "76a914f861d92106d2d49a940504c9bd51d1b6557054ba88ac",
+            "vout": 1,
+            "amountRat": 19980000000,
+            "txId": "ab3eb7014e52320d1dde82c0d36950316b494399b5f1d3ad3a0ec1949bcc40f9",
+            "value": 19980000000
+          }
+        ]
+      }
+    ]
+  }
+}

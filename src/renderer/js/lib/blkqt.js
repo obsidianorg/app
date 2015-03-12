@@ -137,7 +137,7 @@ function getUnspents(address, callback) {
       else
         return true
     }).map(function(utxo) {
-      utxo.amountRat = (new Decimal(utxo.amount)).times(1e8)
+      utxo.amountRat = (new Decimal(utxo.amount)).times(1e8).toNumber()
       utxo.txId = utxo.txid
       utxo.value = utxo.amountRat
 
