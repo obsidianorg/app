@@ -51,6 +51,7 @@
     "proxyquireify": "^1.2.2",
     "quire": "0.0.2",
     "reactify": "^1.0.0",
+    "terst": "^0.3.0",
     "vinyl-source-stream": "^1.0.0",
     "watchify": "^2.2.1"
   },
