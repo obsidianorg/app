@@ -106,7 +106,7 @@ function getNewAddress(callback) {
 function getRawMempool(callback) {
   var data = {
     msg: 'blkqt',
-    args: ['getblockcount']
+    args: ['getrawmempool']
   }
 
   sendIPC(data, function(err, result) {
