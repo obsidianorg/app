@@ -1,6 +1,7 @@
 var Decimal = require('decimal.js')
 var atom = require('../atom')
-var ipc = atom.ipc
+var ipc = require('./ipc')
+
 
 // command references
 // http://we.lovebitco.in/bitcoin-qt/command-reference/
@@ -11,7 +12,7 @@ function sendIPC(data, callback) {
 
   if (callback) {
     var recpMsg = data.msg + '-' + data.token
-    ipc.once(recpMsg, function() {
+    atom.ipc.once(recpMsg, function() {
       var args = [].slice.call(arguments)
 
       // error
@@ -22,8 +23,21 @@ function sendIPC(data, callback) {
     })
   }
 
-  ipc.send(data.msg, data)
+  atom.ipc.send(data.msg, data)
 }
+
+function sendRpc(/** args **/) {
+  var args = [].slice.call(arguments)
+  var callback = args.pop()
+
+  var data = {
+    msg: 'blkqt',
+    args: args
+  }
+
+  ipc.sendIpc(data, callback)
+}
+
 
 function getAccounts(callback) {
   var data = {
@@ -114,12 +128,7 @@ function getRawTransaction(txId, callback) {
 }
 
 function getUnspents(address, callback) {
-  var data = {
-    msg: 'blkqt',
-    args: ['listunspent', 0]
-  }
-
-  sendIPC(data, function(err, result) {
+  sendRpc('listunspent', 0, function(err, result) {
     if (err) return callback(err)
 
     var utxos = result.filter(function(utxo) {
