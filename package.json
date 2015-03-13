@@ -57,7 +57,8 @@
     "watchify": "^2.2.1"
   },
   "browser": {
-    "ipc": false
+    "@common/cryptocoin": "./common/cryptocoin/index.js",
+    "@common/accounting": "./common/accounting/index.js"
   },
   "standard": {
     "ignore": [
