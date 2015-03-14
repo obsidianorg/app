@@ -205,11 +205,32 @@ function serializeToHex(tx) {
   return buffer.toString('hex')
 }
 
+function selectUnspents(unspents, needed) {
+   var sorted = [].concat(unspents).sort(function(o1, o2) {
+    return o2.value - o1.value
+  })
+
+  var have = 0
+  var results = []
+
+  while (have < needed) {
+    var unspent = sorted.shift()
+    if (!unspent)
+      throw new Error('NSF') // not enough
+
+    results.push(unspent)
+    have += unspent.value
+  }
+
+  return results
+}
+
 module.exports = {
   addressToOutputScript: addressToOutputScript,
   clone: clone,
   hashForSignature: hashForSignature,
   parseFromHex: parseFromHex,
+  selectUnspents: selectUnspents,
   sign: sign,
   serializeToHex: serializeToHex
 }
