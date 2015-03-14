@@ -29,7 +29,10 @@ gulp.task('build-js', function(done) {
   //var opts = _.extend({debug: true}, watchify.args)
   var b = browserify({debug: true})
 
-  b.transform('reactify')
+  // not needed yet
+  //b.plugin('proxyquire-universal')
+
+  b.transform('reactify', {sourceMap: true})
 
   b.add(file)
   //b.require('./config/dev.js', {expose: 'config'})
