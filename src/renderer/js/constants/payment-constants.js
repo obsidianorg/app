@@ -1,0 +1,5 @@
+
+module.exports = {
+  PAYMENT_SEND: 'PAYMENT_SEND',
+  PAYMENT_LISTEN: 'PAYMENT_LISTEN'
+}
