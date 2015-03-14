@@ -1,12 +1,17 @@
+var util = require('util')
+var accounting = require('@common/accounting')
 var React = require('react')
 var _ = require('lodash')
-var AccountActions = require('../actions/account-actions')
+var alert = require('../lib/alert')
+var atom = require('../atom')
+var PaymentActions = require('../actions/payment-actions')
+var stealthPayment = require('../lib/stealth-payment')
 
 var SendForm = React.createClass({
   getInitialState: function() {
     return {
       receiver: '',
-      amount: 0.0
+      amount: ''
     }
   },
 
@@ -23,11 +28,33 @@ var SendForm = React.createClass({
   },
 
   handleSend: function() {
-    var data = _.assign({}, this.state)
-    console.log('sending')
-    console.log(JSON.stringify(data, null, 2))
-    //AccountActions.send(data)
-    this.setState(this.getInitialState())
+    var self = this
+    var data = _.cloneDeep(this.state)
+
+    stealthPayment.prepareSend(data, function(err, data) {
+      if (err) return alert.showError(err)
+
+      // for logging
+      // todo, develop better logging strategy
+      console.log(JSON.stringify(data, null, 2))
+
+      var dlgOpts = {
+        buttons: ['Send', "Don't send"],
+        title: 'Send?',
+        message: util.format('Send %s with a fee of %s?', accounting.fm(data.amounts.send), accounting.fm(data.amounts.fee))
+      }
+
+      atom.dialog.showMessageBox(null, dlgOpts, function(buttonIdx) {
+        // send pressed
+        if (buttonIdx === 0) {
+          stealthPayment.createTx(data, function(err, tx) {
+            if (err) return alert.showError(err)
+            PaymentActions.send({tx: tx})
+            self.setState(self.getInitialState())
+          })
+        }
+      })
+    })
   },
 
   render: function() {
@@ -39,12 +66,12 @@ var SendForm = React.createClass({
       <form style={formStyle}>
         <div className="form-group">
           <label htmlFor="receiver">Receiver:</label>
-          <input type="text" id="receiver" onChange={ this.handleReceiverChange } className="form-control input-lg" placeholder="(stealth address)"/>
+          <input type="text" id="receiver" onChange={ this.handleReceiverChange } className="form-control input-lg" placeholder="(stealth address)" value={ this.state.receiver }/>
         </div>
         <div className="form-group">
           <label htmlFor="amount">Amount:</label>
           <div className="input-group input-group-lg">
-            <input type="text" id="amount" className="form-control" onChange={ this.handleAmountChange } placeholder="amount" />
+            <input type="text" id="amount" className="form-control" onChange={ this.handleAmountChange } placeholder="(amount in BLK)" value={ this.state.amount }/>
             <span className="input-group-addon">BLK</span>
           </div>
         </div>
