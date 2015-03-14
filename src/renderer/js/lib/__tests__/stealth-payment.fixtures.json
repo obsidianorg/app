@@ -1,0 +1,65 @@
+{
+  "prepareSend": {
+    "valid": [
+      {
+        "input": {
+          "receiver": "rVwCCvsH83LavaJLxYzArexJMij8eqFJaNgzVsw7FVxPNhXQQs8RgdRWdq6X8U9DvX2EK6Z2JB7P6ZdcTgk723Ew3WHmzhYwojDayZ",
+          "amount": 1
+        },
+        "output": {
+          "amounts": {
+            "changeRat": 19779979999,
+            "change": 197.79979999,
+            "feeRat": 10000,
+            "fee": 0.0001,
+            "sendRat": 100000000,
+            "send": 1,
+            "totalUtxoRat": 19879990000,
+            "totalUtxo": 198.7999,
+            "totalRat": 100010001,
+            "total": 1.00010001,
+            "opretRat": 1,
+            "opret": 1e-8
+          },
+          "receiver": "rVwCCvsH83LavaJLxYzArexJMij8eqFJaNgzVsw7FVxPNhXQQs8RgdRWdq6X8U9DvX2EK6Z2JB7P6ZdcTgk723Ew3WHmzhYwojDayZ",
+          "utxos": [
+            {
+              "account": "",
+              "address": "B8SGLnbxrRQy8wiK7jVG7RU6BWK9xJ4Z4u",
+              "amount": 198.7999,
+              "confirmations": 6,
+              "scriptPubKey": "76a9142bb90a4eab64576c5aba0959b5bcc4088c5dc0c188ac",
+              "vout": 1,
+              "amountRat": 19879990000,
+              "txId": "f94cdc1302d140ae0aadbb21b6b3e32495753d5c86c9f014681000481fc05ca5",
+              "value": 19879990000
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "createTx": {
+    "valid": [
+      {
+        "nonce": "PfuKdhCNh9tyDB9edn5KaNoGbKwWog7pu3PqCnc43qRxycBrSRwF",
+        "txId": "f73728b9ced007d2b290418dabc0ef82ca993151241b947cb1ff78d4e227cc2f",
+        "timestamp": 1426236462,
+        "txHex": "010000002ea4025501a55cc01f4800106814f0c9865c3d759524e3b3b621bbad0aae40d10213dc4cf9010000006b4830450221008890b16fda23cec9a8da22de8c8970e56b54c4de5c4f3a68874e122117f75ce50220322c446d9368dbf3db6d627e1d7aedb5ae6c214813c86434b6b4045aaf13c1db012103258811546cc6947b09bc297d3a818f8fdcd4e792b0152304a69bb450c7781926ffffffff0300e1f505000000001976a914e0fa9b53746342510770b3a32c920ec3df6fa35888acdf8afa9a040000001976a9147aef0d9156324dd7509d754d264775161e909b3d88ac0100000000000000236a210249f6ebd352ebe24ebb46bcf5a8083a4fdd80f11a2267c0822cee3593645670b500000000",
+        "utxoKeys": [
+          "Pn56PUfzqs8gKFjoVPSG3K9U6BtpULxAtXsbJ9SLhCRjwTyUhHC6"
+        ],
+        "standardOutputs": [
+          {
+            "address": "BQxfC9VWe7oVSAdUh5mAdTx6uEq5vJrsoB",
+            "value": 100000000
+          },
+          {
+            "address": "BFf6Rp53uNfWBeGZZukeZfACdSs6VyJpJ2",
+            "value": 19779979999
+          }
+        ]
+      }
+    ]
+  }
+}
