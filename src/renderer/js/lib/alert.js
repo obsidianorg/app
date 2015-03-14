@@ -8,8 +8,13 @@ module.exports = {
   },
 
   showError: function(message) {
+    if (message instanceof Error) {
+      message = message.message
+    }
+
     // this fucks up Flux dispatcher
     //dialog.showErrorBox('Error', message)
+
     ipc.send('error', message)
     console.error(message)
   }
