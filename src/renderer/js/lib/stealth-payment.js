@@ -4,6 +4,7 @@ var ci = require('coininfo')
 var cointx = require('cointx')
 var Decimal = require('decimal.js')
 var Stealth = require('stealth')
+var LocalStealth = require('./stealth')
 var blkqt = require('../lib/blkqt')
 var txUtils = require('../blockchain/txutils')
 var Script = cointx.Script
@@ -117,7 +118,50 @@ function createTx (data, callback) {
   }
 }
 
+function checkTx (hex) {
+  var tx = txUtils.parseFromHex(hex)
+
+  // can be optimized a bit, but the string constant makes it obvious
+  var opReturnOut = tx.outs.filter(function(out) {
+    return (out.script.toASM().indexOf('OP_RETURN') === 0)
+  })
+
+  if (opReturnOut.length === 0) {
+    return null
+  }
+
+  // only ever 1
+  opReturnOut = opReturnOut[0]
+
+  var opReturnPubkey = opReturnOut.script.chunks[1]
+  var stealth = LocalStealth.load()
+
+  var pubKeyHashs = tx.outs.filter(function(out) {
+    return (
+      out.script &&
+      Array.isArray(out.script.chunks) &&
+      out.script.chunks.length === 5 &&
+      Buffer.isBuffer(out.script.chunks[2]) &&
+      out.script.chunks[2].length === 20
+    )
+  }).map(function(out) {
+    return out.script.chunks[2]
+  })
+
+  for (var i = 0; i < pubKeyHashs.length; ++i) {
+    var pubKeyHash = pubKeyHashs[i]
+    var keyPair = stealth.checkPaymentPubKeyHash(opReturnPubkey, pubKeyHash)
+    if (keyPair) {
+      return new CoinKey(keyPair.privKey, BLK_INFO.versions)
+    }
+  }
+
+  // no match
+  return null
+}
+
 module.exports = {
+  checkTx: checkTx,
   createTx: createTx,
   prepareSend: prepareSend
 }

@@ -1,6 +1,7 @@
 var assert = require('assert')
 var CoinKey = require('coinkey')
 var proxyquire = require('proxyquire')
+var Stealth = require('stealth')
 var _ = require('lodash')
 var terst = require('terst')
 var txUtils = require('../../blockchain/txutils')
@@ -80,6 +81,25 @@ describe('stealth-payment', function () {
         EQ(f1ctx.txHex, hex)
         done()
       })
+    })
+  })
+
+  describe('+ checkTx', function() {
+    it('should check transaction for OP_RETURN data that matches stealth key', function() {
+      var f1chtx = fixtures.checkTx.valid[0]
+
+      var stubs = {
+        '@common/cryptocoin': cryptocoin,
+        './stealth': {
+          load: function() {
+            return Stealth.fromJSON(JSON.stringify(f1chtx.stealth))
+          }
+        }
+      }
+
+      var stealthPayment = proxyquire('../stealth-payment', stubs)
+      var keyPair = stealthPayment.checkTx(f1chtx.txHex)
+      EQ (keyPair.privateWif, f1chtx.wif)
     })
   })
 })
