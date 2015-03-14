@@ -225,6 +225,10 @@ function selectUnspents(unspents, needed) {
   return results
 }
 
+function setCurrentTime(tx) {
+  tx.timestamp = Math.floor(Date.now() / 1000)
+}
+
 module.exports = {
   addressToOutputScript: addressToOutputScript,
   clone: clone,
@@ -232,5 +236,6 @@ module.exports = {
   parseFromHex: parseFromHex,
   selectUnspents: selectUnspents,
   sign: sign,
-  serializeToHex: serializeToHex
+  serializeToHex: serializeToHex,
+  setCurrentTime: setCurrentTime
 }
