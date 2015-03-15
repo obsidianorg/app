@@ -1,12 +1,13 @@
 var assert = require('assert')
 var CoinKey = require('coinkey')
 var terst = require('terst')
+var _ = require('lodash')
 var dumpwallet = require('../dumpwallet')
 var fixtures = require('./dumpwallet.fixtures')
 
 describe('dumpwallet', function() {
   fixtures.valid.forEach(function(f) {
-    describe('+decode()', function() {
+    describe('+ decode()', function() {
       it('should convert dumpwallet text format to obj', function() {
         // f.text is expressed as an array because it's easier to read
         var arr = dumpwallet.decode(f.text.join('\n'))
@@ -20,6 +21,18 @@ describe('dumpwallet', function() {
       it('should covert an array of objects to dumpwallet text format', function() {
         var text = dumpwallet.encode(f.array)
         EQ (text, f.sanitizedText.join('\n') + '\n')
+      })
+
+      describe('> when field birth is type date', function() {
+        it('should still convert', function() {
+          var expArr = _.cloneDeep(f.array)
+          expArr.forEach(function(item) {
+            item.birth = new Date(item.birth)
+          })
+
+          var text = dumpwallet.encode(expArr)
+          EQ (text, f.sanitizedText.join('\n') + '\n')
+        })
       })
     })
 

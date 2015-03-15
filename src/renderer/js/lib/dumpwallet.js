@@ -1,4 +1,5 @@
 var assert = require('assert')
+var path = require('path')
 
 function decode(text) {
   text = stripCommentsAndWhitespace(text)
@@ -69,6 +70,13 @@ function stripCommentsAndWhitespace(text) {
 
 function encode(arr) {
   var text = arr.map(function(item) {
+    if (item.birth instanceof Date) {
+      item.birth = item.birth.toISOString()
+      // chop off second fractions (milliseconds)
+      // e.g. 2015-01-26T06:32:37.432Z => 2015-01-26T06:32:37Z
+      item.birth = item.birth.replace(path.extname(item.birth), 'Z')
+    }
+
     var line = [item.wif, item.birth].join(' ')
 
     assert(!('label' in item && 'reserve' in item), "Can't have both label and reserve.")
