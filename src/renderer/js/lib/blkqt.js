@@ -164,6 +164,10 @@ function getWif(address, callback) {
   })
 }
 
+function importWallet(filePath, callback) {
+  sendRpc('importwallet', filePath, callback)
+}
+
 function importWif(wif, label, callback) {
   var data = {
     msg: 'blkqt',
@@ -200,6 +204,7 @@ module.exports = {
   getRawTransaction: getRawTransaction,
   getUnspents: getUnspents,
   getWif: getWif,
+  importWallet: importWallet,
   importWif: importWif,
   submitTransaction: submitTransaction
 }
