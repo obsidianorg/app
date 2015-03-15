@@ -1,0 +1,47 @@
+{
+  "valid": [
+    {
+      "currency": "BLK",
+      "text": [
+        "# Wallet dump created by BlackCoin v1.1.1.0-g32a928e ()",
+        "# * Created on 2015-03-15T03:25:41Z",
+        "# * Best block at time of backup was 608274 (1dfe59530cd754b937c078ed73d37118310358c759af9f77662893769852591f),",
+        "#   mined on 2015-03-15T03:24:16Z",
+        "",
+        " ",
+        "PgvDzp7B1DjcSW9qunjFQaGgfqRadz66caqf9Y3KiomKsMnhc8ca 1970-01-01T00:00:01Z label=label%20with%20space # addr=BENWDKoGfG5mwJyxtiJueiPPW9LntB64A8",
+        "PmQ566rUosr2CmAzJ27fxmpFsvsPDUquXmJ9VRxN3aV4ZKaw3zJX 2015-01-26T06:32:37Z label= # addr=BHGToEuh1XDHzS7mqfhqZYx8CSTPun7h3G",
+        "Phuc2UB7gjnzfSwXN6mZ4Qj4akHzboYU7iJ9VNoTTpxVuYyj3TG1 2015-03-26T06:32:37Z reserve=1 # addr=BP2VReektzZwi5vSi5iHRb7fWvnxUpP5Sh",
+        "69UKv8ib5CNNr9DPjiPCkAHMLeoZMkFi13j9wGPThiDBSwodyQX 1970-01-01T00:00:01Z label=rescan=false # addr=BTD9fr1KghJdByTJjxEPRj24TwgfAeuaXt",
+        "PeVWdxqyJkp6ztN4E6k2P6jto4ijCrLYuZrtvXoSDXNsEcnhx2sD 2015-02-01T00:00:01Z label=#testtest # addr=BEddkQBR2Mtdb4EUWSa3ni4w1mRBspGeTw",
+        "",
+        "# End of dump",
+        ""
+      ],
+      "sanitizedText": [
+        "PgvDzp7B1DjcSW9qunjFQaGgfqRadz66caqf9Y3KiomKsMnhc8ca 1970-01-01T00:00:01Z label=label%20with%20space",
+        "PmQ566rUosr2CmAzJ27fxmpFsvsPDUquXmJ9VRxN3aV4ZKaw3zJX 2015-01-26T06:32:37Z label=",
+        "Phuc2UB7gjnzfSwXN6mZ4Qj4akHzboYU7iJ9VNoTTpxVuYyj3TG1 2015-03-26T06:32:37Z reserve=1",
+        "69UKv8ib5CNNr9DPjiPCkAHMLeoZMkFi13j9wGPThiDBSwodyQX 1970-01-01T00:00:01Z label=rescan=false",
+        "PeVWdxqyJkp6ztN4E6k2P6jto4ijCrLYuZrtvXoSDXNsEcnhx2sD 2015-02-01T00:00:01Z label=#testtest"
+      ],
+      "object": [
+        {
+          "wif": "PgvDzp7B1DjcSW9qunjFQaGgfqRadz66caqf9Y3KiomKsMnhc8ca",
+          "label": "label with space",
+          "birth": "1970-01-01T00:00:01Z"
+        },
+        {
+          "wif": "PmQ566rUosr2CmAzJ27fxmpFsvsPDUquXmJ9VRxN3aV4ZKaw3zJX",
+          "label": "",
+          "birth": "2015-01-26T06:32:37Z"
+        },
+        {
+          "wif": "Phuc2UB7gjnzfSwXN6mZ4Qj4akHzboYU7iJ9VNoTTpxVuYyj3TG1",
+          "reserve": "1",
+          "birth": "2015-03-26T06:32:37Z"
+        }
+      ]
+    }
+  ]
+}
