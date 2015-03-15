@@ -16,6 +16,13 @@ describe('dumpwallet', function() {
       })
     })
 
+    describe('+ encode()', function() {
+      it('should covert an array of objects to dumpwallet text format', function() {
+        var text = dumpwallet.encode(f.array)
+        EQ (text, f.sanitizedText.join('\n') + '\n')
+      })
+    })
+
     describe('stripCommentsAndWhitespace', function() {
       it('should strip all comments and lines with whitespace', function() {
         var sanitizedText = dumpwallet.stripCommentsAndWhitespace(f.text.join('\n'))

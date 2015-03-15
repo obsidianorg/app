@@ -1,3 +1,5 @@
+var assert = require('assert')
+
 function decode(text) {
   text = stripCommentsAndWhitespace(text)
   var lines = text.split('\n')
@@ -65,7 +67,26 @@ function stripCommentsAndWhitespace(text) {
   }
 }
 
+function encode(arr) {
+  var text = arr.map(function(item) {
+    var line = [item.wif, item.birth].join(' ')
+
+    assert(!('label' in item && 'reserve' in item), "Can't have both label and reserve.")
+    assert('label' in item || 'reserve' in item, 'Must have at least a label or reserve.')
+
+    if ('label' in item)
+      line += ' label=' + item.label.split(' ').join('%20')
+    else if ('reserve' in item)
+      line += ' reserve=' + item.reserve
+
+    return line.trim()
+  }).join('\n')
+
+  return text + '\n'
+}
+
 module.exports = {
   decode: decode,
+  encode: encode,
   stripCommentsAndWhitespace: stripCommentsAndWhitespace
 }
