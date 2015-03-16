@@ -1,7 +1,12 @@
+0.1.0 / 2015-03-16
+------------------
+- full stealth sending / receiving support
+- new logo integrated
+
 0.0.3 / 2015-01-12
 ------------------
 - BlackCoin-qt integration
-- livereload 
+- livereload
 
 0.0.2 / 2014-12-28
 ------------------

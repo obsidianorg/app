@@ -1,6 +1,6 @@
 {
   "name": "obsidian",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "main": "./browser/index.js",
   "license": "MIT",
   "private": true,
