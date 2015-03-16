@@ -5,6 +5,7 @@ var SendForm = require('./send-form.react')
 
 var App = React.createClass({
   getInitialState: function() {
+    return null
   },
 
   componentDidMount: function() {
