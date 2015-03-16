@@ -1,9 +1,11 @@
 // please STFU React with your devtools suggestion
 window.__REACT_DEVTOOLS_GLOBAL_HOOK__ = {}
 
+var alert = require('./lib/alert')
+
 // annoying popup an error box instead of silent console output
 window.onerror = function(message, url, line) {
-  require('./lib/alert').showError(message + ' (' + line + ')')
+  alert.showError(message + ' (' + line + ')')
 }
 
 var React = require('react')
