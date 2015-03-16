@@ -21,7 +21,7 @@ function getLastKnownBlockCount(callback) {
   // if app never an before (i.e. no stealth payments could be before this)
   blkqt.getBlockCount(function(err, bc) {
     if (err) return callback(err)
-    storaget.setItem(LS_KEY, LAST_KNOWN)
+    storage.setItem(LS_KEY, LAST_KNOWN)
     return callback(null, bc)
   })
 }
