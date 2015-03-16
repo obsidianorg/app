@@ -59,7 +59,7 @@ gulp.task('bundle-atom-win32', function(done) {
   gulp.src(TMP_DIR + '/src/**')
     .pipe(atomshell({
       version: ATOM_VERSION,
-      productName: pkg.productName,
+      productName: 'Obsidian',
       productVersion: pkg.version,
       platform: 'win32'
     }))
