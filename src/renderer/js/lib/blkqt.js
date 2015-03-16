@@ -1,7 +1,7 @@
 var Decimal = require('decimal.js')
+var async = require('async')
 var atom = require('../atom')
 var ipc = require('./ipc')
-
 
 // command references
 // http://we.lovebitco.in/bitcoin-qt/command-reference/
@@ -79,16 +79,16 @@ function getAccounts(callback) {
   })
 }
 
-function getBlockCount(callback) {
-  var data = {
-    msg: 'blkqt',
-    args: ['getblockcount']
-  }
+function getBlock(blockHash, callback) {
+  sendRpc('getblock', blockHash, callback)
+}
 
-  sendIPC(data, function(err, result) {
-    if (err) return callback(err)
-    callback(null, result)
-  })
+function getBlockCount(callback) {
+  sendRpc('getblockcount', callback)
+}
+
+function getBlockHash(blockHeight, callback) {
+  sendRpc('getblockhash', blockHeight, callback)
 }
 
 function getNewAddress(callback) {
@@ -124,6 +124,19 @@ function getRawTransaction(txId, callback) {
   sendIPC(data, function(err, result) {
     if (err) return callback(err)
     callback(null, result)
+  })
+}
+
+function getRawTransactionsFromBlock(blockHeight, callback) {
+  getBlockHash(blockHeight, function(err, blockHash) {
+    if (err) return callback(err)
+    getBlock(blockHash, function(err, blockData) {
+      if (err) return callback(err)
+      async.mapLimit(blockData.tx, 4, getRawTransaction, function(err, rawTxs) {
+        if (err) return callback(err)
+        callback(null, rawTxs)
+      })
+    })
   })
 }
 
@@ -202,6 +215,7 @@ module.exports = {
   getNewAddress: getNewAddress,
   getRawMempool: getRawMempool,
   getRawTransaction: getRawTransaction,
+  getRawTransactionsFromBlock: getRawTransactionsFromBlock,
   getUnspents: getUnspents,
   getWif: getWif,
   importWallet: importWallet,
