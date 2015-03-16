@@ -50,6 +50,7 @@ var SendForm = React.createClass({
           stealthPayment.createTx(data, function(err, tx) {
             if (err) return alert.showError(err)
             PaymentActions.send({tx: tx})
+            atom.dialog.showMessageBox(null, {buttons: ['OK'], title: 'Sent', message: 'Sent!'}, function(){})
             self.setState(self.getInitialState())
           })
         }
