@@ -12,7 +12,7 @@ function initSync() {
   if (!settingsExist) {
     // default: no test
     settings.test = false
-    settings.blockCheckInterval = 60*1000
+    settings.blockCheckInterval = 30*1000
     settings.mempoolCheckInterval = 10*1000
     settings.exe = {
       test: exe.qtapp(true),
