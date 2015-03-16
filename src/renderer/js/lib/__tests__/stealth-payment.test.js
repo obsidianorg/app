@@ -89,6 +89,7 @@ describe('stealth-payment', function () {
       var f1chtx = fixtures.checkTx.valid[0]
 
       var stubs = {
+        '../lib/blkqt': blkqtStub,
         '@common/cryptocoin': cryptocoin,
         './stealth': {
           load: function() {
