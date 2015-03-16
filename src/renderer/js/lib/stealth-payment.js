@@ -160,7 +160,21 @@ function checkTx (hex) {
   return null
 }
 
+function checkBlock (blockHeight, callback) {
+  blkqt.getRawTransactionsFromBlock(blockHeight, function(err, txs) {
+    if (err) return callback(err)
+    var keys = []
+    txs.forEach(function(rawTx) {
+      var key = checkTx(rawTx)
+      if (key) keys.push(key)
+    })
+
+    callback(null, keys)
+  })
+}
+
 module.exports = {
+  checkBlock: checkBlock,
   checkTx: checkTx,
   createTx: createTx,
   prepareSend: prepareSend
