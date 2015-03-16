@@ -10,6 +10,7 @@ window.onerror = function(message, url, line) {
 
 var React = require('react')
 var App = require('./components/app.react')
+var blockChecker = require('./lib/block-checker')
 
 window.onload = function() {
   React.render(
@@ -18,13 +19,8 @@ window.onload = function() {
   )
 }
 
-// todo: move
-var blkqt = require('./lib/blkqt')
-var LS_KEY = 'lastBlockCount'
 setTimeout(function() {
-  if (window.localStorage.getItem(LS_KEY)) return
-
-  blkqt.getBlockCount(function(err, bc) {
-    window.localStorage.setItem(LS_KEY, bc)
+  blockChecker.init(function(err) {
+    if (err) alert.showError(err)
   })
-}, 500)
+}, 1000)
