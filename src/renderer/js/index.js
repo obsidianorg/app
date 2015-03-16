@@ -13,7 +13,7 @@ window.onload = function() {
   React.render(
     <App/>,
     document.querySelector('.app')
-  ) 
+  )
 }
 
 // todo: move

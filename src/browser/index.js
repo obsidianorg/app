@@ -6,7 +6,6 @@ var util = require('util')
 var app = require('./app')
 var connectingWindow = require('./connecting-window')
 var mainWindow = require('./main-window')
-var blockListener = require('./block-listener')
 var settings = require('./settings')
 var exe = require('./settings/exe')
 var qtclient = require('./qtclient')
@@ -82,15 +81,7 @@ function verifyConnected(callback) {
 function initMain(rpcClient) {
   installIPCforQT(rpcClient)
 
-  mainWindow.initAndShow(function(mainWindow) {
-    blockListener.createListener(function(blockHash) {
-      rpcClient.cmd('getblock', blockHash, function(err, blockData) {
-        if (err) return console.error(err)
-        console.dir(blockData.tx)
-       mainWindow.webContents.send('blockchain:tx:listen', blockData.tx)
-      })
-    }).listen(14921)
-  })
+  mainWindow.initAndShow(function(mainWindow) {})
 }
 
 // so client JS can easily query RPC commands
