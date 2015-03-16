@@ -16,7 +16,7 @@ var Header = React.createClass({
     return (
       <header className="header" onClick={this.handleClick}>
         <div className="text-center">
-          || LOGO HERE ||
+          <img src="res/logo.png" />
         </div>
       </header>
     )

@@ -9,11 +9,14 @@
     http://www.colourlovers.com/palette/148712/Gamebookers
 */
 
-@import url(http://fonts.googleapis.com/css?family=Ruda:400,700,900);
+/*@import url(http://fonts.googleapis.com/css?family=Ruda:400,700,900);*/
 
 body {
-  color: #797979;
-	background: #f2f2f2;
+  /*color: #797979;*/
+	/*background: #f2f2f2;*/
+  background: #444;
+  /*color: #daac53;*/
+  color: #eee;
   font-family: 'Ruda', sans-serif;
   font-size: 20px;
 }
@@ -112,9 +115,24 @@ ul.sidebar-menu li a.active i {
 }
 
 .header {
-  background: #ffd700;
+  background: #000;
   color: #fff;
   padding: 10px 0;
   cursor: pointer;
+}
+
+.btn {
+  color: #000;
+  background-color: #daac53;
+}
+
+.form-control {
+  color: #fff;
+  background-color: #aaa;
+}
+
+.input-group-addon {
+  color: #000;
+  background-color: #daac53;
 }
 

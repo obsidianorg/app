@@ -76,7 +76,7 @@ var SendForm = React.createClass({
             <span className="input-group-addon">BLK</span>
           </div>
         </div>
-        <button type="button" className="btn btn-primary btn-lg" onClick={ this.handleSend }>Send</button>
+        <button type="button" className="btn btn-lg" onClick={ this.handleSend } style={{marginRight: '1.5rem'}}>Send Payment</button>
       </form>
     )
   }
