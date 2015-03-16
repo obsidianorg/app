@@ -6,6 +6,10 @@ var alert = require('../lib/alert')
 var atom = require('../atom')
 var PaymentActions = require('../actions/payment-actions')
 var stealthPayment = require('../lib/stealth-payment')
+var stealth = require('../lib/stealth')
+
+// only onefor now
+var sk = stealth.load()
 
 var SendForm = React.createClass({
   getInitialState: function() {
@@ -19,6 +23,11 @@ var SendForm = React.createClass({
     this.setState({
       amount: event.target.value
     })
+  },
+
+  handleCopy: function(event) {
+    atom.clipboard.writeText(sk.toString())
+    console.log(sk + ' copied')
   },
 
   handleReceiverChange: function(event) {
@@ -77,6 +86,7 @@ var SendForm = React.createClass({
           </div>
         </div>
         <button type="button" className="btn btn-lg" onClick={ this.handleSend } style={{marginRight: '1.5rem'}}>Send Payment</button>
+        <button type="button" className="btn btn-lg" onClick={ this.handleCopy }>Copy Stealth Address</button>
       </form>
     )
   }
