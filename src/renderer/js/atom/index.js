@@ -6,5 +6,6 @@ module.exports = {
   dialog: remote.require('dialog'),
   ipc: require('i' + 'pc'),
   remote: remote,
-  shell: require('she' + 'll')
+  shell: require('she' + 'll'),
+  CONFIG: remote.getGlobal('CONFIG') // see browser/index.js global.CONFIG
 }

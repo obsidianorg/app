@@ -34,6 +34,9 @@ app.ready(function(app) {
 
 
 function start() {
+  // this done intentionally so that renderer (client) can access them
+  global.CONFIG = cfg
+
   connectingWindow.initAndShow(cfg.settings.test, function (connectingWindow) {
     verifyConnected(function(err, rpcClient) {
       if (err) {
