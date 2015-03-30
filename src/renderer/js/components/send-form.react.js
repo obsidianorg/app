@@ -76,17 +76,31 @@ var SendForm = React.createClass({
       <form style={formStyle}>
         <div className="form-group">
           <label htmlFor="receiver">Receiver:</label>
-          <input type="text" id="receiver" onChange={ this.handleReceiverChange } className="form-control input-lg" placeholder="(stealth address)" value={ this.state.receiver }/>
+          <input type="text"
+            id="receiver"
+            onChange={ this.handleReceiverChange }
+            className="form-control input-lg"
+            placeholder="(stealth address)"
+            value={ this.state.receiver }/>
         </div>
         <div className="form-group">
           <label htmlFor="amount">Amount:</label>
           <div className="input-group input-group-lg">
-            <input type="text" id="amount" className="form-control" onChange={ this.handleAmountChange } placeholder="(amount in BLK)" value={ this.state.amount }/>
+            <input
+              type="text"
+              id="amount" c
+              lassName="form-control"
+              onChange={ this.handleAmountChange }
+              placeholder="(amount in BLK)"
+              value={ this.state.amount }/>
             <span className="input-group-addon">BLK</span>
           </div>
         </div>
-        <button type="button" className="btn btn-lg" onClick={ this.handleSend } style={{marginRight: '1.5rem'}}>Send Payment</button>
-        <button type="button" className="btn btn-lg" onClick={ this.handleCopy }>Copy Stealth Address</button>
+        <button type="button" className="btn btn-lg"
+          onClick={ this.handleSend }
+          style={{marginRight: '1.5rem'}}>Send Payment</button>
+        <button type="button" className="btn btn-lg"
+          onClick={ this.handleCopy }>Copy Stealth Address</button>
       </form>
     )
   }
