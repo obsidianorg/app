@@ -24,6 +24,7 @@ node_modules/proxyquire
 node_modules/proxyquire-universal
 node_modules/proxyquireify
 node_modules/quire
+node_modules/rcedit
 node_modules/reactify
 node_modules/vinyl-source-stream
 node_modules/watchify

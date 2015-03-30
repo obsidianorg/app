@@ -27,7 +27,20 @@ gulp.task('build-win32', ['asar-win32'], function(done) {
   fs.removeSync(BUILD_ZIP_FILE)
   fs.removeSync(APP_DIR)
   fs.ensureDirSync('./release')
-  fs.move(OUT_DIR, FINAL_DIR, {clobber: true}, done)
+  fs.move(OUT_DIR, FINAL_DIR, {clobber: true}, function (err) {
+    if (err) return done(err)
+
+    // set icon
+    // brew install wine (takes a looooong time)
+    var exeFile = path.join(FINAL_DIR, 'Obsidian.exe')
+    var iconPath = path.resolve('src/renderer/res/icon.ico')
+    var rceditPath = 'node_modules/rcedit/bin/rcedit.exe' // couldn't get package `rcedit` to work, call exe directly
+    var args = ['wine', rceditPath, exeFile, '--set-icon', iconPath].join(' ')
+    cp.exec(args, function (err, stdout, stderr) {
+      if (err) console.error(err)
+      done(err)
+    })
+  })
 })
 
 gulp.task('asar-win32', ['unzip-win32'], function() {
