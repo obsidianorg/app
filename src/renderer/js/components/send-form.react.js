@@ -42,6 +42,7 @@ var SendForm = React.createClass({
   handleSend: function() {
     var self = this
     var data = _.cloneDeep(this.state)
+    data.receiver = data.receiver.trim()
 
     stealthPayment.prepareSend(data, function(err, data) {
       if (err) return alert.showError(err)
