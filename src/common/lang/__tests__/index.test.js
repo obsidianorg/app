@@ -36,7 +36,7 @@ describe('lang', function () {
     it('should return the translations for the context', function () {
       var lang = require('../')
       var enData = lang.getLanguageData('en')
-      var data = enData.getContext('send-form.react.js')
+      var data = enData.getContext('/some/path/send-form.react.js')
       assert(data.receiverLabel)
     })
   })

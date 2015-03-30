@@ -8,7 +8,7 @@ function getLanguageData (lang) {
 }
 
 function getContext (fileName) {
-  var file = fileName.split('.')[0]
+  var file = path.basename(fileName).split('.')[0]
   return this[file]
 }
 
