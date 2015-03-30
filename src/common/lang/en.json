@@ -1,0 +1,25 @@
+{
+  "send-form": {
+    "sendMB": {
+      "buttons": [
+        "Send",
+        "Don't Send"
+      ],
+      "title": "Send?",
+      "message": "Send %s with a fee of %s?"
+    },
+    "sentMB": {
+      "buttons": [
+        "OK"
+      ],
+      "title": "Sent",
+      "message": "Sent!"
+    },
+    "receiverLabel": "Receiver",
+    "receiverPlaceholder": "(stealth address)",
+    "amountLabel": "Amount",
+    "amountPlaceholder": "(amount in BLK)",
+    "sendButton": "Send Payment",
+    "copyButton": "Copy Stealth Address"
+  }
+}
