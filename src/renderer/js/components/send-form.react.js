@@ -7,6 +7,9 @@ var atom = require('../atom')
 var PaymentActions = require('../actions/payment-actions')
 var stealthPayment = require('../lib/stealth-payment')
 var stealth = require('../lib/stealth')
+var userLang = require('../lib/lang').getLanguage()
+console.log(userLang)
+var lang = require('../../../common/lang').getLanguageData(userLang).getContext(__filename)
 
 // only onefor now
 var sk = stealth.load()
@@ -48,9 +51,9 @@ var SendForm = React.createClass({
       console.log(JSON.stringify(data, null, 2))
 
       var dlgOpts = {
-        buttons: ['Send', "Don't send"],
-        title: 'Send?',
-        message: util.format('Send %s with a fee of %s?', accounting.fm(data.amounts.send), accounting.fm(data.amounts.fee))
+        buttons: lang.sendMB.buttons,
+        title: lang.sendMB.title,
+        message: util.format(lang.sendMB.message, accounting.fm(data.amounts.send), accounting.fm(data.amounts.fee))
       }
 
       atom.dialog.showMessageBox(null, dlgOpts, function(buttonIdx) {
@@ -59,7 +62,7 @@ var SendForm = React.createClass({
           stealthPayment.createTx(data, function(err, tx) {
             if (err) return alert.showError(err)
             PaymentActions.send({tx: tx})
-            atom.dialog.showMessageBox(null, {buttons: ['OK'], title: 'Sent', message: 'Sent!'}, function(){})
+            atom.dialog.showMessageBox(null, lang.sentMB, function(){})
             self.setState(self.getInitialState())
           })
         }
@@ -75,32 +78,36 @@ var SendForm = React.createClass({
     return (
       <form style={formStyle}>
         <div className="form-group">
-          <label htmlFor="receiver">Receiver:</label>
+          <label htmlFor="receiver">{ lang.receiverLabel }</label>
           <input type="text"
             id="receiver"
             onChange={ this.handleReceiverChange }
             className="form-control input-lg"
-            placeholder="(stealth address)"
+            placeholder={ lang.receiverPlaceholder }
             value={ this.state.receiver }/>
         </div>
         <div className="form-group">
-          <label htmlFor="amount">Amount:</label>
+          <label htmlFor="amount">{ lang.amountLabel }</label>
           <div className="input-group input-group-lg">
             <input
               type="text"
-              id="amount" c
-              lassName="form-control"
+              id="amount"
+              className="form-control"
               onChange={ this.handleAmountChange }
-              placeholder="(amount in BLK)"
+              placeholder={ lang.amountPlaceholder }
               value={ this.state.amount }/>
             <span className="input-group-addon">BLK</span>
           </div>
         </div>
         <button type="button" className="btn btn-lg"
           onClick={ this.handleSend }
-          style={{marginRight: '1.5rem'}}>Send Payment</button>
+          style={{marginRight: '1.5rem'}}>
+          { lang.sendButton }
+        </button>
         <button type="button" className="btn btn-lg"
-          onClick={ this.handleCopy }>Copy Stealth Address</button>
+          onClick={ this.handleCopy }>
+          { lang.copyButton }
+        </button>
       </form>
     )
   }
