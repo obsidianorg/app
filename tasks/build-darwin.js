@@ -23,11 +23,17 @@ var atomPkg = {
   main: './browser/index.js'
 }
 
-gulp.task('build-darwin', ['asar-darwin'], function(done) {
+gulp.task('build-darwin', ['copy-icon'], function(done) {
   fs.removeSync(BUILD_ZIP_FILE)
   fs.removeSync(APP_DIR)
   fs.ensureDirSync('./release')
   fs.move(OUT_DIR, FINAL_DIR, {clobber: true}, done)
+})
+
+// change this, integrate with actual build task 'bundle-atom-darwin'
+gulp.task('copy-icon', ['asar-darwin'], function (done) {
+  fs.copySync(path.resolve('src/renderer/res/icon.icns'), path.join(RES_DIR, 'atom.icns'), {clobber: true})
+  done()
 })
 
 gulp.task('asar-darwin', ['unzip-darwin'], function() {
