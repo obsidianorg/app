@@ -1,0 +1,25 @@
+{
+  "send-form": {
+    "sendMB": {
+      "buttons": [
+        "Transmitir",
+        "No Transmitir"
+      ],
+      "title": "¿Debería Transmitir?",
+      "message": "¿Debería trasmitir sum %s con cantidad de %s?"
+    },
+    "sentMB": {
+      "buttons": [
+        "OK"
+      ],
+      "title": "Transmitida",
+      "message": "¡Transmitida!"
+    },
+    "receiverLabel": "Receptor",
+    "receiverPlaceholder": "(dirección de sigilo)",
+    "amountLabel": "Suma",
+    "amountPlaceholder": "(suma de BLK)",
+    "sendButton": "Transmitir Pago",
+    "copyButton": "Copia Dirección de Sigilo"
+  }
+}
