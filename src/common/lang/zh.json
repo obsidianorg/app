@@ -1,0 +1,25 @@
+{
+  "send-form": {
+    "sendMB": {
+      "buttons": [
+        "发送",
+        "不发"
+      ],
+      "title": "发送",
+      "message": "送 %s 为 %s 的费?"
+    },
+    "sentMB": {
+      "buttons": [
+        "行"
+      ],
+      "title": "发送",
+      "message": "发送!"
+    },
+    "receiverLabel": "接收者",
+    "receiverPlaceholder": "(匿名地址)",
+    "amountLabel": "已发送",
+    "amountPlaceholder": "(已发送)",
+    "sendButton": "发送交易",
+    "copyButton": "复制匿名地址"
+  }
+}

@@ -1,5 +1,9 @@
+var path = require('path')
+
 var langs = {
-  'en': require('./en')
+  'en': require('./en'),
+  'es': require('./es'),
+  'zh': require('./zh')
 }
 
 function getLanguageData (lang) {
