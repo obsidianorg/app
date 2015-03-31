@@ -1,3 +1,8 @@
+0.2.1 / 2015-03-31
+------------------
+- bugfix if `OP_RETURN` payload is not 33 bytes, causes an error
+- included Linux build
+
 0.2.0 / 2015-03-30
 ------------------
 - builds now include icon
