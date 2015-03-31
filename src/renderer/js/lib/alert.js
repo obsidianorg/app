@@ -9,7 +9,7 @@ module.exports = {
 
   showError: function(message) {
     if (message instanceof Error) {
-      message = message.message
+      message = message.message + '\n\n' + message.stack
     }
 
     // this fucks up Flux dispatcher
