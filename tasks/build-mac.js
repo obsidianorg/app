@@ -8,12 +8,12 @@ var atomshell = require('gulp-atom-shell')
 var _ = require('lodash')
 var pkg = require('../package')
 
-var TMP_DIR = '/tmp/obsidian-build/darwin/'
+var TMP_DIR = '/tmp/obsidian-build/mac/'
 var OUT_DIR = path.join(TMP_DIR, 'obsidian')
 var BUILD_ZIP_FILE = path.join(TMP_DIR, 'app.zip')
 var RES_DIR = path.join(OUT_DIR, 'Obsidian.app/Contents/Resources/')
 var APP_DIR = RES_DIR + 'app/'
-var FINAL_DIR = './release/obsidian-darwin'
+var FINAL_DIR = './release/obsidian-mac'
 
 var ATOM_VERSION = '0.21.2'
 
@@ -23,26 +23,26 @@ var atomPkg = {
   main: './browser/index.js'
 }
 
-gulp.task('build-darwin', ['copy-icon'], function(done) {
+gulp.task('build-mac', ['copy-icon'], function(done) {
   fs.removeSync(BUILD_ZIP_FILE)
   fs.removeSync(APP_DIR)
   fs.ensureDirSync('./release')
   fs.move(OUT_DIR, FINAL_DIR, {clobber: true}, done)
 })
 
-// change this, integrate with actual build task 'bundle-atom-darwin'
-gulp.task('copy-icon', ['asar-darwin'], function (done) {
+// change this, integrate with actual build task 'bundle-atom-mac'
+gulp.task('copy-icon', ['asar-mac'], function (done) {
   fs.copySync(path.resolve('src/renderer/res/icon.icns'), path.join(RES_DIR, 'atom.icns'), {clobber: true})
   done()
 })
 
-gulp.task('asar-darwin', ['unzip-darwin'], function() {
+gulp.task('asar-mac', ['unzip-mac'], function() {
   return gulp.src(APP_DIR + '**/*', { base: APP_DIR })
     .pipe(asar('app.asar'))
     .pipe(gulp.dest(RES_DIR))
 })
 
-gulp.task('unzip-darwin', ['bundle-atom-darwin'], function(done) {
+gulp.task('unzip-mac', ['bundle-atom-mac'], function(done) {
   // node.js unzip libraries blow ass
   var cmd = util.format('unzip -q %s -d %s', BUILD_ZIP_FILE, OUT_DIR)
 
@@ -52,7 +52,7 @@ gulp.task('unzip-darwin', ['bundle-atom-darwin'], function(done) {
   })
 })
 
-gulp.task('bundle-atom-darwin', function(done) {
+gulp.task('bundle-atom-mac', function(done) {
   deleteCreateDirSync(TMP_DIR)
 
   fs.writeJsonSync('./src/package.json', atomPkg)
