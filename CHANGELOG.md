@@ -1,3 +1,7 @@
+0.2.2 / 2015-04-11
+------------------
+- button to show debug window
+
 0.2.1 / 2015-03-31
 ------------------
 - bugfix if `OP_RETURN` payload is not 33 bytes, causes an error
