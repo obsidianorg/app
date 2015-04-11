@@ -47,7 +47,8 @@ gulp.task('unzip-linux', ['bundle-atom-linux'], function(done) {
 })
 
 gulp.task('bundle-atom-linux', function(done) {
-  deleteCreateDirSync(TMP_DIR)
+  fs.emptyDirSync(TMP_DIR)
+  fs.emptyDirSync(FINAL_DIR)
 
   fs.writeJsonSync('./src/package.json', atomPkg)
   fs.copySync('./src', path.join(TMP_DIR, 'src'))
@@ -68,13 +69,3 @@ gulp.task('bundle-atom-linux', function(done) {
     .on('end', done)
 })
 
-function deleteCreateDirSync(dir) {
-  if (!fs.existsSync(dir))
-    return fs.mkdirsSync(dir)
-
-  // delete contents only
-  fs.readdirSync(dir).map(_.partial(_.ary(path.join, 2), dir))
-    .forEach(function(entry) {
-      fs.removeSync(entry)
-    })
-}

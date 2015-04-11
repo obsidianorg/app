@@ -60,7 +60,8 @@ gulp.task('unzip-win32', ['bundle-atom-win32'], function(done) {
 })
 
 gulp.task('bundle-atom-win32', function(done) {
-  deleteCreateDirSync(TMP_DIR)
+  fs.emptyDirSync(TMP_DIR)
+  fs.emptyDirSync(FINAL_DIR)
 
   fs.writeJsonSync('./src/package.json', atomPkg)
   fs.copySync('./src', path.join(TMP_DIR, 'src'))
@@ -81,13 +82,3 @@ gulp.task('bundle-atom-win32', function(done) {
     .on('end', done)
 })
 
-function deleteCreateDirSync(dir) {
-  if (!fs.existsSync(dir))
-    return fs.mkdirsSync(dir)
-
-  // delete contents only
-  fs.readdirSync(dir).map(_.partial(_.ary(path.join, 2), dir))
-    .forEach(function(entry) {
-      fs.removeSync(entry)
-    })
-}
