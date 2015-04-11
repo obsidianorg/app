@@ -8,7 +8,6 @@ var PaymentActions = require('../actions/payment-actions')
 var stealthPayment = require('../lib/stealth-payment')
 var stealth = require('../lib/stealth')
 var userLang = require('../lib/lang').getLanguage()
-console.log(userLang)
 var lang = require('../../../common/lang').getLanguageData(userLang).getContext(__filename)
 
 // only onefor now
@@ -71,6 +70,10 @@ var SendForm = React.createClass({
     })
   },
 
+  handleShowDebug: function () {
+    atom.remote.getCurrentWindow().openDevTools()
+  },
+
   render: function() {
     var formStyle = {
       padding: '10px'
@@ -102,12 +105,18 @@ var SendForm = React.createClass({
         </div>
         <button type="button" className="btn btn-lg"
           onClick={ this.handleSend }
-          style={{marginRight: '1.5rem'}}>
+          style={{marginRight: '1.2rem', width: '220px'}}>
           { lang.sendButton }
         </button>
         <button type="button" className="btn btn-lg"
-          onClick={ this.handleCopy }>
+          onClick={ this.handleCopy }
+          style={{marginRight: '1.2rem', width: '220px'}}>
           { lang.copyButton }
+        </button>
+        <button type="button" className="btn btn-lg"
+          onClick={ this.handleShowDebug }
+          style={{marginRight: '1.2rem', width: '220px'}}>
+          Show Debug
         </button>
       </form>
     )
