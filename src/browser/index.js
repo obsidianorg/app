@@ -13,10 +13,10 @@ var spawn = cp.spawn
 
 var cfg = settings.initSync()
 
-app.ready(function(app) {
+app.ready(function (app) {
   if (!fs.existsSync(cfg.settings.exePath)) {
     dialog.showErrorBox('Error', util.format("Can't find %s-qt. Please locate it.", cfg.settings.test ? 'Bitcoin' : 'BlackCoin'))
-    exe.showFindDialog({test: cfg.settings.test}, function(newPath) {
+    exe.showFindDialog({test: cfg.settings.test}, function (newPath) {
       if (!newPath) {
         dialog.showErrorBox('Error', 'You must make a selection to continue.')
         process.exit()
@@ -26,19 +26,17 @@ app.ready(function(app) {
       cfg.settings.saveSync()
       start()
     })
-  }
-  else {
+  } else {
     start()
   }
 })
 
-
-function start() {
+function start () {
   // this done intentionally so that renderer (client) can access them
   global.CONFIG = cfg
 
   connectingWindow.initAndShow(cfg.settings.test, function (connectingWindow) {
-    verifyConnected(function(err, rpcClient) {
+    verifyConnected(function (err, rpcClient) {
       if (err) {
         dialog.showErrorBox('Error', "Can't connect to the QT client.")
         process.exit()
@@ -50,20 +48,20 @@ function start() {
   })
 }
 
-function verifyConnected(callback) {
+function verifyConnected (callback) {
   var started = false
   var checker = setInterval(check, 1000)
 
-  var to = setTimeout(function() {
+  var to = setTimeout(function () {
     breakOut(new Error('Timeout trying to connect.'))
-  }, 120*1000)
+  }, 120 * 1000)
 
   var connectingToQt = false
-  function check() {
+  function check () {
     if (connectingToQt) return
 
     connectingToQt = true
-    qtclient.connect(cfg.rpc, function(err, rpcClient) {
+    qtclient.connect(cfg.rpc, function (err, rpcClient) {
       connectingToQt = false
       if (err && !started) {
         spawn(cfg.settings.exePath)
@@ -74,28 +72,26 @@ function verifyConnected(callback) {
     })
   }
 
-  function breakOut(err, rpcClient) {
+  function breakOut (err, rpcClient) {
     clearInterval(checker)
     clearTimeout(to)
     callback(err, rpcClient)
   }
 }
 
-function initMain(rpcClient) {
+function initMain (rpcClient) {
   installIPCforQT(rpcClient)
 
-  mainWindow.initAndShow(function(mainWindow) {})
+  mainWindow.initAndShow(function (mainWindow) {})
 }
 
 // so client JS can easily query RPC commands
-function installIPCforQT(rpcClient) {
-  ipc.on('blkqt', function(event, obj) {
-    var callback = function(err, res) {
+function installIPCforQT (rpcClient) {
+  ipc.on('blkqt', function (event, obj) {
+    var callback = function (err, res) {
       var msg = obj.msg + '-' + obj.token
-      if (err)
-        event.sender.send(msg, err.message, null)
-      else
-        event.sender.send(msg, null, res)
+      if (err) event.sender.send(msg, err.message, null)
+      else event.sender.send(msg, null, res)
     }
 
     obj.args.push(callback)
@@ -104,7 +100,6 @@ function installIPCforQT(rpcClient) {
 }
 
 // hacky messaging solution, switch to fancy html errors
-require('ipc').on('error', function(event, message) {
+require('ipc').on('error', function (event, message) {
   dialog.showErrorBox('Error', message)
 })
-

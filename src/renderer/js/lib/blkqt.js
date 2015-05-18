@@ -7,26 +7,24 @@ var ipc = require('./ipc')
 // http://we.lovebitco.in/bitcoin-qt/command-reference/
 // https://en.bitcoin.it/wiki/Original_Bitcoin_client/API_calls_list
 
-function sendIPC(data, callback) {
+function sendIPC (data, callback) {
   data.token = Date.now() + Math.random()
 
   if (callback) {
     var recpMsg = data.msg + '-' + data.token
-    atom.ipc.once(recpMsg, function() {
+    atom.ipc.once(recpMsg, function () {
       var args = [].slice.call(arguments)
 
       // error
-      if (args[0])
-        callback(new Error(args[0]))
-      else
-        callback(null, args[1])
+      if (args[0]) callback(new Error(args[0]))
+      else callback(null, args[1])
     })
   }
 
   atom.ipc.send(data.msg, data)
 }
 
-function sendRpc(/** args **/) {
+function sendRpc (/** args **/) {
   var args = [].slice.call(arguments)
   var callback = args.pop()
 
@@ -38,38 +36,39 @@ function sendRpc(/** args **/) {
   ipc.sendIpc(data, callback)
 }
 
-
-function getAccounts(callback) {
+function getAccounts (callback) {
   var data = {
     msg: 'blkqt',
     args: ['listreceivedbyaddress', 0, true]
   }
 
-  sendIPC(data, function(err, result) {
+  sendIPC(data, function (err, result) {
     if (err) return callback(err)
-    var accounts = result.map(function(acc) {
+    var accounts = result.map(function (acc) {
       acc.label = acc.account
-      //acc.balance = acc.amount
-      //acc.balanceRat = (new Decimal(acc.balance)).times(1e8)
+      // acc.balance = acc.amount
+      // acc.balanceRat = (new Decimal(acc.balance)).times(1e8)
 
       delete acc.account
       delete acc.amount
 
-      if (!acc.label)
+      if (!acc.label) {
         acc.label = '(no label)'
+      }
 
       return acc
     })
 
     var accs = {}
-    accounts.forEach(function(acc) {
+    accounts.forEach(function (acc) {
       accs[acc.address] = acc
       accs[acc.address].balance = 0
       accs[acc.address].balanceRat = 0
     })
 
-    getUnspents(null, function(err, unspents) {
-      unspents.forEach(function(utxo) {
+    getUnspents(null, function (err, unspents) {
+      if (err) return callback(err)
+      unspents.forEach(function (utxo) {
         accs[utxo.address].balance += utxo.amount
         accs[utxo.address].balanceRat += utxo.amountRat
       })
@@ -79,60 +78,60 @@ function getAccounts(callback) {
   })
 }
 
-function getBlock(blockHash, callback) {
+function getBlock (blockHash, callback) {
   sendRpc('getblock', blockHash, callback)
 }
 
-function getBlockCount(callback) {
+function getBlockCount (callback) {
   sendRpc('getblockcount', callback)
 }
 
-function getBlockHash(blockHeight, callback) {
+function getBlockHash (blockHeight, callback) {
   sendRpc('getblockhash', blockHeight, callback)
 }
 
-function getNewAddress(callback) {
+function getNewAddress (callback) {
   var data = {
     msg: 'blkqt',
     args: ['getnewaddress']
   }
 
-  sendIPC(data, function(err, result) {
+  sendIPC(data, function (err, result) {
     if (err) return callback(err)
     callback(null, result)
   })
 }
 
-function getRawMempool(callback) {
+function getRawMempool (callback) {
   var data = {
     msg: 'blkqt',
     args: ['getrawmempool']
   }
 
-  sendIPC(data, function(err, result) {
+  sendIPC(data, function (err, result) {
     if (err) return callback(err)
     callback(null, result)
   })
 }
 
-function getRawTransaction(txId, callback) {
+function getRawTransaction (txId, callback) {
   var data = {
     msg: 'blkqt',
     args: ['getrawtransaction', txId]
   }
 
-  sendIPC(data, function(err, result) {
+  sendIPC(data, function (err, result) {
     if (err) return callback(err)
     callback(null, result)
   })
 }
 
-function getRawTransactionsFromBlock(blockHeight, callback) {
-  getBlockHash(blockHeight, function(err, blockHash) {
+function getRawTransactionsFromBlock (blockHeight, callback) {
+  getBlockHash(blockHeight, function (err, blockHash) {
     if (err) return callback(err)
-    getBlock(blockHash, function(err, blockData) {
+    getBlock(blockHash, function (err, blockData) {
       if (err) return callback(err)
-      async.mapLimit(blockData.tx, 4, getRawTransaction, function(err, rawTxs) {
+      async.mapLimit(blockData.tx, 4, getRawTransaction, function (err, rawTxs) {
         if (err) return callback(err)
         callback(null, {timestamp: blockData.time, txs: rawTxs, blockHeight: blockHeight})
       })
@@ -140,16 +139,17 @@ function getRawTransactionsFromBlock(blockHeight, callback) {
   })
 }
 
-function getUnspents(address, callback) {
-  sendRpc('listunspent', 0, function(err, result) {
+function getUnspents (address, callback) {
+  sendRpc('listunspent', 0, function (err, result) {
     if (err) return callback(err)
 
-    var utxos = result.filter(function(utxo) {
-      if (address)
+    var utxos = result.filter(function (utxo) {
+      if (address) {
         return utxo.address === address
-      else
+      } else {
         return true
-    }).map(function(utxo) {
+      }
+    }).map(function (utxo) {
       utxo.amountRat = (new Decimal(utxo.amount)).times(1e8).toNumber()
       utxo.txId = utxo.txid
       utxo.value = utxo.amountRat
@@ -163,49 +163,46 @@ function getUnspents(address, callback) {
   })
 }
 
-function getWif(address, callback) {
+function getWif (address, callback) {
   var data = {
     msg: 'blkqt',
     args: ['dumpprivkey', address]
   }
 
-  sendIPC(data, function(err, address) {
-    if (err)
-      callback(err)
-    else
-      callback(null, address)
+  sendIPC(data, function (err, address) {
+    if (err) callback(err)
+    else callback(null, address)
   })
 }
 
-function importWallet(filePath, callback) {
+function importWallet (filePath, callback) {
   sendRpc('importwallet', filePath, callback)
 }
 
-function importWif(wif, label, callback) {
+function importWif (wif, label, callback) {
   var data = {
     msg: 'blkqt',
     args: ['importprivkey', wif, label, 'false']
   }
 
-  sendIPC(data, function(err) {
-    if (err)
-      callback(err)
-    else
-      callback(null)
+  sendIPC(data, function (err) {
+    if (err) callback(err)
+    else callback(null)
   })
 }
 
-function submitTransaction(rawTx, callback) {
+function submitTransaction (rawTx, callback) {
   var data = {
     msg: 'blkqt',
     args: ['sendrawtransaction', rawTx]
   }
 
-  sendIPC(data, function(err, txId) {
-    if (err)
+  sendIPC(data, function (err, txId) {
+    if (err) {
       return callback(err)
-    else
+    } else {
       return callback(null, txId)
+    }
   })
 }
 
@@ -222,4 +219,3 @@ module.exports = {
   importWif: importWif,
   submitTransaction: submitTransaction
 }
-

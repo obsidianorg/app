@@ -66,9 +66,9 @@ function prepareSend (data, callback) {
 
 function createTx (data, callback) {
   if (!data.receiver) return callback(new Error('Missing receiver.'))
-  if (typeof data.amounts.changeRat != 'number') return callback(new Error('Missing change amount.'))
-  if (typeof data.amounts.sendRat != 'number') return callback(new Error('Missing send amount.'))
-  if (typeof data.amounts.opretRat != 'number') return callback(new Error('Missing OP_RETURN amount.'))
+  if (typeof data.amounts.changeRat !== 'number') return callback(new Error('Missing change amount.'))
+  if (typeof data.amounts.sendRat !== 'number') return callback(new Error('Missing send amount.'))
+  if (typeof data.amounts.opretRat !== 'number') return callback(new Error('Missing OP_RETURN amount.'))
   if (!Array.isArray(data.utxos)) return callback(new Error('Missing utxos.'))
 
   var tx = new Transaction()
@@ -93,7 +93,7 @@ function createTx (data, callback) {
   }
 
   function addInputsAndSign () {
-    //make OP_RETURN first
+    // make OP_RETURN first
     tx.addOutput(opReturn, data.amounts.opretRat)
 
     async.mapSeries(data.utxos, function (utxo, done) {
@@ -122,7 +122,7 @@ function checkTx (hex) {
   var tx = txUtils.parseFromHex(hex)
 
   // can be optimized a bit, but the string constant makes it obvious
-  var opReturnOut = tx.outs.filter(function(out) {
+  var opReturnOut = tx.outs.filter(function (out) {
     return (out.script.toASM().indexOf('OP_RETURN') === 0)
   })
 
@@ -136,7 +136,7 @@ function checkTx (hex) {
   var opReturnPubkey = opReturnOut.script.chunks[1]
   var stealth = LocalStealth.load()
 
-  var pubKeyHashs = tx.outs.filter(function(out) {
+  var pubKeyHashs = tx.outs.filter(function (out) {
     return (
       out.script &&
       Array.isArray(out.script.chunks) &&
@@ -144,7 +144,7 @@ function checkTx (hex) {
       Buffer.isBuffer(out.script.chunks[2]) &&
       out.script.chunks[2].length === 20
     )
-  }).map(function(out) {
+  }).map(function (out) {
     return out.script.chunks[2]
   })
 
@@ -161,10 +161,10 @@ function checkTx (hex) {
 }
 
 function checkBlock (blockHeight, callback) {
-  blkqt.getRawTransactionsFromBlock(blockHeight, function(err, blockData) {
+  blkqt.getRawTransactionsFromBlock(blockHeight, function (err, blockData) {
     if (err) return callback(err)
     var keys = []
-    blockData.txs.forEach(function(rawTx) {
+    blockData.txs.forEach(function (rawTx) {
       var key = checkTx(rawTx)
       if (key) keys.push({keyPair: key, timestamp: blockData.timestamp, blockHeight: blockData.blockHeight})
     })

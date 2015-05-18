@@ -1,3 +1,7 @@
+0.3.0 / 2015-xx-yy
+------------------
+- converted to [JavaScript Standard Style](https://github.com/feross/standard)
+
 0.2.2 / 2015-04-11
 ------------------
 - button to show debug window

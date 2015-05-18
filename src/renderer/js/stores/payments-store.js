@@ -6,16 +6,15 @@ var alert = require('../lib/alert')
 var blkqt = require('../lib/blkqt')
 var txUtils = require('../blockchain/txutils')
 
-function send(data) {
+function send (data) {
   var tx = data.tx
 
   var hex = txUtils.serializeToHex(tx)
   console.log('raw hex: ')
   console.log(hex)
 
-  blkqt.submitTransaction(hex, function(err, txId) {
-    if (err)
-      return alert.showError('Transaction submission error: ' + err.message)
+  blkqt.submitTransaction(hex, function (err, txId) {
+    if (err) return alert.showError('Transaction submission error: ' + err.message)
     console.log(txId)
   })
 }
@@ -24,7 +23,7 @@ var store = {}
 _.mixin(store, EventEmitter.prototype)
 EventEmitter.call(store)
 
-AppDispatcher.register(function(payload) {
+AppDispatcher.register(function (payload) {
   var action = payload.action
 
   switch (action.actionType) {

@@ -1,12 +1,12 @@
 var coinInfo = require('coininfo')
 var CoinKey = require('coinkey')
 
-function create(coin) {
+function create (coin) {
   coin = coin || 'BLK'
   var info = coinInfo(coin)
 
   var oldCoinKeyCreateRandom = CoinKey.createRandom
-  CoinKey.createRandom = function() {
+  CoinKey.createRandom = function () {
     return oldCoinKeyCreateRandom(info.versions)
   }
 

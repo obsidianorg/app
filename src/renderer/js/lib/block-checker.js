@@ -1,6 +1,4 @@
 var util = require('util')
-var async = require('async')
-var _ = require('lodash')
 var S = require('string')
 var atom = require('../atom')
 var blkqt = require('./blkqt')
@@ -13,67 +11,65 @@ var LS_KEY = 'lastBlockCount'
 var LAST_KNOWN = 0
 var TWELVE_MINS = 12 * 60 * 1000
 
-function getLastKnownBlockCount(callback) {
+function getLastKnownBlockCount (callback) {
   if (storage.getItem(LS_KEY)) {
     return callback(null, parseInt(storage.getItem(LS_KEY), 10))
   }
 
   // if app never an before (i.e. no stealth payments could be before this)
-  blkqt.getBlockCount(function(err, bc) {
+  blkqt.getBlockCount(function (err, bc) {
     if (err) return callback(err)
     storage.setItem(LS_KEY, LAST_KNOWN)
     return callback(null, bc)
   })
 }
 
-function updateLastKnown(blockHeight) {
+function updateLastKnown (blockHeight) {
   LAST_KNOWN = blockHeight
   storage.setItem(LS_KEY, LAST_KNOWN)
 }
 
-function init(callback) {
-  getLastKnownBlockCount(function(err, blockCount) {
+function init (callback) {
+  getLastKnownBlockCount(function (err, blockCount) {
     if (err) return callback(err)
     LAST_KNOWN = blockCount
 
     var isChecking = false
-    var blockInterval = setInterval(function runCheck () {
-      blkqt.getBlockCount(function(err, currentBlockcount) {
+    /*var blockInterval = */setInterval((function () {
+      blkqt.getBlockCount(function (err, currentBlockcount) {
         if (isChecking) return
-
         if (LAST_KNOWN === currentBlockcount) return
 
+        if (err) return console.error(err)
+
         isChecking = true
-        checkBlocks(LAST_KNOWN, currentBlockcount, function(err, items) {
+        checkBlocks(LAST_KNOWN, currentBlockcount, function (err, items) {
           isChecking = false
           if (err) return console.error(err)
 
           updateLastKnown(currentBlockcount)
           if (items.length === 0) return
 
-          importKeys(items, function(err) {
+          importKeys(items, function (err) {
             if (err) console.error(err)
             console.log('successfully imported ' + items.length)
           })
         })
       })
-
-      // run it away
-      return runCheck
-    } (), atom.CONFIG.settings.blockCheckInterval)
+    })(), atom.CONFIG.settings.blockCheckInterval)
   })
 }
 
-function importKeys(items, callback) {
+function importKeys (items, callback) {
   var dwText = dumpwallet.encode(items)
   var textLen = dwText.length
-  var tmpFile = atom.path.join(atom.app.getPath('temp'), (''+Math.random()).slice(2))
+  var tmpFile = atom.path.join(atom.app.getPath('temp'), ('' + Math.random()).slice(2))
 
-  atom.fs.writeFile(tmpFile, dwText, function(err) {
+  atom.fs.writeFile(tmpFile, dwText, function (err) {
     if (err) return callback(err)
-    blkqt.importWallet(tmpFile, function(err) {
+    blkqt.importWallet(tmpFile, function (err) {
       if (err) return callback(err)
-      atom.fs.writeFile(tmpFile, S('0').repeat(textLen).s, function(err) {
+      atom.fs.writeFile(tmpFile, S('0').repeat(textLen).s, function (err) {
         if (err) return callback(err)
         callback()
       })
@@ -89,19 +85,19 @@ function checkBlocks (start, finish, callback) {
 
   console.log(util.format('checking range: %d -> %d', start, finish))
 
-  function check(current) {
+  function check (current) {
     if (current % 100 === 0) {
       console.log(current)
       updateLastKnown(current)
     }
 
-    stealthPayment.checkBlock(current, function(err, arrData) {
+    stealthPayment.checkBlock(current, function (err, arrData) {
       if (err) return callback(err)
 
       if (arrData.length > 0) {
         console.log('we have data! ' + current)
         // unlikely to be more than one
-        arrData.forEach(function(item) {
+        arrData.forEach(function (item) {
           items.push({
             wif: item.keyPair.privateWif,
             // probaby not necessary, but just in case
@@ -112,10 +108,11 @@ function checkBlocks (start, finish, callback) {
       }
 
       // done
-      if (current === finish)
+      if (current === finish) {
         return callback(null, items)
-      else
+      } else {
         check(current + 1)
+      }
     })
   }
   check(start)
@@ -124,4 +121,3 @@ function checkBlocks (start, finish, callback) {
 module.exports = {
   init: init
 }
-

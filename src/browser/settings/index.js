@@ -3,17 +3,16 @@ var path = require('path-extra')
 var exe = require('./exe')
 var qtconfig = require('./qtconfig')
 
-
 var SETTINGS_FILE = path.join(path.datadir('obsidian'), 'obsidian.conf.json')
 
-function initSync() {
+function initSync () {
   var settingsExist = fs.existsSync(SETTINGS_FILE)
   var settings = {}
   if (!settingsExist) {
     // default: no test
     settings.test = false
-    settings.blockCheckInterval = 30*1000
-    settings.mempoolCheckInterval = 10*1000
+    settings.blockCheckInterval = 30 * 1000
+    settings.mempoolCheckInterval = 10 * 1000
     settings.exe = {
       test: exe.qtapp(true),
       prod: exe.qtapp(false)
@@ -24,17 +23,17 @@ function initSync() {
 
   settings.exe = settings.exe || {}
 
-  settings.saveSync = function() {
+  settings.saveSync = function () {
     fs.outputJsonSync(SETTINGS_FILE, settings)
   }
 
   // 'exe' property won't be saved, which is what we want
   Object.defineProperty(settings, 'exePath', {
     enumerable: false,
-    get: function() {
+    get: function () {
       return settings.test ? settings.exe.test : settings.exe.prod
     },
-    set: function(newPath) {
+    set: function (newPath) {
       if (settings.test) settings.exe.test = newPath
       else settings.exe.prod = newPath
     }
@@ -52,12 +51,12 @@ function initSync() {
       port: settings.test ? 18333 : 15715,
       user: qtconfig.rpcuser,
       pass: qtconfig.rpcpassword,
-      timeout: 30*1000
+      timeout: 30 * 1000
     }
   }
 }
 
-function readQtConfig(isTest) {
+function readQtConfig (isTest) {
   var data = qtconfig.readSync(isTest)
 
   // rpc info may already be set
@@ -72,4 +71,3 @@ function readQtConfig(isTest) {
 module.exports = {
   initSync: initSync
 }
-

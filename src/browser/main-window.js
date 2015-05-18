@@ -28,11 +28,11 @@ function initAndShow (callback) {
 
   mainWindow.loadUrl(indexUrl)
 
-  mainWindow.on('closed', function() {
+  mainWindow.on('closed', function () {
     mainWindow = null
   })
 
-  mainWindow.webContents.on('did-finish-load', function() {
+  mainWindow.webContents.on('did-finish-load', function () {
     callback(mainWindow)
   })
   mainWindow.show()
@@ -41,4 +41,3 @@ function initAndShow (callback) {
 module.exports = {
   initAndShow: initAndShow
 }
-

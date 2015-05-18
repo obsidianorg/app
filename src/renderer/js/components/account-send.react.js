@@ -5,7 +5,7 @@ var Popover = require('react-bootstrap').Popover
 var _ = require('lodash')
 var AccountActions = require('../actions/account-actions')
 
-var getInitialState = function() {
+var getInitialState = function () {
   return {
     address: '',
     amount: 0.0
@@ -13,23 +13,25 @@ var getInitialState = function() {
 }
 
 var AccountSend = React.createClass({
-  getInitialState: function() {
+  displayName: 'AccountSend',
+
+  getInitialState: function () {
     return getInitialState()
   },
 
-  handleAmountChange: function(event) {
+  handleAmountChange: function (event) {
     this.setState({
       amount: event.target.value
     })
   },
 
-  handleAddressChange: function(event) {
+  handleAddressChange: function (event) {
     this.setState({
       address: event.target.value
     })
   },
 
-  handleSend: function(event) {
+  handleSend: function (event) {
     var data = _.assign({}, this.state)
     data.account = this.props.account
     AccountActions.send(data)
@@ -37,18 +39,24 @@ var AccountSend = React.createClass({
     this.setState(getInitialState())
   },
 
-  render: function() {
-    var popover = <Popover title="Add Account">
-      <input onChange={this.handleAddressChange} ref="addressInput" value={this.state.address} />
-      <input onChange={this.handleAmountChange} ref="amountInput" value={this.state.amount} />
-      <div>
-        <Button bsSize="xsmall" bsStyle="success" onClick={this.handleSend}>Send</Button>
-      </div>
-    </Popover>
+  propTypes: {
+    account: React.PropTypes.object
+  },
+
+  render: function () {
+    var popover = (
+      <Popover title='Add Account'>
+        <input onChange={this.handleAddressChange} ref='addressInput' value={this.state.address} />
+        <input onChange={this.handleAmountChange} ref='amountInput' value={this.state.amount} />
+        <div>
+          <Button bsSize='xsmall' bsStyle='success' onClick={this.handleSend}>Send</Button>
+        </div>
+      </Popover>
+    )
 
     return (
-      <OverlayTrigger trigger="click" placement="bottom" ref="accountSendPopover" overlay={popover}>
-        <Button bsSize="small" bsStyle="primary">Send</Button>
+      <OverlayTrigger trigger='click' placement='bottom' ref='accountSendPopover' overlay={popover}>
+        <Button bsSize='small' bsStyle='primary'>Send</Button>
       </OverlayTrigger>
     )
   }

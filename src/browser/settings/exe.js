@@ -3,38 +3,36 @@ var path = require('path')
 var os = require('os')
 var util = require('util')
 
-function bitcoin() {
+function bitcoin () {
   var ost = os.type().toLowerCase()
   if (ost.indexOf('darwin') === 0) {
     return '/Applications/Bitcoin-Qt.app/Contents/MacOS/Bitcoin-Qt'
-  }
-  else if (ost.indexOf('win') === 0) {
+  } else if (ost.indexOf('win') === 0) {
     return 'C:\\Program Files\\Bitcoin\\bitcoin-qt.exe'
   }
 }
 
-function blackcoin() {
+function blackcoin () {
   var ost = os.type().toLowerCase()
   if (ost.indexOf('darwin') === 0) {
     return '/Applications/BlackCoin-Qt.app/Contents/MacOS/BlackCoin-Qt'
-  }
-  else if (ost.indexOf('win') === 0) {
+  } else if (ost.indexOf('win') === 0) {
     return 'C:\\Program Files\\Bitcoin\\blackcoin-qt.exe'
   }
 }
 
-function qtapp(isTest) {
+function qtapp (isTest) {
   return isTest ? bitcoin() : blackcoin()
 }
 
-function showFindDialog(params, callback) {
+function showFindDialog (params, callback) {
   var title = util.format('Select %s-QT Location...', params.test ? 'Bitcoin' : 'BlackCoin')
   var options = {
-    title:  title,
+    title: title,
     properties: ['openFile']
   }
 
-  function dialogCallback(exeFile) {
+  function dialogCallback (exeFile) {
     if (!Array.isArray(exeFile)) {
       // probably undefined
       return callback(exeFile)
@@ -51,8 +49,9 @@ function showFindDialog(params, callback) {
   }
 
   var args = [options, dialogCallback]
-  if (params.browserWindow)
+  if (params.browserWindow) {
     args.unshift(params.browserWindow)
+  }
 
   dialog.showOpenDialog.apply(dialog, args)
 }
@@ -63,5 +62,3 @@ module.exports = {
   qtapp: qtapp,
   showFindDialog: showFindDialog
 }
-
-

@@ -1,19 +1,20 @@
-//jest.autoMockOff()
+// jest.autoMockOff()
 
 var assert = require('assert')
-var CoinKey = require('coinkey')
 var ci = require('coininfo')
 var quire = require('quire')
 var accountFixtures = require('./account.fixtures')
 var blackCoinInfo = ci('BLK')
 
-describe.skip('Account', function() {
-  describe('create()', function() {
+/* global describe, it */
+
+describe.skip('Account', function () {
+  describe('create()', function () {
     var _acc1 = accountFixtures.valid[0]
 
-    it('should create a new account', function() {
+    it('should create a new account', function () {
       var stubs = {'coinkey': {
-        createRandom: function() {
+        createRandom: function () {
           var CoinKey = require('coinkey')
           var privKey = new Buffer(require('./account.fixtures').valid[0].privateKey, 'hex')
           return new CoinKey(privKey, blackCoinInfo.versions)
@@ -31,14 +32,14 @@ describe.skip('Account', function() {
       assert.equal(account.amount, 0)
 
       // clean up
-      //jest.dontMock('coinkey')
+      // jest.dontMock('coinkey')
     })
   })
 
-  describe('createFromWif()', function() {
+  describe('createFromWif()', function () {
     var acc0 = accountFixtures.valid[0]
 
-    it('should create from wallet import format (private key)', function() {
+    it('should create from wallet import format (private key)', function () {
       var Account = require('../account')
       var account = Account.createFromWif('Spending', acc0.wif)
 

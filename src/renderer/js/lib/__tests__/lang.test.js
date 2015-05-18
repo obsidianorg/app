@@ -1,6 +1,8 @@
 var assert = require('assert')
 var proxyquire = require('proxyquire')
 
+/* global describe, it */
+
 describe('lang', function () {
   describe('+ getLanguage()', function () {
     describe('> when nothing is set', function () {

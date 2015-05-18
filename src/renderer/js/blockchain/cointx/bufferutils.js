@@ -2,14 +2,14 @@ var assert = require('assert')
 var util = require('util')
 
 // https://github.com/feross/buffer/blob/master/index.js#L1127
-function verifuint(value, max) {
+function verifuint (value, max) {
   assert(typeof value === 'number', 'cannot write a non-number as a number')
   assert(value >= 0, 'specified a negative value for writing an unsigned value')
   assert(value <= max, 'value is larger than maximum value for type')
   assert(Math.floor(value) === value, util.format('value %d has a fractional component', value))
 }
 
-function readUInt64LE(buffer, offset) {
+function readUInt64LE (buffer, offset) {
   var a = buffer.readUInt32LE(offset)
   var b = buffer.readUInt32LE(offset + 4)
   b *= 0x100000000
@@ -19,7 +19,7 @@ function readUInt64LE(buffer, offset) {
   return b + a
 }
 
-function readVarInt(buffer, offset) {
+function readVarInt (buffer, offset) {
   var t = buffer.readUInt8(offset)
   var number, size
 
@@ -50,21 +50,21 @@ function readVarInt(buffer, offset) {
   }
 }
 
-function writeUInt64LE(buffer, value, offset) {
+function writeUInt64LE (buffer, value, offset) {
   verifuint(value, 0x001fffffffffffff)
 
   buffer.writeInt32LE(value & -1, offset)
   buffer.writeUInt32LE(Math.floor(value / 0x100000000), offset + 4)
 }
 
-function varIntSize(i) {
-  return i < 253      ? 1
-    : i < 0x10000     ? 3
+function varIntSize (i) {
+  return i < 253 ? 1
+    : i < 0x10000 ? 3
     : i < 0x100000000 ? 5
-    :                   9
+    : 9
 }
 
-function writeVarInt(buffer, number, offset) {
+function writeVarInt (buffer, number, offset) {
   var size = varIntSize(number)
 
   // 8 bit

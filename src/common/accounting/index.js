@@ -1,8 +1,8 @@
 var accounting = require('accounting')
 
 var FORMAT = {
-  symbol: "BLK",
-  format: "%v %s",
+  symbol: 'BLK',
+  format: '%v %s',
   precision: 4
 }
 

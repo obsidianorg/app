@@ -1,11 +1,10 @@
 var CoinKey = require('coinkey')
 var Stealth = require('stealth')
-var json = require('./json')
 
 var STEALTH_CONSTANT = 0x27
 var LS_KEY = 'sk'
 
-function create(scan, payload) {
+function create (scan, payload) {
   return new Stealth({
     scanPrivKey: scan.privateKey,
     scanPubKey: scan.publicKey,
@@ -15,7 +14,7 @@ function create(scan, payload) {
   })
 }
 
-function load() {
+function load () {
   var skData = window.localStorage.getItem(LS_KEY)
   if (skData == null) {
     var sk = create(CoinKey.createRandom(), CoinKey.createRandom())

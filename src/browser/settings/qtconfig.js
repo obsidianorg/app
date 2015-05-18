@@ -15,7 +15,7 @@ var DEFAULT_SETTINGS = {
 function readSync (isTest) {
   var text = ''
   try {
-    var text = fs.readFileSync(isTest ? TEST_FILE : PROD_FILE).toString('utf8')
+    text = fs.readFileSync(isTest ? TEST_FILE : PROD_FILE).toString('utf8')
   } catch (e) {}
 
   var data = ini.parse(text)
@@ -37,7 +37,6 @@ function saveSync (data, isTest) {
 
   fs.outputFileSync(isTest ? TEST_FILE : PROD_FILE, text)
 }
-
 
 module.exports = {
   TEST_FILE: TEST_FILE,

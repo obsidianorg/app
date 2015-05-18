@@ -1,12 +1,12 @@
 var assert = require('assert')
 var path = require('path')
 
-function decode(text) {
+function decode (text) {
   text = stripCommentsAndWhitespace(text)
   var lines = text.split('\n')
 
   var arr = []
-  lines.forEach(function(line) {
+  lines.forEach(function (line) {
     var fields = line.split(' ')
 
     var item = {
@@ -21,14 +21,15 @@ function decode(text) {
       var label = lr.split('label=')[1]
       item.label = label
       // some cases where there is no label, i.e. 'label='
-      if (item.label === undefined)
+      if (item.label === undefined) {
         item.label = ''
+      }
       // replacing %20 with space, can't use encodeURICompoment because of '=. #' etc
       item.label = item.label.split('%20').join(' ')
     }
 
     if (lr.indexOf('reserve') >= 0) {
-      item.reserve =  lr.split('reserve=')[1]
+      item.reserve = lr.split('reserve=')[1]
     }
 
     arr.push(item)
@@ -38,22 +39,22 @@ function decode(text) {
 }
 
 // naive / not optimally efficient, however, practically won't matter
-function stripCommentsAndWhitespace(text) {
+function stripCommentsAndWhitespace (text) {
   var lines = text.split('\n')
 
   // strip comments
-  lines = lines.map(function(line) {
+  lines = lines.map(function (line) {
     return stripCommentFromLine(line)
   })
 
     // filter empty lines
-  lines = lines.filter(function(line) {
+  lines = lines.filter(function (line) {
     return !!line.trim()
   })
 
   return lines.join('\n')
 
-  function stripCommentFromLine(line, startPos) {
+  function stripCommentFromLine (line, startPos) {
     startPos = ~~startPos
 
     var commentPos = line.indexOf('#', startPos)
@@ -68,8 +69,8 @@ function stripCommentsAndWhitespace(text) {
   }
 }
 
-function encode(arr) {
-  var text = arr.map(function(item) {
+function encode (arr) {
+  var text = arr.map(function (item) {
     if (item.birth instanceof Date) {
       item.birth = item.birth.toISOString()
       // chop off second fractions (milliseconds)
@@ -82,10 +83,11 @@ function encode(arr) {
     assert(!('label' in item && 'reserve' in item), "Can't have both label and reserve.")
     assert('label' in item || 'reserve' in item, 'Must have at least a label or reserve.')
 
-    if ('label' in item)
+    if ('label' in item) {
       line += ' label=' + item.label.split(' ').join('%20')
-    else if ('reserve' in item)
+    } else if ('reserve' in item) {
       line += ' reserve=' + item.reserve
+    }
 
     return line.trim()
   }).join('\n')

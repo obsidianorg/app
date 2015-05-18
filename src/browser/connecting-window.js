@@ -23,12 +23,12 @@ function initAndShow (isTest, callback) {
 
   connectingWindow.loadUrl(indexUrl)
 
-  connectingWindow.on('closed', function() {
+  connectingWindow.on('closed', function () {
     connectingWindow = null
   })
 
-  connectingWindow.webContents.on('did-finish-load', function() {
-    setTimeout(function() {
+  connectingWindow.webContents.on('did-finish-load', function () {
+    setTimeout(function () {
       callback(connectingWindow)
     }, 250)
   })
@@ -38,4 +38,3 @@ function initAndShow (isTest, callback) {
 module.exports = {
   initAndShow: initAndShow
 }
-

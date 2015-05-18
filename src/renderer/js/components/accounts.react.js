@@ -2,7 +2,13 @@ var React = require('react')
 var AccountItem = require('./account-item.react')
 
 var Accounts = React.createClass({
-  render: function() {
+  displayName: 'Accounts',
+
+  propTypes: {
+    data: React.PropTypes.object
+  },
+
+  render: function () {
     var accounts = []
 
     for (var key in this.props.data) {
@@ -10,7 +16,7 @@ var Accounts = React.createClass({
     }
 
     return (
-      <section className="wrapper">
+      <section className='wrapper'>
         { accounts }
       </section>
     )

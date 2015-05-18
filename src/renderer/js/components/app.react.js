@@ -2,26 +2,26 @@ var React = require('react')
 var Sidebar = require('./sidebar.react')
 var Header = require('./header.react')
 var SendForm = require('./send-form.react')
-var PaymentStore = require('../stores/payments-store')
 
 var App = React.createClass({
-  getInitialState: function() {
+  displayName: 'App',
+
+  getInitialState: function () {
     return null
   },
 
-  componentDidMount: function() {
+  componentDidMount: function () {
   },
 
-  componentWillUnmount: function() {
+  componentWillUnmount: function () {
   },
 
-
-  render: function() {
+  render: function () {
     return (
-      <div id="container" >
+      <div id='container' >
         <Sidebar />
 
-        <section id="main-content">
+        <section id='main-content'>
           <Header />
           <SendForm />
         </section>
@@ -29,7 +29,7 @@ var App = React.createClass({
     )
   },
 
-  _onChange: function() {
+  _onChange: function () {
   }
 })
 

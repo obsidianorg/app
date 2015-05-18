@@ -3,24 +3,27 @@ var CoinKey = require('coinkey')
 var proxyquire = require('proxyquire')
 var Stealth = require('stealth')
 var _ = require('lodash')
-var terst = require('terst')
 var txUtils = require('../../blockchain/txutils')
 // the fixtures will almost certainly require refactoring
 var fixtures = require('./stealth-payment.fixtures')
+require('terst')
+
+/* global describe, it EQ, NEQ */
+/* eslint-disable no-spaced-func */
 
 var blkqtStub = {
   '@noCallThru': true // for proxyquire
 }
 
-var cryptocoin = _.assign({'@noCallThru':true}, require('../../../../common/cryptocoin'))
+var cryptocoin = _.assign({'@noCallThru': true}, require('../../../../common/cryptocoin'))
 
 describe('stealth-payment', function () {
   describe('+ prepareSend()', function () {
-    it('should prepare', function(done) {
+    it('should prepare', function (done) {
       var f1 = fixtures.prepareSend.valid[0]
 
       var blkqt = _.assign({
-        getUnspents: function(address, callback) {
+        getUnspents: function (address, callback) {
           callback(null, f1.output.utxos)
         }
       }, blkqtStub)
@@ -31,7 +34,7 @@ describe('stealth-payment', function () {
       }
 
       var stealthPayment = proxyquire('../stealth-payment', stubs)
-      stealthPayment.prepareSend(f1.input, function(err, data) {
+      stealthPayment.prepareSend(f1.input, function (err, data) {
         NEQ(err)
         assert.deepEqual(data, f1.output)
         done()
@@ -39,16 +42,16 @@ describe('stealth-payment', function () {
     })
   })
 
-  describe('+ createTx()', function() {
-    it('should create the tx', function(done) {
+  describe('+ createTx()', function () {
+    it('should create the tx', function (done) {
       var f1ps = fixtures.prepareSend.valid[0]
       var f1ctx = fixtures.createTx.valid[0]
 
       var blkqt = _.assign({
-        getNewAddress: function(callback) {
+        getNewAddress: function (callback) {
           callback(null, f1ctx.standardOutputs[1].address)
         },
-        getWif: function(address, callback) {
+        getWif: function (address, callback) {
           callback(null, f1ctx.utxoKeys[0])
         }
       }, blkqtStub)
@@ -56,10 +59,10 @@ describe('stealth-payment', function () {
       var stubs = {
         '../lib/blkqt': blkqt,
         '@common/cryptocoin': _.assign(cryptocoin, {
-          create: function() {
+          create: function () {
             return {
               CoinKey: {
-                createRandom: function() {
+                createRandom: function () {
                   return CoinKey.fromWif(f1ctx.nonce)
                 },
                 fromWif: CoinKey.fromWif
@@ -68,14 +71,14 @@ describe('stealth-payment', function () {
           }
         }),
         '../blockchain/txutils': {
-          setCurrentTime: function(tx) {
+          setCurrentTime: function (tx) {
             tx.timestamp = f1ctx.timestamp
           }
         }
       }
 
       var stealthPayment = proxyquire('../stealth-payment', stubs)
-      stealthPayment.createTx(f1ps.output, function(err, tx) {
+      stealthPayment.createTx(f1ps.output, function (err, tx) {
         NEQ(err)
         var hex = txUtils.serializeToHex(tx)
         EQ(f1ctx.txHex, hex)
@@ -84,15 +87,15 @@ describe('stealth-payment', function () {
     })
   })
 
-  describe('+ checkTx', function() {
-    it('should check transaction for OP_RETURN data that matches stealth key', function() {
+  describe('+ checkTx', function () {
+    it('should check transaction for OP_RETURN data that matches stealth key', function () {
       var f1chtx = fixtures.checkTx.valid[0]
 
       var stubs = {
         '../lib/blkqt': blkqtStub,
         '@common/cryptocoin': cryptocoin,
         './stealth': {
-          load: function() {
+          load: function () {
             return Stealth.fromJSON(JSON.stringify(f1chtx.stealth))
           }
         }
@@ -104,4 +107,3 @@ describe('stealth-payment', function () {
     })
   })
 })
-
