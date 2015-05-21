@@ -8,7 +8,7 @@ var spawn = childProcess.spawn
 var atomPkg = {
   name: pkg.name,
   version: pkg.version,
-  main: './browser/index.js'
+  main: pkg.main
 }
 
 var ATOM_PATH = '/Applications/Atom.app/Contents/MacOS/Atom'
