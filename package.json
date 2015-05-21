@@ -10,7 +10,7 @@
     "bigi": "^1.4.0",
     "bitcoin": "^2.2.0",
     "bluebird": "^2.6.2",
-    "browserify": "^9.0.3",
+    "browserify": "^10.2.1",
     "bs58": "^2.0.1",
     "buffer": "^3.2.2",
     "cb-insight": "^0.1.0",
