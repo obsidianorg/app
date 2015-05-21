@@ -1,0 +1,36 @@
+{
+  "createTx": {
+    "valid": [
+      {
+        "pseudonym": "obsidian-test",
+        "utxos": [
+          {
+            "txId" : "be5a926476145d18d6224d540f3a4fb915d4dc526f3e0707f3b57f51417ccb57",
+            "vout" : 0,
+            "address" : "BGbKmBihhSN7F2rgyhR3Rxzpn3dmJ4PG8C",
+            "scriptPubKey" : "76a9148530a5471cfe3eb1e5ec57131a566fea167df23288ac",
+            "value" : 35000000000
+          }
+        ],
+        "txId": "e4cf05df7efa023b0c9854b7da4e6b93cc10938293b0bf420050c942711567de",
+        "timestamp": 1431981481,
+        "txHex": "01000000a94d5a550157cb7c41517fb5f307073e6f52dcd415b94f3a0f544d22d6185d147664925abe000000006a473044022016f5498045eec0d1dacd3a1f07777c1201e07242f8ae4a6991f4c24e01521fd5022072be17fab1ad96643991b7b34a87f909951fdc02a13b94a9b6fde3eb5d2d34ce012102de8fa41a4e9f7c8939fb48013026f65290909df03c30c900ac60b22a9293d332ffffffff040100000000000000156a135f4f5052473a6f6273696469616e2d746573740034e23004000000232102c90a458645cd5d0f624f6242c0aa9240afd291f31653456a015d66ad9be30cb5ac007841cb0200000023210369f6bfe5421e60730a95944263e47ce599800bf5ad5c1a657010d3a26edcf6cdacefca052a010000001976a9147ba9f249679db3ec935dec79da1286e0525442a288ac00000000",
+        "utxoKeys": [
+          "PfY83QxgHDqkimnHTknLMMkrNfN1yfuzb9bk8JTrQn3AkD1s9Ewu"
+        ],
+        "standardOutputs": [
+          {
+            "address": "BFixKPugisktVrWQM7bCLKqLtsvB1ArwMi"
+          }
+        ],
+        "stealth": {
+          "payloadPrivKey": "ad7c17a0540a5867c90df9f5fb8d70e2cee37ecf17e5b6bb6c85182a5667c91e",
+          "payloadPubKey": "02c90a458645cd5d0f624f6242c0aa9240afd291f31653456a015d66ad9be30cb5",
+          "scanPrivKey": "0867f9ed0bb492b54bcb2eef58f17b23f2dd203b9663451ce46e06ce8e75aaae",
+          "scanPubKey": "0369f6bfe5421e60730a95944263e47ce599800bf5ad5c1a657010d3a26edcf6cd",
+          "version": 39
+        }
+      }
+    ]
+  }
+}
