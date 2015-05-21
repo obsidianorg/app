@@ -1,6 +1,7 @@
 0.3.0 / 2015-xx-yy
 ------------------
 - converted to [JavaScript Standard Style](https://github.com/feross/standard)
+- upgrade React.js to 0.13
 
 0.2.2 / 2015-04-11
 ------------------
