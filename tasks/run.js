@@ -3,10 +3,11 @@ var gulp = require('gulp')
 var gutil = require('gulp-util')
 var spawn = childProcess.spawn
 
-var ATOM_PATH = '/Applications/Atom.app/Contents/MacOS/Atom'
+var ELECTRON_PATH = '/Applications/Atom.app/Contents/MacOS/Atom'
+// var ELECTRON_PATH = '/Applications/Electron.app/Contents/MacOS/Electron'
 
-gulp.task('run-atom', function () {
-  var atom = spawn(ATOM_PATH, ['./'])
+gulp.task('run', function () {
+  var atom = spawn(ELECTRON_PATH, ['./'])
   atom.stdout.on('data', function (data) {
     gutil.log(data.toString('utf8'))
   })
