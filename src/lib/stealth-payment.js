@@ -11,7 +11,7 @@ var Script = cointx.Script
 var Transaction = cointx.Transaction
 var BLK_INFO = ci('BLK')
 
-var cc = require('@common/cryptocoin').create()
+var cc = require('../common/cryptocoin').create()
 
 var BLK_MUL = 1e8
 

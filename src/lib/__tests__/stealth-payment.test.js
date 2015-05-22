@@ -15,7 +15,7 @@ var blkqtStub = {
   '@noCallThru': true // for proxyquire
 }
 
-var cryptocoin = _.assign({'@noCallThru': true}, require('../../../../common/cryptocoin'))
+var cryptocoin = _.assign({'@noCallThru': true}, require('../../common/cryptocoin'))
 
 describe('stealth-payment', function () {
   describe('+ prepareSend()', function () {
@@ -30,7 +30,7 @@ describe('stealth-payment', function () {
 
       var stubs = {
         '../lib/blkqt': blkqt,
-        '@common/cryptocoin': cryptocoin
+        '../common/cryptocoin': cryptocoin
       }
 
       var stealthPayment = proxyquire('../stealth-payment', stubs)
@@ -58,7 +58,7 @@ describe('stealth-payment', function () {
 
       var stubs = {
         '../lib/blkqt': blkqt,
-        '@common/cryptocoin': _.assign(cryptocoin, {
+        '../common/cryptocoin': _.assign(cryptocoin, {
           create: function () {
             return {
               CoinKey: {
@@ -93,7 +93,7 @@ describe('stealth-payment', function () {
 
       var stubs = {
         '../lib/blkqt': blkqtStub,
-        '@common/cryptocoin': cryptocoin,
+        '../common/cryptocoin': cryptocoin,
         './stealth': {
           load: function () {
             return Stealth.fromJSON(JSON.stringify(f1chtx.stealth))

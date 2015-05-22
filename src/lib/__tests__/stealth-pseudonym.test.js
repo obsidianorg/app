@@ -10,7 +10,7 @@ var fixtures = require('./stealth-pseudonym.fixtures')
 var blkqtStub = {
   '@noCallThru': true // for proxyquire
 }
-var cryptocoin = _.assign({'@noCallThru': true}, require('../../../../common/cryptocoin'))
+var cryptocoin = _.assign({'@noCallThru': true}, require('../../common/cryptocoin'))
 
 describe('stealth-pseudonym', function () {
   it('should create a pseudonym registery transaction', function (done) {
@@ -29,7 +29,7 @@ describe('stealth-pseudonym', function () {
 
     var stubs = {
       '../lib/blkqt': blkqt,
-      '@common/cryptocoin': cryptocoin,
+      '../common/cryptocoin': cryptocoin,
       '../blockchain/txutils': {
         setCurrentTime: function (tx) {
           tx.timestamp = f1.timestamp

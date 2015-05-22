@@ -9,7 +9,7 @@ var Script = cointx.Script
 var Transaction = cointx.Transaction
 var BLK_INFO = ci('BLK')
 
-var cc = require('@common/cryptocoin').create()
+var cc = require('../common/cryptocoin').create()
 
 function createRegistryTx (pseudonym, stealthKey, callback) {
   assert(typeof pseudonym, 'pseudonym must be a string')

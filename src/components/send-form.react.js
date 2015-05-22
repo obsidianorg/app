@@ -1,14 +1,14 @@
 var util = require('util')
-var accounting = require('@common/accounting')
 var React = require('react')
 var _ = require('lodash')
+var accounting = require('../common/accounting')
 var alert = require('../lib/alert')
 var atom = require('../atom')
 var PaymentActions = require('../actions/payment-actions')
 var stealthPayment = require('../lib/stealth-payment')
 var stealth = require('../lib/stealth')
 var userLang = require('../lib/lang').getLanguage()
-var lang = require('../../../common/lang').getLanguageData(userLang).getContext(__filename)
+var lang = require('../common/lang').getLanguageData(userLang).getContext(__filename)
 
 // only onefor now
 var sk = stealth.load()
@@ -118,7 +118,7 @@ var SendForm = React.createClass({
         <button type='button' className='btn btn-lg'
           onClick={ this.handleShowDebug }
           style={{marginRight: '1.2rem', width: '220px'}}>
-          Show Debug
+          Show test hello
         </button>
       </form>
     )
