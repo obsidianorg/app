@@ -63,10 +63,6 @@ var SendForm = React.createClass({
     })
   },
 
-  handleShowDebug: function () {
-    atom.remote.getCurrentWindow().openDevTools()
-  },
-
   render: function () {
     var formStyle = {
       padding: '10px'
@@ -100,11 +96,6 @@ var SendForm = React.createClass({
           onClick={ this.handleSend }
           style={{marginRight: '1.2rem', width: '220px'}}>
           { lang.sendButton }
-        </button>
-        <button type='button' className='btn btn-lg'
-          onClick={ this.handleShowDebug }
-          style={{marginRight: '1.2rem', width: '220px'}}>
-          Show test hello
         </button>
       </form>
     )

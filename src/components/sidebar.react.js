@@ -1,4 +1,5 @@
 var clipboard = require('clipboard')
+var remote = require('remote')
 var React = require('react')
 var SidebarButton = require('./sidebar-button.react')
 var stealth = require('../lib/stealth')
@@ -21,7 +22,7 @@ var Sidebar = React.createClass({
   },
 
   handleClickShowDevTools: function () {
-
+    remote.getCurrentWindow().toggleDevTools()
   },
 
   render: function () {
@@ -42,9 +43,10 @@ var Sidebar = React.createClass({
                 icon='share-alt'/>
             </li>
             <li>
-              <a title='Show Developer Tools' >
-                <i className='fa fa-wrench'></i>
-              </a>
+              <SidebarButton
+                hoverText='Show Developer Tools'
+                onClick={ this.handleClickShowDevTools }
+                icon='wrench'/>
             </li>
           </ul>
         </div>
