@@ -47,14 +47,16 @@ body {
   position: relative;
 }
 
+ul.sidebar-menu {
+  position: fixed;
+  bottom: 0px;
+  height: 150px;
+}
+
 ul.sidebar-menu,
 ul.sidebar-menu li {
   margin: -2px 0 0;
   padding: 0;
-}
-
-ul.sidebar-menu {
-  margin-top: 45px;
 }
 
 ul.sidebar-menu li{
@@ -72,15 +74,15 @@ ul.sidebar-menu li a{
   color: #aeb2b7;
   text-decoration: none;
   display: block;
-  padding: 15px 0 15px 10px;
+  padding: 0px 0 0px 5px;
   font-size: 18px;
   outline: none;
-  -webkit-transition: all 0.3s ease;
   transition: all 0.3s ease;
+  margin-bottom: 20px;
 }
 
 ul.sidebar-menu li a i {
-  font-size: 15px;
+  font-size: 30px;
   padding-right: 6px;
 }
 
