@@ -94,7 +94,7 @@ var SendForm = React.createClass({
         </div>
         <button type='button' className='btn btn-lg'
           onClick={ this.handleSend }
-          style={{marginRight: '1.2rem', width: '220px'}}>
+          style={{marginRight: '1.2rem', marginTop: '1.5rem', width: '220px'}}>
           { lang.sendButton }
         </button>
       </form>
