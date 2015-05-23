@@ -6,12 +6,8 @@ var alert = require('../lib/alert')
 var atom = require('../atom')
 var PaymentActions = require('../actions/payment-actions')
 var stealthPayment = require('../lib/stealth-payment')
-var stealth = require('../lib/stealth')
 var userLang = require('../lib/lang').getLanguage()
 var lang = require('../common/lang').getLanguageData(userLang).getContext(__filename)
-
-// only onefor now
-var sk = stealth.load()
 
 var SendForm = React.createClass({
   displayName: 'SendForm',
@@ -27,11 +23,6 @@ var SendForm = React.createClass({
     this.setState({
       amount: event.target.value
     })
-  },
-
-  handleCopy: function (event) {
-    atom.clipboard.writeText(sk.toString())
-    console.log(sk + ' copied')
   },
 
   handleReceiverChange: function (event) {
@@ -109,11 +100,6 @@ var SendForm = React.createClass({
           onClick={ this.handleSend }
           style={{marginRight: '1.2rem', width: '220px'}}>
           { lang.sendButton }
-        </button>
-        <button type='button' className='btn btn-lg'
-          onClick={ this.handleCopy }
-          style={{marginRight: '1.2rem', width: '220px'}}>
-          { lang.copyButton }
         </button>
         <button type='button' className='btn btn-lg'
           onClick={ this.handleShowDebug }

@@ -1,5 +1,12 @@
+var clipboard = require('clipboard')
 var React = require('react')
 var SidebarButton = require('./sidebar-button.react')
+var stealth = require('../lib/stealth')
+var userLang = require('../lib/lang').getLanguage()
+var lang = require('../common/lang').getLanguageData(userLang).getContext('send-form')
+
+// only onefor now
+var sk = stealth.load()
 
 var Sidebar = React.createClass({
   displayName: 'Sidebar',
@@ -9,7 +16,8 @@ var Sidebar = React.createClass({
   },
 
   handleClickCopy: function () {
-
+    clipboard.writeText(sk.toString())
+    console.log(sk + ' copied')
   },
 
   handleClickShowDevTools: function () {
@@ -28,9 +36,10 @@ var Sidebar = React.createClass({
                 icon='user-secret'/>
             </li>
             <li>
-              <a title='Copy Stealth Address'>
-                <i className='fa fa-share-alt'></i>
-              </a>
+              <SidebarButton
+                hoverText={ lang.copyButton }
+                onClick={ this.handleClickCopy }
+                icon='share-alt'/>
             </li>
             <li>
               <a title='Show Developer Tools' >
