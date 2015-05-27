@@ -1103,7 +1103,7 @@
       "from": "ecurve@latest"
     },
     "electron-window": {
-      "version": "0.2.1",
+      "version": "0.3.0",
       "from": "electron-window@latest"
     },
     "flux": {
