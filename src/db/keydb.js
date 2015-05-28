@@ -1,5 +1,6 @@
 var CoinKey = require('coinkey')
 var Stealth = require('stealth')
+var window = require('../domwindow')
 
 var STEALTH_CONSTANT = 0x27
 var LS_KEY = 'sk'
