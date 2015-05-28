@@ -1,0 +1,15 @@
+{
+  "names": [
+    {
+      "name": "obsidian-test",
+      "data": {
+        "stealth": {
+          "payloadPubKey": "",
+          "scanPubKey": ""
+        },
+        "txId": "e4cf05df7efa023b0c9854b7da4e6b93cc10938293b0bf420050c942711567de",
+        "blockHeight": "692087"
+      }
+    }
+  ]
+}
