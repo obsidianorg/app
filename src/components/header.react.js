@@ -1,17 +1,9 @@
-var clipboard = require('clip' + 'board')
 var React = require('react')
-var stealth = require('../lib/stealth')
-
-// only onefor now
-var sk = stealth.load()
 
 var Header = React.createClass({
   displayName: 'Header',
 
-  handleClick: function (e) {
-    clipboard.writeText(sk.toString())
-    console.log(sk + ' copied')
-  },
+  handleClick: function (e) {},
 
   render: function () {
     return (
