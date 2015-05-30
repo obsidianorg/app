@@ -91,7 +91,7 @@ function checkBlocks (start, finish, callback) {
       updateLastKnown(current)
     }
 
-    stealthPayment.checkBlock(current, function (err, arrData) {
+    checkBlock(current, function (err, arrData) {
       if (err) return callback(err)
 
       if (arrData.length > 0) {
@@ -116,6 +116,19 @@ function checkBlocks (start, finish, callback) {
     })
   }
   check(start)
+}
+
+function checkBlock (blockHeight, callback) {
+  blkqt.getRawTransactionsFromBlock(blockHeight, function (err, blockData) {
+    if (err) return callback(err)
+    var keys = []
+    blockData.txs.forEach(function (rawTx) {
+      var key = stealthPayment.checkTx(rawTx)
+      if (key) keys.push({keyPair: key, timestamp: blockData.timestamp, blockHeight: blockData.blockHeight})
+    })
+
+    callback(null, keys)
+  })
 }
 
 module.exports = {
