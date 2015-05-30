@@ -2,7 +2,7 @@ var clipboard = require('clipboard')
 var remote = require('remote')
 var React = require('react')
 var SidebarButton = require('./sidebar-button.react')
-var stealth = require('../lib/stealth')
+var stealth = require('../db/keydb')
 var userLang = require('../lib/lang').getLanguage()
 var lang = require('../common/lang').getLanguageData(userLang).getContext('send-form')
 
