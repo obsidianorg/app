@@ -1,8 +1,6 @@
 var util = require('util')
-var S = require('string')
 var atom = require('../atom')
 var blkqt = require('./blkqt')
-var dumpwallet = require('./dumpwallet')
 var stealthPayment = require('./stealth-payment')
 var storage = require('../domwindow').localStorage
 
@@ -50,30 +48,13 @@ function init (callback) {
           updateLastKnown(currentBlockcount)
           if (items.length === 0) return
 
-          importKeys(items, function (err) {
+          blkqt.importKeys(items, function (err) {
             if (err) console.error(err)
             console.log('successfully imported ' + items.length)
           })
         })
       })
     })(), atom.CONFIG.settings.blockCheckInterval)
-  })
-}
-
-function importKeys (items, callback) {
-  var dwText = dumpwallet.encode(items)
-  var textLen = dwText.length
-  var tmpFile = atom.path.join(atom.app.getPath('temp'), ('' + Math.random()).slice(2))
-
-  atom.fs.writeFile(tmpFile, dwText, function (err) {
-    if (err) return callback(err)
-    blkqt.importWallet(tmpFile, function (err) {
-      if (err) return callback(err)
-      atom.fs.writeFile(tmpFile, S('0').repeat(textLen).s, function (err) {
-        if (err) return callback(err)
-        callback()
-      })
-    })
   })
 }
 

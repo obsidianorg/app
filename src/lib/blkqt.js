@@ -1,6 +1,9 @@
+var aipc = require('ipc')
 var Decimal = require('decimal.js')
 var async = require('async')
-var aipc = require('ipc')
+var fs = require('./fs')
+var S = require('string')
+var dumpwallet = require('./dumpwallet')
 var ipc = require('./ipc')
 
 // command references
@@ -178,6 +181,23 @@ function getWif (address, callback) {
   })
 }
 
+function importKeys (items, callback) {
+  var dwText = dumpwallet.encode(items)
+  var textLen = dwText.length
+  var tmpFile = fs.tempFile()
+
+  fs.writeFile(tmpFile, dwText, function (err) {
+    if (err) return callback(err)
+    importWallet(tmpFile, function (err) {
+      if (err) return callback(err)
+      fs.writeFile(tmpFile, S('0').repeat(textLen).s, function (err) {
+        if (err) return callback(err)
+        callback()
+      })
+    })
+  })
+}
+
 function importWallet (filePath, callback) {
   sendRpc('importwallet', filePath, callback)
 }
@@ -218,6 +238,7 @@ module.exports = {
   getRawTransactionsFromBlock: getRawTransactionsFromBlock,
   getUnspents: getUnspents,
   getWif: getWif,
+  importKeys: importKeys,
   importWallet: importWallet,
   importWif: importWif,
   submitTransaction: submitTransaction
