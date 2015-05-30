@@ -2,10 +2,8 @@ var assert = require('assert')
 var _ = require('lodash')
 var dumpwallet = require('../dumpwallet')
 var fixtures = require('./dumpwallet.fixtures')
-require('terst')
 
-/* global describe, it EQ, T */
-/* eslint-disable no-spaced-func */
+/* global describe, it */
 
 describe('dumpwallet', function () {
   fixtures.valid.forEach(function (f) {
@@ -13,8 +11,8 @@ describe('dumpwallet', function () {
       it('should convert dumpwallet text format to obj', function () {
         // f.text is expressed as an array because it's easier to read
         var arr = dumpwallet.decode(f.text.join('\n'))
-        EQ (arr.length, f.array.length)
-        T (arr.length > 0)
+        assert.strictEqual(arr.length, f.array.length)
+        assert(arr.length > 0)
         assert.deepEqual(arr, f.array)
       })
     })
@@ -22,7 +20,7 @@ describe('dumpwallet', function () {
     describe('+ encode()', function () {
       it('should covert an array of objects to dumpwallet text format', function () {
         var text = dumpwallet.encode(f.array)
-        EQ (text, f.sanitizedText.join('\n') + '\n')
+        assert.strictEqual(text, f.sanitizedText.join('\n') + '\n')
       })
 
       describe('> when field birth is type date', function () {
@@ -33,7 +31,7 @@ describe('dumpwallet', function () {
           })
 
           var text = dumpwallet.encode(expArr)
-          EQ (text, f.sanitizedText.join('\n') + '\n')
+          assert.strictEqual(text, f.sanitizedText.join('\n') + '\n')
         })
       })
     })
@@ -41,7 +39,7 @@ describe('dumpwallet', function () {
     describe('stripCommentsAndWhitespace', function () {
       it('should strip all comments and lines with whitespace', function () {
         var sanitizedText = dumpwallet.stripCommentsAndWhitespace(f.text.join('\n'))
-        EQ (sanitizedText, f.sanitizedText.join('\n'))
+        assert.strictEqual(sanitizedText, f.sanitizedText.join('\n'))
       })
     })
   })

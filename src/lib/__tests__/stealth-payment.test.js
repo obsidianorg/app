@@ -6,10 +6,8 @@ var _ = require('lodash')
 var txUtils = require('../../blockchain/txutils')
 // the fixtures will almost certainly require refactoring
 var fixtures = require('./stealth-payment.fixtures')
-require('terst')
 
-/* global describe, it EQ, NEQ */
-/* eslint-disable no-spaced-func */
+/* global describe, it */
 
 var blkqtStub = {
   '@noCallThru': true // for proxyquire
@@ -35,7 +33,7 @@ describe('stealth-payment', function () {
 
       var stealthPayment = proxyquire('../stealth-payment', stubs)
       stealthPayment.prepareSend(f1.input, function (err, data) {
-        NEQ(err)
+        assert.ifError(err)
         assert.deepEqual(data, f1.output)
         done()
       })
@@ -79,9 +77,9 @@ describe('stealth-payment', function () {
 
       var stealthPayment = proxyquire('../stealth-payment', stubs)
       stealthPayment.createTx(f1ps.output, function (err, tx) {
-        NEQ(err)
+        assert.ifError(err)
         var hex = txUtils.serializeToHex(tx)
-        EQ(f1ctx.txHex, hex)
+        assert.strictEqual(f1ctx.txHex, hex)
         done()
       })
     })
@@ -103,7 +101,7 @@ describe('stealth-payment', function () {
 
       var stealthPayment = proxyquire('../stealth-payment', stubs)
       var keyPair = stealthPayment.checkTx(f1chtx.txHex)
-      EQ (keyPair.privateWif, f1chtx.wif)
+      assert.strictEqual(keyPair.privateWif, f1chtx.wif)
     })
   })
 })

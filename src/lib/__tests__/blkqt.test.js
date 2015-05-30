@@ -2,10 +2,8 @@ var assert = require('assert')
 var proxyquire = require('proxyquire')
 var _ = require('lodash')
 var fixtures = require('./blkqt.fixtures')
-require('terst')
 
-/* global describe, it EQ */
-/* eslint-disable no-spaced-func */
+/* global describe, it */
 
 var atomStub = {
   '@noCallThru': true // for proxyquire
@@ -41,10 +39,10 @@ describe('blkqt', function () {
             var utxo = unspents[i]
             var exp = f.expected[i]
 
-            EQ(utxo.txId, inp.txid)
-            EQ(utxo.txId, exp.txId)
-            EQ(utxo.amountRat, exp.amountRat)
-            EQ(utxo.amountRat, utxo.value)
+            assert.strictEqual(utxo.txId, inp.txid)
+            assert.strictEqual(utxo.txId, exp.txId)
+            assert.strictEqual(utxo.amountRat, exp.amountRat)
+            assert.strictEqual(utxo.amountRat, utxo.value)
           }
 
           done()
