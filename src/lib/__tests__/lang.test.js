@@ -11,7 +11,7 @@ describe('lang', function () {
           '../atom': {
             '@noCallThru': true
           },
-          '../window': {
+          '../domwindow': {
             '@noCallThru': true
           }
         }
@@ -27,7 +27,7 @@ describe('lang', function () {
           '../atom': {
             '@noCallThru': true
           },
-          '../window': {
+          '../domwindow': {
             navigator: {
               language: 'es-MX'
             },
@@ -51,7 +51,7 @@ describe('lang', function () {
             },
             '@noCallThru': true
           },
-          '../window': {
+          '../domwindow': {
             navigator: {
               language: 'es-MX'
             },

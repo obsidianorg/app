@@ -1,5 +1,5 @@
 var atom = require('../atom')
-var window = require('../window')
+var window = require('../domwindow')
 
 function getLanguage () {
   var browserLang = (window && window.navigator && window.navigator.language) || 'en-US'
