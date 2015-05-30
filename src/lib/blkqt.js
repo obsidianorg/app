@@ -139,7 +139,7 @@ function getRawTransactionsFromBlock (blockHeight, callback) {
       if (err) return callback(err)
       async.mapLimit(blockData.tx, 4, getRawTransaction, function (err, rawTxs) {
         if (err) return callback(err)
-        callback(null, {timestamp: blockData.time, txs: rawTxs, blockHeight: blockHeight})
+        callback(null, {timestamp: blockData.time, txs: rawTxs, height: blockHeight})
       })
     })
   })
