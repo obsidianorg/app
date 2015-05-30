@@ -48,4 +48,16 @@ describe('stealth-pseudonym', function () {
       })
     })
   })
+
+  describe('checkTx', function () {
+    it('should return the pub keys and pseudonym of a valid tx', function () {
+      var f0 = fixtures.createTx.valid[0]
+      var stealthPseudonym = require('../stealth-pseudonym')
+      var res = stealthPseudonym.checkTx(f0.txHex)
+
+      assert.strictEqual(res.pseudonym, f0.pseudonym)
+      assert.strictEqual(res.scanPubKey.toString('hex'), f0.stealth.scanPubKey)
+      assert.strictEqual(res.payloadPubKey.toString('hex'), f0.stealth.payloadPubKey)
+    })
+  })
 })
