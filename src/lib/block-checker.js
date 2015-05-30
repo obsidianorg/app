@@ -4,7 +4,7 @@ var atom = require('../atom')
 var blkqt = require('./blkqt')
 var dumpwallet = require('./dumpwallet')
 var stealthPayment = require('./stealth-payment')
-var storage = require('./storage')
+var storage = require('../domwindow').localStorage
 
 // "block count" or "block height" same thing
 var LS_KEY = 'lastBlockCount'
