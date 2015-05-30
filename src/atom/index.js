@@ -7,7 +7,6 @@ module.exports = {
   clipboard: require('clip' + 'board'),
   dialog: remote.require('dialog'),
   fs: remote.require('fs-extra'),
-  ipc: require('i' + 'pc'),
   path: remote.require('path'),
   remote: remote,
   shell: require('she' + 'll'),

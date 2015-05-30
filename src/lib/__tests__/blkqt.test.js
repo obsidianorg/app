@@ -27,7 +27,7 @@ describe('blkqt', function () {
 
         var stubs = {
           './ipc': ipc,
-          '../atom': atomStub
+          'ipc': atomStub
         }
 
         var blkqt = proxyquire('../blkqt', stubs)

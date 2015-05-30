@@ -1,18 +1,21 @@
 var Decimal = require('decimal.js')
 var async = require('async')
-var atom = require('../atom')
+var aipc = require('ipc')
 var ipc = require('./ipc')
 
 // command references
 // http://we.lovebitco.in/bitcoin-qt/command-reference/
 // https://en.bitcoin.it/wiki/Original_Bitcoin_client/API_calls_list
 
+// NEEDS refactoring, all proxied to main process, this was due to an error in
+// my understanding of the relationship between main/renderer
+
 function sendIPC (data, callback) {
   data.token = Date.now() + Math.random()
 
   if (callback) {
     var recpMsg = data.msg + '-' + data.token
-    atom.ipc.once(recpMsg, function () {
+    aipc.once(recpMsg, function () {
       var args = [].slice.call(arguments)
 
       // error
@@ -21,7 +24,7 @@ function sendIPC (data, callback) {
     })
   }
 
-  atom.ipc.send(data.msg, data)
+  aipc.send(data.msg, data)
 }
 
 function sendRpc (/** args **/) {

@@ -1,5 +1,4 @@
-var atom = require('../atom')
-var ipc = atom.ipc
+var ipc = require('ipc')
 
 function sendIpc (data, callback) {
   data.token = Date.now() + Math.random()
