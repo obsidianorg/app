@@ -9,19 +9,6 @@ var LS_KEY = 'lastBlockCount'
 var LAST_KNOWN = 0
 var TWELVE_MINS = 12 * 60 * 1000
 
-function getLastKnownBlockCount (callback) {
-  if (storage.getItem(LS_KEY)) {
-    return callback(null, parseInt(storage.getItem(LS_KEY), 10))
-  }
-
-  // if app never an before (i.e. no stealth payments could be before this)
-  blkqt.getBlockCount(function (err, bc) {
-    if (err) return callback(err)
-    storage.setItem(LS_KEY, LAST_KNOWN)
-    return callback(null, bc)
-  })
-}
-
 function updateLastKnown (blockHeight) {
   LAST_KNOWN = blockHeight
   storage.setItem(LS_KEY, LAST_KNOWN)
