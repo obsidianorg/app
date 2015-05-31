@@ -15,16 +15,16 @@ var cryptocoin = _.assign({'@noCallThru': true}, require('../../common/cryptocoi
 describe('stealth-pseudonym', function () {
   describe('createRegistryTx', function () {
     it('should create a pseudonym registery transaction', function (done) {
-      var f1 = fixtures.createTx.valid[0]
+      var f0 = fixtures.createTx.valid[0]
       var blkqt = _.assign({
         getUnspents: function (address, callback) {
-          callback(null, f1.utxos)
+          callback(null, f0.utxos)
         },
         getNewAddress: function (callback) {
-          callback(null, f1.standardOutputs[0].address)
+          callback(null, f0.standardOutputs[0].address)
         },
         getWif: function (address, callback) {
-          callback(null, f1.utxoKeys[0])
+          callback(null, f0.utxoKeys[0])
         }
       }, blkqtStub)
 
@@ -33,17 +33,17 @@ describe('stealth-pseudonym', function () {
         '../common/cryptocoin': cryptocoin,
         '../blockchain/txutils': {
           setCurrentTime: function (tx) {
-            tx.timestamp = f1.timestamp
+            tx.timestamp = f0.timestamp
           }
         }
       }
 
       var stealthPseudonym = proxyquire('../stealth-pseudonym', stubs)
-      var stealthKey = Stealth.fromJSON(JSON.stringify(f1.stealth))
-      stealthPseudonym.createRegistryTx(f1.pseudonym, stealthKey, function (err, tx) {
+      var stealthKey = Stealth.fromJSON(JSON.stringify(f0.stealth))
+      stealthPseudonym.createRegistryTx(f0.pseudonym, stealthKey, function (err, tx) {
         assert.ifError(err)
         var hex = txUtils.serializeToHex(tx)
-        assert.strictEqual(f1.txHex, hex)
+        assert.strictEqual(f0.txHex, hex)
         done()
       })
     })
