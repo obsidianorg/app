@@ -16,7 +16,7 @@ describe('block-checker', function () {
           callback(null, block605977)
         })
         stubo(stubs, './stealth-payment', 'checkTx()', {})
-        Object.keys(stubs).forEach(function (key) { stubs[key]['@noCallThru'] = true })
+        Object.keys(stubs).forEach(key => stubs[key]['@noCallThru'] = true)
 
         var blockHeight = block605977.height
         var blockChecker = proxyquire('../block-checker', stubs)

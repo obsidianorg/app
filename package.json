@@ -55,6 +55,6 @@
     "ignore": []
   },
   "scripts": {
-    "test": "standard && find ./src/ -name *.test.js | xargs ./node_modules/.bin/mocha"
+    "test": "standard && find ./src/ -name *.test.js | xargs ./node_modules/.bin/mocha --compilers js:babel/register"
   }
 }
