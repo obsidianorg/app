@@ -4,6 +4,7 @@
 - upgrade React.js to 0.13
 - restructured code
 - removed Browserify and associated libraries
+- upgraded `react-bootstrap`
 
 0.2.2 / 2015-04-11
 ------------------
