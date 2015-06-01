@@ -16,9 +16,10 @@ window.onload = function () {
   appGUI.renderApp()
 }
 
-var blockChecker = require('./lib/block-checker')
+var blockManager = require('./lib/block-manager')
+
 setTimeout(function () {
-  blockChecker.init(function (err) {
+  blockManager.start().on('error', function (err) {
     if (err) alert.showError(err)
   })
 }, 1000)
