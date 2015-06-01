@@ -3,6 +3,7 @@ var Decimal = require('decimal.js')
 var async = require('async')
 var fs = require('./fs')
 var S = require('string')
+var _ = require('lodash')
 var dumpwallet = require('./dumpwallet')
 var ipc = require('./ipc')
 
@@ -139,7 +140,11 @@ function getRawTransactionsFromBlock (blockHeight, callback) {
       if (err) return callback(err)
       async.mapLimit(blockData.tx, 4, getRawTransaction, function (err, rawTxs) {
         if (err) return callback(err)
-        callback(null, {timestamp: blockData.time, txs: rawTxs, height: blockHeight})
+        callback(null, {
+          timestamp: blockData.time,
+          txs: _.zipObject(blockData.tx, rawTxs), // => {txId1: txHex1, ..., txIdn: txHexn}
+          height: blockHeight
+        })
       })
     })
   })

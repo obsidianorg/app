@@ -20,7 +20,8 @@ function create () {
     blkqt.getRawTransactionsFromBlock(blockHeight, function (err, blockData) {
       if (err) return blockChecker.emit('error', err)
       var keys = []
-      blockData.txs.forEach(function (rawTx) {
+      Object.keys(blockData.txs).forEach(function (txId) {
+        var rawTx = blockData.txs[txId]
         var key = stealthPayment.checkTx(rawTx)
         if (!key) return
         keys.push({
