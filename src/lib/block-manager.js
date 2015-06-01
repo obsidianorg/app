@@ -116,7 +116,12 @@ function importKeys (keys) {
 // this doesn't belong here
 function importPseudonyms (pseudonyms) {
   pseudonyms.forEach(function (pseudonym) {
-    db.add(pseudonym.pseudonym, pseudonym, function (err) {
+    var pubKeys = {
+      scanPubKey: pseudonym.scanPubKey,
+      payloadPubKey: pseudonym.payloadPubKey
+    }
+
+    db.add(pseudonym.pseudonym, pubKeys, pseudonym.txId, pseudonym.blockHeight, function (err) {
       if (err) blockManager.emit('error', err)
     })
   })

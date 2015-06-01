@@ -1,5 +1,6 @@
 var path = require('path')
 var fs = require('fs-extra')
+var Stealth = require('stealth')
 var env = require('../env')
 
 // only one for now
@@ -37,9 +38,17 @@ function init (callback) {
   })
 }
 
-function add (name, data, callback) {
+function add (name, pubkeys, txId, blockHeight, callback) {
   if (this.data == null) return callback(new Error('You forgot to call init()'))
-  this.data.names[name] = data
+
+  var stealth = new Stealth(pubkeys)
+
+  this.data.names[name] = {
+    stealth: stealth.toString(),
+    txId: txId,
+    blockHeight: blockHeight
+  }
+
   fs.outputJson(this.file, this.data, callback)
 }
 

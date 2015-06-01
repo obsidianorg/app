@@ -82,12 +82,19 @@ describe('pdb', function () {
       db.init(function (err) {
         assert.ifError(err)
 
-        db.add(f0.name, f0.data, function (err) {
+        var pubKeys = {
+          payloadPubKey: new Buffer(f0.data.pubKeys.payloadPubKey, 'hex'),
+          scanPubKey: new Buffer(f0.data.pubKeys.scanPubKey, 'hex')
+        }
+
+        db.add(f0.name, pubKeys, f0.data.txId, f0.data.blockHeight, function (err) {
           assert.ifError(err)
 
           db.resolve(f0.name, function (err, data) {
             assert.ifError(err)
-            assert.deepEqual(f0.data, data)
+            assert.deepEqual(f0.data.stealth, data.stealth)
+            assert.deepEqual(f0.data.txId, data.txId)
+            assert.deepEqual(f0.data.blockHeight, data.blockHeight)
             done()
           })
         })

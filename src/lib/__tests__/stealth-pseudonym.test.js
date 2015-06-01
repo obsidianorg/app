@@ -37,6 +37,8 @@ describe('stealth-pseudonym', function () {
       var res = stealthPseudonym.checkTx(f0.txHex)
 
       assert.strictEqual(res.pseudonym, f0.pseudonym)
+      assert(Buffer.isBuffer(res.scanPubKey))
+      assert(Buffer.isBuffer(res.payloadPubKey))
       assert.strictEqual(res.scanPubKey.toString('hex'), f0.stealth.scanPubKey)
       assert.strictEqual(res.payloadPubKey.toString('hex'), f0.stealth.payloadPubKey)
     })
