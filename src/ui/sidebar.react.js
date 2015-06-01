@@ -2,12 +2,19 @@ var clipboard = require('clipboard')
 var remote = require('remote')
 var React = require('react')
 var SidebarButton = require('./sidebar-button.react')
+var PseudonymModal = require('./pseudonym-modal.react')
 var stealth = require('../db/keydb')
 var userLang = require('../lib/lang').getLanguage()
 var lang = require('../common/lang').getLanguageData(userLang).getContext('send-form')
+var ModalTrigger = require('react-bootstrap').ModalTrigger
+
+// todo, refactor
+var localStorage = require('../domwindow').localStorage
 
 // only onefor now
 var sk = stealth.load()
+
+var registerButtonVisible = !localStorage.pseudonym
 
 var Sidebar = React.createClass({
   displayName: 'Sidebar',
@@ -26,16 +33,22 @@ var Sidebar = React.createClass({
   },
 
   render: function () {
+    // this might be the wrong way to do this...
+    var registerButton = registerButtonVisible
+      ? <li>
+          <ModalTrigger modal={ <PseudonymModal/> }>
+            <SidebarButton
+              hoverText='Register Stealth Pseudonym'
+              icon='user-secret'/>
+          </ModalTrigger>
+        </li>
+      : <span></span>
+
     return (
       <aside>
         <div id='sidebar'>
           <ul className='sidebar-menu'>
-            <li>
-              <SidebarButton
-                hoverText='Register Stealth Pseudonym'
-                onClick={ this.handleClickRegister }
-                icon='user-secret'/>
-            </li>
+            { registerButton }
             <li>
               <SidebarButton
                 hoverText={ lang.copyButton }

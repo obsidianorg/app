@@ -50,7 +50,6 @@ body {
 ul.sidebar-menu {
   position: fixed;
   bottom: 0px;
-  height: 150px;
 }
 
 ul.sidebar-menu,
