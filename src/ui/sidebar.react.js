@@ -14,10 +14,14 @@ var localStorage = require('../domwindow').localStorage
 // only onefor now
 var sk = stealth.load()
 
-var registerButtonVisible = !localStorage.pseudonym
-
 var Sidebar = React.createClass({
   displayName: 'Sidebar',
+
+  getInitialState: function () {
+    return {
+      registerButtonVisible: !localStorage.pseudonym
+    }
+  },
 
   handleClickRegister: function () {
     window.alert('Not implemented yet.')
@@ -32,11 +36,17 @@ var Sidebar = React.createClass({
     remote.getCurrentWindow().toggleDevTools()
   },
 
+  handlePseudonymRegistered: function () {
+    this.setState({
+      registerButtonVisible: false
+    })
+  },
+
   render: function () {
     // this might be the wrong way to do this...
-    var registerButton = registerButtonVisible
+    var registerButton = this.state.registerButtonVisible
       ? <li>
-          <ModalTrigger modal={ <PseudonymModal/> }>
+          <ModalTrigger modal={ <PseudonymModal handlePseudonymRegistered={ this.handlePseudonymRegistered } /> }>
             <SidebarButton
               hoverText='Register Stealth Pseudonym'
               icon='user-secret'/>
