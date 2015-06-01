@@ -138,3 +138,11 @@ ul.sidebar-menu li a.active i {
   background-color: #daac53;
 }
 
+.modal-content {
+  background-color: #333;
+}
+
+.help-block {
+  font-size: 12px;
+}
+
