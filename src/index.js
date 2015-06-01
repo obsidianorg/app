@@ -3,6 +3,8 @@ require('babel/register')({
   only: '*.react.js'
 })
 
+require('./devtools')
+
 var alert = require('./lib/alert')
 // annoying popup an error box instead of silent console output
 window.onerror = function (message, url, line) {
