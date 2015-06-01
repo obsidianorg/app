@@ -11,6 +11,8 @@ window.onerror = function (message, url, line) {
   alert.showError(message + ' (' + line + ')')
 }
 
+require('./stores/payments-store')
+
 var appGUI = require('./ui/index.react')
 window.onload = function () {
   appGUI.renderApp()
