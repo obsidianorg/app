@@ -16,6 +16,7 @@ describe('block-checker', function () {
           callback(null, block605977)
         })
         stubo(stubs, './stealth-payment', 'checkTx()', {})
+        stubo(stubs, './stealth-pseudonym', 'checkTx()', {pseudonym: 'obsidian-test'})
         Object.keys(stubs).forEach(key => stubs[key]['@noCallThru'] = true)
 
         var blockHeight = block605977.height
@@ -27,9 +28,20 @@ describe('block-checker', function () {
           _keys = _keys ? assert(false, 'should only be called once') : keys
         })
 
+        var _pseudonyms
+        bc.on('stealth:pseudonym:registered', function (pseudonyms) {
+          _pseudonyms = _pseudonyms ? assert(false, 'should only be called once') : pseudonyms
+        })
+
         bc.on('block:checked', function () {
           assert(Array.isArray(_keys))
+          assert(Array.isArray(_pseudonyms))
+
           assert.strictEqual(_keys[0].blockHeight, blockHeight)
+
+          assert.strictEqual(_pseudonyms[0].pseudonym, 'obsidian-test')
+          assert(_pseudonyms[0].txId)
+          assert(_pseudonyms[0].blockHeight)
           done()
         })
 
