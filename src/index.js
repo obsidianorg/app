@@ -11,7 +11,7 @@ window.onerror = function (message, url, line) {
   alert.showError(message + ' (' + line + ')')
 }
 
-var appGUI = require('./components/index.react')
+var appGUI = require('./ui/index.react')
 window.onload = function () {
   appGUI.renderApp()
 }
