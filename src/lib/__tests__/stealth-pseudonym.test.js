@@ -21,7 +21,7 @@ describe('stealth-pseudonym', function () {
 
       var stealthPseudonym = proxyquire('../stealth-pseudonym', stubs)
       var stealthKey = Stealth.fromJSON(JSON.stringify(f0.stealth))
-      stealthPseudonym.createRegistryTx(f0.pseudonym, stealthKey, function (err, tx) {
+      stealthPseudonym.createRegistryTx(f0.pseudonym, stealthKey, 300, function (err, tx) {
         assert.ifError(err)
         var hex = txUtils.serializeToHex(tx)
         assert.strictEqual(f0.txHex, hex)

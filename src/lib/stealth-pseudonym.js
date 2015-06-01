@@ -13,11 +13,10 @@ var cc = require('../common/cryptocoin').create()
 
 var MIN_BLK = 100
 
-function createRegistryTx (pseudonym, stealthKey, callback) {
+function createRegistryTx (pseudonym, stealthKey, registryAmountBLK, callback) {
   assert(typeof pseudonym, 'pseudonym must be a string')
   assert(stealthKey, 'Must pass in stealthKey')
-
-  var registryAmountBLK = 300
+  assert(registryAmountBLK >= MIN_BLK, 'Amount must be greater than or equal to ' + MIN_BLK)
 
   var tx = new Transaction()
   txUtils.setCurrentTime(tx)
