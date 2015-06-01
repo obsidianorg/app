@@ -90,13 +90,11 @@ describe('pdb', function () {
         db.add(f0.name, pubKeys, f0.data.txId, f0.data.blockHeight, function (err) {
           assert.ifError(err)
 
-          db.resolve(f0.name, function (err, data) {
-            assert.ifError(err)
-            assert.deepEqual(f0.data.stealth, data.stealth)
-            assert.deepEqual(f0.data.txId, data.txId)
-            assert.deepEqual(f0.data.blockHeight, data.blockHeight)
-            done()
-          })
+          var data = db.resolveSync(f0.name)
+          assert.deepEqual(f0.data.stealth, data.stealth)
+          assert.deepEqual(f0.data.txId, data.txId)
+          assert.deepEqual(f0.data.blockHeight, data.blockHeight)
+          done()
         })
       })
     })

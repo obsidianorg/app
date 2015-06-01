@@ -17,7 +17,7 @@ function createPdb (config) {
 
   _pdb.init = init.bind(_pdb)
   _pdb.add = add.bind(_pdb)
-  _pdb.resolve = resolve.bind(_pdb)
+  _pdb.resolveSync = resolveSync.bind(_pdb)
 
   return _pdb
 }
@@ -52,9 +52,9 @@ function add (name, pubkeys, txId, blockHeight, callback) {
   fs.outputJson(this.file, this.data, callback)
 }
 
-function resolve (name, callback) {
-  if (this.data == null) return callback(new Error('You forgot to call init()'))
-  name in this.data.names ? callback(null, this.data.names[name]) : callback(null, null)
+function resolveSync (name) {
+  if (this.data == null) throw new Error('You forgot to call init()')
+  return name in this.data.names ? this.data.names[name] : null
 }
 
 module.exports = {
