@@ -42,6 +42,7 @@ function add (name, pubkeys, txId, blockHeight, callback) {
   if (this.data == null) return callback(new Error('You forgot to call init()'))
 
   var stealth = new Stealth(pubkeys)
+  stealth.version = 39 // BlackCoin specific
 
   this.data.names[name] = {
     stealth: stealth.toString(),
@@ -58,5 +59,6 @@ function resolveSync (name) {
 }
 
 module.exports = {
-  createPdb: createPdb
+  createPdb: createPdb,
+  PDB: PDB // temporary hack
 }
