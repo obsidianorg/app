@@ -8,7 +8,7 @@ var PDB = {}
 
 function createPdb (config) {
   config = config || {}
-  var file = config.file || path.join(env.datadir, 'pdb.db')
+  var file = config.file || path.join(env.datadir, 'obsidian', 'pdb.db')
 
   var _pdb = PDB
   _pdb.file = file
