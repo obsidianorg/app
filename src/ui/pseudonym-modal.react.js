@@ -2,9 +2,27 @@ var React = require('react')
 var Modal = require('react-bootstrap').Modal
 var Button = require('react-bootstrap').Button
 var Input = require('react-bootstrap').Input
+var alert = require('../lib/alert')
+var atom = require('../atom')
+var PaymentActions = require('../actions/payment-actions')
+var stealthPseudonym = require('../lib/stealth-pseudonym')
+var pdb = require('../db/pdb').PDB // temporary hack
+var stealth = require('../db/keydb')
+var localStorage = require('../domwindow').localStorage
+
+// already init'd in index.js/blockManager (this is hacky to rely upon that, TODO, fix)
+
+// only onefor now
+var sk = stealth.load()
 
 const PseudonymModal = React.createClass({
   displayName: 'PseudonymModal',
+
+  getDefaultProps: function () {
+    return {
+      handlePseudonymRegistered: Function()
+    }
+  },
 
   getInitialState: function () {
     return {
@@ -21,11 +39,38 @@ const PseudonymModal = React.createClass({
   },
 
   handleRegisterClicked: function () {
-    this.props.onRequestHide()
+    var dlgOpts = {
+      buttons: [
+        'Register',
+        'Cancel Register'
+      ],
+      title: 'Register Pseudonym?',
+      message: 'Are you sure that you want to register ' + this.state.value + ' at a a cost of 100 BLK?'
+    }
+
+    var self = this
+    var pseudonym = this.state.value
+
+    atom.dialog.showMessageBox(null, dlgOpts, function (buttonIdx) {
+      // check if register pressed
+      if (buttonIdx !== 0) return
+
+      stealthPseudonym.createRegistryTx(pseudonym, sk, 100, function (err, tx) {
+        if (err) return alert.showError(err)
+        PaymentActions.send({tx: tx})
+        window.alert(pseudonym + ' registered!')
+
+        localStorage.pseudonym = pseudonym
+
+        self.props.handlePseudonymRegistered()
+        self.props.onRequestHide()
+      })
+    })
   },
 
   propTypes: function () {
     return {
+      handlePseudonymRegistered: React.PropTypes.Func,
       onRequestHide: React.PropTypes.Func
     }
   },
@@ -37,6 +82,9 @@ const PseudonymModal = React.createClass({
     if (val.length === 0) return { style: undefined, message: '' }
     if (val.length < 4) return { style: 'error', message: 'Must be at least 4 characters.' }
     if (val.match(/\s/)) return { style: 'error', message: 'Can NOT contain any spaces.' }
+
+    // could use style 'warning' here
+    if (pdb.resolveSync(val)) return { style: 'error', message: val + ' already is registered.' }
 
     return { style: 'success', message: '' }
   },
@@ -64,7 +112,11 @@ const PseudonymModal = React.createClass({
         </div>
         <div className='modal-footer'>
           <Button onClick={ this.handleCancelClicked }>Cancel</Button>
-          <Button onClick={ this.handleRegisterClicked }>Register</Button>
+          {
+            validationResult.style === 'success'
+              ? <Button onClick={ this.handleRegisterClicked }>Register</Button>
+              : <Button disabled>Register</Button>
+          }
         </div>
       </Modal>
     )
