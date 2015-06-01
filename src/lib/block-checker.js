@@ -10,13 +10,6 @@ function create () {
   _.mixin(blockChecker, EventEmitter.prototype)
   EventEmitter.call(blockChecker)
 
-  blockChecker.run = function (start, finish) {
-    start = parseInt(start, 10)
-    finish = parseInt(finish, 10)
-
-    blockChecker.checkBlocks(start, finish)
-  }
-
   blockChecker.checkBlock = function (blockHeight) {
     blkqt.getRawTransactionsFromBlock(blockHeight, function (err, blockData) {
       if (err) return blockChecker.emit('error', err)
