@@ -1,10 +1,11 @@
-0.3.0 / 2015-xx-yy
-------------------
+0.3.0 / 2015-06-01
+----------------------
 - converted to [JavaScript Standard Style](https://github.com/feross/standard)
 - upgrade React.js to 0.13
 - restructured code
 - removed Browserify and associated libraries
 - upgraded `react-bootstrap`
+- pseudonym registry
 
 0.2.2 / 2015-04-11
 ------------------
