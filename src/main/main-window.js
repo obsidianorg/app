@@ -4,7 +4,7 @@ var window = require('electron-window')
 function initAndShow (callback) {
   var mainWindow = window.createWindow({
     width: 1000,
-    height: 365,
+    height: 385,
     'web-preferences': {
       // mama don't need CORs now
       'web-security': false
