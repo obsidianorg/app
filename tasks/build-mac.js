@@ -16,12 +16,6 @@ var FINAL_DIR = './release/obsidian-mac'
 
 var ATOM_VERSION = '0.21.2'
 
-var atomPkg = {
-  name: pkg.name,
-  version: pkg.version,
-  main: './browser/index.js'
-}
-
 gulp.task('build-mac', ['copy-icon'], function (done) {
   fs.removeSync(BUILD_ZIP_FILE)
   fs.removeSync(APP_DIR)
@@ -31,7 +25,7 @@ gulp.task('build-mac', ['copy-icon'], function (done) {
 
 // change this, integrate with actual build task 'bundle-atom-mac'
 gulp.task('copy-icon', ['asar-mac'], function (done) {
-  fs.copySync(path.resolve('src/renderer/res/icon.icns'), path.join(RES_DIR, 'atom.icns'), {clobber: true})
+  fs.copySync(path.resolve('static/res/icon.icns'), path.join(RES_DIR, 'atom.icns'), {clobber: true})
   done()
 })
 
@@ -55,14 +49,15 @@ gulp.task('bundle-atom-mac', function (done) {
   fs.emptyDirSync(TMP_DIR)
   fs.emptyDirSync(FINAL_DIR)
 
-  fs.writeJsonSync('./src/package.json', atomPkg)
+  fs.copySync('./package.json', path.join(TMP_DIR, 'package.json'))
   fs.copySync('./src', path.join(TMP_DIR, 'src'))
+  fs.copySync('./static', path.join(TMP_DIR, 'static'))
 
   Object.keys(pkg.dependencies).forEach(function (dep) {
-    fs.copySync(path.join('./node_modules', dep), path.join(TMP_DIR, 'src', 'node_modules', dep))
+    fs.copySync(path.join('./node_modules', dep), path.join(TMP_DIR, 'node_modules', dep))
   })
 
-  gulp.src(TMP_DIR + '/src/**')
+  gulp.src(TMP_DIR + '/**')
     .pipe(atomshell({
       version: ATOM_VERSION,
       productName: 'Obsidian',

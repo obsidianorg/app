@@ -16,12 +16,6 @@ var FINAL_DIR = './release/obsidian-win32'
 
 var ATOM_VERSION = '0.21.2'
 
-var atomPkg = {
-  name: pkg.name,
-  version: pkg.version,
-  main: './browser/index.js'
-}
-
 gulp.task('build-win32', ['asar-win32'], function (done) {
   fs.removeSync(BUILD_ZIP_FILE)
   fs.removeSync(APP_DIR)
@@ -32,7 +26,7 @@ gulp.task('build-win32', ['asar-win32'], function (done) {
     // set icon
     // brew install wine (takes a looooong time)
     var exeFile = path.join(FINAL_DIR, 'Obsidian.exe')
-    var iconPath = path.resolve('src/renderer/res/icon.ico')
+    var iconPath = path.resolve('static/res/icon.ico')
     var rceditPath = 'node_modules/rcedit/bin/rcedit.exe' // couldn't get package `rcedit` to work, call exe directly
     var args = ['wine', rceditPath, exeFile, '--set-icon', iconPath].join(' ')
     cp.exec(args, function (err, stdout, stderr) {
@@ -62,14 +56,15 @@ gulp.task('bundle-atom-win32', function (done) {
   fs.emptyDirSync(TMP_DIR)
   fs.emptyDirSync(FINAL_DIR)
 
-  fs.writeJsonSync('./src/package.json', atomPkg)
+  fs.copySync('./package.json', path.join(TMP_DIR, 'package.json'))
   fs.copySync('./src', path.join(TMP_DIR, 'src'))
+  fs.copySync('./static', path.join(TMP_DIR, 'static'))
 
   Object.keys(pkg.dependencies).forEach(function (dep) {
-    fs.copySync(path.join('./node_modules', dep), path.join(TMP_DIR, 'src', 'node_modules', dep))
+    fs.copySync(path.join('./node_modules', dep), path.join(TMP_DIR, 'node_modules', dep))
   })
 
-  gulp.src(TMP_DIR + '/src/**')
+  gulp.src(TMP_DIR + '/**')
     .pipe(atomshell({
       version: ATOM_VERSION,
       productName: 'Obsidian',
