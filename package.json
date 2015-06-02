@@ -52,7 +52,7 @@
     "stubo": "^0.1.0"
   },
   "standard": {
-    "ignore": []
+    "ignore": ["release"]
   },
   "scripts": {
     "test": "standard && find ./src/ -name *.test.js | xargs ./node_modules/.bin/mocha --compilers js:babel/register"
