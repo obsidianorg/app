@@ -145,3 +145,8 @@ ul.sidebar-menu li a.active i {
   font-size: 12px;
 }
 
+/* this fixes placment on the main form */
+.has-feedback label ~ .form-control-feedback {
+  top: 40px;
+}
+
