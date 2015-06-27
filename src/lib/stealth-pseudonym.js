@@ -133,7 +133,8 @@ function checkTx (hex) {
   })
 
   if (pubKeyData.length !== 2) return null
-  var pkd0 = pubKeyData[0], pkd1 = pubKeyData[1]
+  var pkd0 = pubKeyData[0]
+  var pkd1 = pubKeyData[1]
 
   // verify sum is GTE than accepted value
   var sum = pkd0.value + pkd1.value

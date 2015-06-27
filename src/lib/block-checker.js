@@ -13,7 +13,9 @@ function create () {
   blockChecker.checkBlock = function (blockHeight) {
     blkqt.getRawTransactionsFromBlock(blockHeight, function (err, blockData) {
       if (err) return blockChecker.emit('error', err)
-      var keys = [], pseudonyms = []
+      var keys = []
+      var pseudonyms = []
+
       Object.keys(blockData.txs).forEach(function (txId) {
         var rawTx = blockData.txs[txId]
         // check if a pseudonym registry exists
