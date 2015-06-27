@@ -1,5 +1,6 @@
+Obisidian
+=========
 
-=========================
+[![build status](https://secure.travis-ci.org/obsidianorg/app.svg)](http://travis-ci.org/obsidianorg/app)
 
-[![build status](https://secure.travis-ci.org/obsidianorg/wallet.svg)](http://travis-ci.org/obsidianorg/wallet)
 
