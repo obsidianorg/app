@@ -49,7 +49,7 @@ var Sidebar = React.createClass({
           <ModalTrigger modal={ <PseudonymModal handlePseudonymRegistered={ this.handlePseudonymRegistered } /> }>
             <SidebarButton
               hoverText='Register Stealth Pseudonym'
-              icon='user-secret'/>
+              icon='user-plus'/>
           </ModalTrigger>
         </li>
       : <span></span>

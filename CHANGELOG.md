@@ -1,3 +1,7 @@
+0.4.0 / 2015-xx-yy
+------------------
+- changed add stealth address icon
+
 0.3.0 / 2015-06-01
 ----------------------
 - converted to [JavaScript Standard Style](https://github.com/feross/standard)
