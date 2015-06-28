@@ -6,16 +6,6 @@ var SendForm = require('./send-form.react')
 var App = React.createClass({
   displayName: 'App',
 
-  getInitialState: function () {
-    return null
-  },
-
-  componentDidMount: function () {
-  },
-
-  componentWillUnmount: function () {
-  },
-
   render: function () {
     return (
       <div id='container' >
@@ -27,9 +17,6 @@ var App = React.createClass({
         </section>
       </div>
     )
-  },
-
-  _onChange: function () {
   }
 })
 
