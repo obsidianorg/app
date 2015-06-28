@@ -1,15 +1,15 @@
 var util = require('util')
 var React = require('react')
 var _ = require('lodash')
-var accounting = require('../common/accounting')
-var alert = require('../lib/alert')
-var atom = require('../atom')
+var accounting = require('../../common/accounting')
+var alert = require('../../lib/alert')
+var atom = require('../../atom')
 var Input = require('react-bootstrap').Input
-var PaymentActions = require('../actions/payment-actions')
-var stealthPayment = require('../lib/stealth-payment')
-var userLang = require('../lib/lang').getLanguage()
-var lang = require('../common/lang').getLanguageData(userLang).getContext(__filename)
-var pdb = require('../db/pdb').PDB // temporary hack
+var PaymentActions = require('../../actions/payment-actions')
+var stealthPayment = require('../../lib/stealth-payment')
+var userLang = require('../../lib/lang').getLanguage()
+var lang = require('../../common/lang').getLanguageData(userLang).getContext(__filename)
+var pdb = require('../../db/pdb').PDB // temporary hack
 var Stealth = require('stealth')
 
 var SendForm = React.createClass({
