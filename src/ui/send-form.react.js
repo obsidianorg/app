@@ -98,6 +98,10 @@ var SendForm = React.createClass({
     }
   },
 
+  shit: function () {
+    // require('sweetalert')({   title: "Error!",   text: "Here's my error message!",   type: "error",   confirmButtonText: "Cool" })
+  },
+
   render: function () {
     var receiverValidationResult = this.validateReceiver()
 
@@ -130,7 +134,7 @@ var SendForm = React.createClass({
               onChange={ this.handleAmountChange }
               placeholder={ lang.amountPlaceholder }
               value={ this.state.amount }/>
-            <span className='input-group-addon'>BLK</span>
+            <span className='input-group-addon' onClick={ this.shit }>BLK</span>
           </div>
         </div>
         <button type='button' className='btn btn-lg'

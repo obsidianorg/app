@@ -1,5 +1,5 @@
 var React = require('react')
-var Sidebar = require('./sidebar.react')
+var Sidebar = require('./sidebar')
 var Header = require('./header.react')
 var SendForm = require('./send-form.react')
 

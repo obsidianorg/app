@@ -2,14 +2,14 @@ var clipboard = require('clipboard')
 var remote = require('remote')
 var React = require('react')
 var SidebarButton = require('./sidebar-button.react')
-var PseudonymModal = require('./pseudonym-modal.react')
-var stealth = require('../db/keydb')
-var userLang = require('../lib/lang').getLanguage()
-var lang = require('../common/lang').getLanguageData(userLang).getContext('send-form')
+var PseudonymModal = require('../pseudonym-modal.react')
+var stealth = require('../../db/keydb')
+var userLang = require('../../lib/lang').getLanguage()
+var lang = require('../../common/lang').getLanguageData(userLang).getContext('send-form')
 var ModalTrigger = require('react-bootstrap').ModalTrigger
 
 // todo, refactor
-var localStorage = require('../domwindow').localStorage
+var localStorage = require('../../domwindow').localStorage
 
 // only onefor now
 var sk = stealth.load()
