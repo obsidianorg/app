@@ -1,6 +1,7 @@
 0.4.0 / 2015-xx-yy
 ------------------
 - changed add stealth address icon
+- add tooltips on side menu buttons
 
 0.3.0 / 2015-06-01
 ----------------------

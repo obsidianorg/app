@@ -1,4 +1,5 @@
 var React = require('react')
+var {OverlayTrigger, Tooltip} = require('react-bootstrap')
 
 var SidebarButton = React.createClass({
   displayName: 'SidebarButton',
@@ -18,10 +19,15 @@ var SidebarButton = React.createClass({
   render: function () {
     var classString = 'fa fa-' + this.props.icon
 
+    var toolTip = <Tooltip>{ this.props.hoverText }</Tooltip>
+
     return (
-      <a title={ this.props.hoverText } onClick={ this.props.onClick }>
-        <i className={ classString }></i>
-      </a>
+      <OverlayTrigger placement='right' overlay={toolTip}>
+        {/*<a {title={ this.props.hoverText } onClick={ this.props.onClick }>*/}
+        <a onClick={ this.props.onClick }>
+          <i className={ classString }></i>
+        </a>
+      </OverlayTrigger>
     )
   }
 })
