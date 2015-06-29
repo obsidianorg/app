@@ -1,20 +1,9 @@
-/*
-  palettes to consider:
-    Golden Divide: http://www.colourlovers.com/palette/755661/Golden_Divide
-    http://www.colourlovers.com/palette/558733/%E2%99%A5_400_LOVERS_%E2%99%A5
-    http://www.colourlovers.com/palette/76247/Monarch_Butterfly
-    http://www.colourlovers.com/palette/394033/Waiting_for_Godot
-    http://www.colourlovers.com/palette/74/light
-    http://www.colourlovers.com/palette/110996/Part-Time_Super_Girl
-    http://www.colourlovers.com/palette/148712/Gamebookers
-*/
-
 /*@import url(http://fonts.googleapis.com/css?family=Ruda:400,700,900);*/
 
 body {
   /*color: #797979;*/
   /*background: #f2f2f2;*/
-  background: #444;
+  background: $dark;
   /*color: #daac53;*/
   color: #eee;
   font-family: 'Ruda', sans-serif;
@@ -40,7 +29,7 @@ body {
   width: 55px;
   height: 100%;
   position: fixed;
-  background: #333;
+  background: $really-dark;
 }
 
 #sidebar ul li {
@@ -116,7 +105,7 @@ ul.sidebar-menu li a.active i {
 }
 
 .header {
-  background: #000;
+  background: $really-really-dark;
   color: #fff;
   padding: 10px 0;
   cursor: pointer;
@@ -124,7 +113,7 @@ ul.sidebar-menu li a.active i {
 
 .btn {
   color: #000;
-  background-color: #daac53;
+  background-color: $gold;
 }
 
 .form-control {
@@ -134,11 +123,11 @@ ul.sidebar-menu li a.active i {
 
 .input-group-addon {
   color: #000;
-  background-color: #daac53;
+  background-color: $gold;
 }
 
 .modal-content {
-  background-color: #333;
+  background-color: $really-dark;
 }
 
 .help-block {
