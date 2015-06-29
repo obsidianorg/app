@@ -17,6 +17,7 @@ function createPdb (config) {
 
   _pdb.init = init.bind(_pdb)
   _pdb.add = add.bind(_pdb)
+  _pdb.matchSync = matchSync.bind(_pdb)
   _pdb.resolveSync = resolveSync.bind(_pdb)
 
   return _pdb
@@ -51,6 +52,15 @@ function add (name, pubkeys, txId, blockHeight, callback) {
   }
 
   fs.outputJson(this.file, this.data, callback)
+}
+
+function matchSync (search) {
+  if (!search) return []
+  if (search.length < 2) return []
+  var matchRegex = new RegExp('^' + search, 'i')
+  return Object.keys(this.data.names).filter(function (name) {
+    return name.match(matchRegex)
+  })
 }
 
 function resolveSync (name) {

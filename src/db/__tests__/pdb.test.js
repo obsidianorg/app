@@ -99,4 +99,21 @@ describe('pdb', function () {
       })
     })
   })
+
+  describe('matchSync()', function () {
+    it('should match search input with results', function () {
+      var db = pdb.createPdb({file: TEST_FILE})
+      db.data = {
+        names: {
+          'jpRichardson': null,
+          'someONE': null,
+          'jprichardson': null,
+          'JONPAUL': null,
+          'JPRICH': null
+        }
+      }
+
+      assert.deepEqual(db.matchSync('jp'), ['jpRichardson', 'jprichardson', 'JPRICH'])
+    })
+  })
 })
