@@ -13,6 +13,7 @@ node_modules/gulp
 node_modules/gulp-asar
 node_modules/gulp-atom-shell
 node_modules/gulp-atom
+node_modules/gulp-sass
 node_modules/gulp-util
 node_modules/gulp-watch
 node_modules/jest-cli
