@@ -35,7 +35,7 @@ const DropdownMenu = React.createClass({
 
     // Grab hyperlinks and convert to array
     var items = [].slice.call(this.getDOMNode().querySelectorAll('a'), 0);
-    console.dir(items)
+    // console.dir(items)
     return items
   },
 
