@@ -6,7 +6,7 @@ var spawn = childProcess.spawn
 var ELECTRON_PATH = '/Applications/Atom.app/Contents/MacOS/Atom'
 // var ELECTRON_PATH = '/Applications/Electron.app/Contents/MacOS/Electron'
 
-gulp.task('run', function () {
+gulp.task('run', ['scss'], function () {
   var atom = spawn(ELECTRON_PATH, ['./'])
   atom.stdout.on('data', function (data) {
     gutil.log(data.toString('utf8'))

@@ -1,0 +1,12 @@
+.dropdown-menu {
+  background-color: $really-dark;
+  font-size: 18px;
+
+  > li > a {
+    color: white;
+  }
+
+  a:focus {
+    outline: none;
+  }
+}

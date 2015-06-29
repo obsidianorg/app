@@ -117,8 +117,17 @@ ul.sidebar-menu li a.active i {
   background-color: #333; }
 
 .help-block {
-  font-size: 12px; }
+  font-size: 12px;
+  position: absolute; }
 
 /* this fixes placment on the main form */
 .has-feedback label ~ .form-control-feedback {
   top: 40px; }
+
+.dropdown-menu {
+  background-color: #333;
+  font-size: 18px; }
+  .dropdown-menu > li > a {
+    color: white; }
+  .dropdown-menu a:focus {
+    outline: none; }

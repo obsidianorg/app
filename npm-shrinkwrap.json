@@ -1,6 +1,6 @@
 {
   "name": "obsidian",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "dependencies": {
     "accounting": {
       "version": "0.4.1",
@@ -1046,6 +1046,11 @@
         }
       }
     },
+    "classnames": {
+      "version": "2.1.2",
+      "from": "classnames@*",
+      "resolved": "https://registry.npmjs.org/classnames/-/classnames-2.1.2.tgz"
+    },
     "coininfo": {
       "version": "0.3.1",
       "from": "coininfo@latest"
@@ -1257,9 +1262,16 @@
       }
     },
     "react-bootstrap": {
-      "version": "0.13.0",
-      "from": "react-bootstrap@*",
-      "resolved": "https://registry.npmjs.org/react-bootstrap/-/react-bootstrap-0.13.0.tgz"
+      "version": "0.23.0",
+      "from": "react-bootstrap@latest",
+      "resolved": "https://registry.npmjs.org/react-bootstrap/-/react-bootstrap-0.23.0.tgz",
+      "dependencies": {
+        "classnames": {
+          "version": "2.1.2",
+          "from": "classnames@>=2.0.0 <3.0.0",
+          "resolved": "https://registry.npmjs.org/classnames/-/classnames-2.1.2.tgz"
+        }
+      }
     },
     "secure-random": {
       "version": "1.1.1",
