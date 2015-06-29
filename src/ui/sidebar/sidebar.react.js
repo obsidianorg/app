@@ -63,7 +63,7 @@ var Sidebar = React.createClass({
               <SidebarButton
                 hoverText={ lang.copyButton }
                 onClick={ this.handleClickCopy }
-                icon='share-alt'/>
+                icon='clipboard'/>
             </li>
             <li>
               <SidebarButton

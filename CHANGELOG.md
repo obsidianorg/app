@@ -2,6 +2,7 @@
 ------------------
 - changed add stealth address icon
 - add tooltips on side menu buttons
+- changed copy stealth address icon
 
 0.3.0 / 2015-06-01
 ----------------------
