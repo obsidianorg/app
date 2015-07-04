@@ -1204,6 +1204,10 @@
       "from": "ini@*",
       "resolved": "https://registry.npmjs.org/ini/-/ini-1.3.3.tgz"
     },
+    "is-electron-renderer": {
+      "version": "1.0.0",
+      "from": "is-electron-renderer@*"
+    },
     "lodash": {
       "version": "3.9.1",
       "from": "lodash@latest",
