@@ -5,10 +5,9 @@ require('babel/register')({
 
 require('./devtools')
 
-var alert = require('./lib/alert')
 // annoying popup an error box instead of silent console output
 window.onerror = function (message, url, line) {
-  alert.showError(message + ' (' + line + ')')
+  window.alert('ERROR: \n' + message + ' (' + line + ')')
 }
 
 require('./stores/payments-store')

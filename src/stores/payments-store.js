@@ -2,9 +2,11 @@ var EventEmitter = require('events').EventEmitter
 var _ = require('lodash')
 var Constants = require('../constants/payment-constants')
 var AppDispatcher = require('../dispatcher/app-dispatcher')
-var alert = require('../lib/alert')
+var alert = require('../ui/alert')
 var blkqt = require('../lib/blkqt')
 var txUtils = require('../blockchain/txutils')
+
+// WRONG PLACE FOR THIS CODE. TODO: refactor
 
 function send (data) {
   var tx = data.tx
