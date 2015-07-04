@@ -3,7 +3,6 @@ var React = require('react')
 var _ = require('lodash')
 var accounting = require('../../common/accounting')
 var alert = require('../alert')
-var atom = require('../../atom')
 var PaymentActions = require('../../actions/payment-actions')
 var stealthPayment = require('../../lib/stealth-payment')
 var userLang = require('../../lib/lang').getLanguage()
@@ -63,13 +62,13 @@ var SendForm = React.createClass({
         message: util.format(lang.sendMB.message, accounting.fm(data.amounts.send), accounting.fm(data.amounts.fee))
       }
 
-      atom.dialog.showMessageBox(null, dlgOpts, function (buttonIdx) {
+      alert.showMessageBox(null, dlgOpts, function (buttonIdx) {
         // send pressed
         if (buttonIdx === 0) {
           stealthPayment.createTx(data, function (err, tx) {
             if (err) return alert.showError(err)
             PaymentActions.send({tx: tx})
-            atom.dialog.showMessageBox(null, lang.sentMB, Function())
+            alert.showMessageBox(null, lang.sentMB, Function())
             self.setState(self.getInitialState())
           })
         }

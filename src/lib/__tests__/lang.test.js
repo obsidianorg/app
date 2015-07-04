@@ -8,10 +8,8 @@ describe('lang', function () {
     describe('> when nothing is set', function () {
       it('should default to en', function () {
         var stubs = {
-          '../atom': {
-            '@noCallThru': true
-          },
           '../domwindow': {
+            '__args__': {},
             '@noCallThru': true
           }
         }
@@ -24,12 +22,12 @@ describe('lang', function () {
     describe('> when browser language is set and not settings', function () {
       it('should return browser language', function () {
         var stubs = {
-          '../atom': {
-            '@noCallThru': true
-          },
           '../domwindow': {
             navigator: {
               language: 'es-MX'
+            },
+            '__args__': {
+              'CONFIG': {}
             },
             '@noCallThru': true
           }
@@ -43,17 +41,16 @@ describe('lang', function () {
     describe('> when config/settings', function () {
       it('should always use config', function () {
         var stubs = {
-          '../atom': {
-            CONFIG: {
-              settings: {
-                language: 'zh-CN'
-              }
-            },
-            '@noCallThru': true
-          },
           '../domwindow': {
             navigator: {
               language: 'es-MX'
+            },
+            '__args__': {
+              CONFIG: {
+                settings: {
+                  language: 'zh-CN'
+                }
+              }
             },
             '@noCallThru': true
           }

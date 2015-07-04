@@ -10,6 +10,7 @@ describe('block-manager', function () {
       it('should return value', function (done) {
         var stubs = {}
         stubo(stubs, '../domwindow', 'localStorage.getItem', () => 653100)
+        stubo(stubs, './blkqt', '@noCallThru', true)
         var blockManager = proxyquire('../block-manager', stubs)
 
         blockManager.getLastKnownBlockCount(function (err, n) {
@@ -25,6 +26,7 @@ describe('block-manager', function () {
         var stubs = {}
         stubo(stubs, '../domwindow', 'localStorage.getItem()', null)
         stubo(stubs, './blkqt', 'getBlockCount', cb => { cb(null, 453100) })
+        stubo(stubs, './blkqt', '@noCallThru', true)
         var blockManager = proxyquire('../block-manager', stubs)
 
         blockManager.getLastKnownBlockCount(function (err, n) {

@@ -5,10 +5,6 @@ var fixtures = require('./blkqt.fixtures')
 
 /* global describe, it */
 
-var atomStub = {
-  '@noCallThru': true // for proxyquire
-}
-
 var ipcStub = {
   '@noCallThru': true
 }
@@ -25,7 +21,7 @@ describe('blkqt', function () {
 
         var stubs = {
           './ipc': ipc,
-          'ipc': atomStub
+          'ipc': ipcStub
         }
 
         var blkqt = proxyquire('../blkqt', stubs)

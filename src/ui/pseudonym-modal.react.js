@@ -3,7 +3,6 @@ var Modal = require('react-bootstrap').Modal
 var Button = require('react-bootstrap').Button
 var Input = require('react-bootstrap').Input
 var alert = require('./alert')
-var atom = require('../atom')
 var PaymentActions = require('../actions/payment-actions')
 var stealthPseudonym = require('../lib/stealth-pseudonym')
 var pdb = require('../db/pdb').PDB // temporary hack
@@ -51,7 +50,7 @@ const PseudonymModal = React.createClass({
     var self = this
     var pseudonym = this.state.value
 
-    atom.dialog.showMessageBox(null, dlgOpts, function (buttonIdx) {
+    alert.showMessageBox(null, dlgOpts, function (buttonIdx) {
       // check if register pressed
       if (buttonIdx !== 0) return
 

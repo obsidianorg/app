@@ -4,7 +4,7 @@ var _ = require('lodash')
 var blkqt = require('./blkqt')
 var blockChecker = require('./block-checker')
 var pdb = require('../db/pdb')
-var blockCheckInterval = 30000 // require('../atom').CONFIG.settings.blockCheckInterval
+var blockCheckInterval = 30000 // CONFIG.settings.blockCheckInterval
 var storage = require('../domwindow').localStorage
 
 var LS_KEY = 'lastBlockCount'

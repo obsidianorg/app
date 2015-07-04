@@ -21,6 +21,6 @@ var blockManager = require('./lib/block-manager')
 
 setTimeout(function () {
   blockManager.start().on('error', function (err) {
-    if (err) alert.showError(err)
+    if (err) window.alert('ERROR: \n' + err)
   })
 }, 1000)
