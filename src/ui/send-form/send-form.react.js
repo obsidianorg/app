@@ -28,9 +28,9 @@ var SendForm = React.createClass({
     })
   },
 
-  handleReceiverChange: function (event) {
+  handleReceiverChange: function (receiver) {
     this.setState({
-      receiver: event.target.value
+      receiver: receiver
     })
   },
 

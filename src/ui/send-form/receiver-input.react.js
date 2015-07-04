@@ -38,7 +38,7 @@ var ReceiverInput = React.createClass({
       value: value,
       validation: this.validate(value)
     })
-    this.props.onChange(event)
+    this.props.onChange(value)
   },
 
   propTypes: {
@@ -54,7 +54,7 @@ var ReceiverInput = React.createClass({
             href='#'
             tabIndex='-1'
             ref={'menuItem' + i}
-            onClick={() => this.setState({ value: item, matchResults: [], validation: this.validate(item) }) }
+            onClick={() => { this.setState({ value: item, matchResults: [], validation: this.validate(item) }); this.props.onChange(item) } }
           >
             { item }
           </a>
