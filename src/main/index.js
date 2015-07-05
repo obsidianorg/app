@@ -5,12 +5,15 @@ var ipc = require('ipc')
 var util = require('util')
 var app = require('./app')
 var connectingWindow = require('./connecting-window')
+var log = require('../logger')
 var mainWindow = require('./main-window')
 var settings = require('./settings')
 var exe = require('./settings/exe')
 var qtclient = require('./qtclient')
 var spawn = cp.spawn
 
+log.info('starting...')
+require('../logger/main').listener()
 var cfg = settings.initSync()
 
 app.ready(function (app) {

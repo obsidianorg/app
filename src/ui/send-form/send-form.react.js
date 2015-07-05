@@ -3,6 +3,7 @@ var React = require('react')
 var _ = require('lodash')
 var accounting = require('../../common/accounting')
 var alert = require('../alert')
+var logger = require('../../logger')
 var PaymentActions = require('../../actions/payment-actions')
 var stealthPayment = require('../../lib/stealth-payment')
 var userLang = require('../../lib/lang').getLanguage()
@@ -50,10 +51,14 @@ var SendForm = React.createClass({
     }
 
     stealthPayment.prepareSend(data, function (err, data) {
-      if (err) return alert.showError(err)
+      if (err) {
+        logger.error(err)
+        return alert.showError(err)
+      }
 
       // for logging
       // todo, develop better logging strategy
+      logger.info(data, 'prepareSend')
       console.log(JSON.stringify(data, null, 2))
 
       var dlgOpts = {
@@ -66,7 +71,10 @@ var SendForm = React.createClass({
         // send pressed
         if (buttonIdx === 0) {
           stealthPayment.createTx(data, function (err, tx) {
-            if (err) return alert.showError(err)
+            if (err) {
+              logger.error(err)
+              return alert.showError(err)
+            }
             PaymentActions.send({tx: tx})
             alert.showMessageBox(null, lang.sentMB, Function())
             self.setState(self.getInitialState())

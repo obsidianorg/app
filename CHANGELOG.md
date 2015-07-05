@@ -4,6 +4,7 @@
 - add tooltips on side menu buttons
 - changed copy stealth address icon
 - added type-ahead support for pseudonyms
+- logging
 
 0.3.0 / 2015-06-01
 ----------------------

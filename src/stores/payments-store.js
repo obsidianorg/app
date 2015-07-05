@@ -4,6 +4,7 @@ var Constants = require('../constants/payment-constants')
 var AppDispatcher = require('../dispatcher/app-dispatcher')
 var alert = require('../ui/alert')
 var blkqt = require('../lib/blkqt')
+var logger = require('../logger')
 var txUtils = require('../blockchain/txutils')
 
 // WRONG PLACE FOR THIS CODE. TODO: refactor
@@ -16,7 +17,11 @@ function send (data) {
   console.log(hex)
 
   blkqt.submitTransaction(hex, function (err, txId) {
-    if (err) return alert.showError('Transaction submission error: ' + err.message)
+    if (err) {
+      logger.error(err)
+      return alert.showError('Transaction submission error: ' + err.message)
+    }
+    logger.info('tx: ' + txId)
     console.log(txId)
   })
 }
