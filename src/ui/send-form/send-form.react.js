@@ -39,6 +39,14 @@ var SendForm = React.createClass({
     var data = _.cloneDeep(this.state)
     data.receiver = data.receiver.trim()
 
+    if (!data.receiver) {
+      return alert.showError('Please enter in a stealth address or alias/pseudonym.')
+    }
+
+    if (!data.amount || isNaN(parseFloat(data.amount))) {
+      return alert.showError('Please enter in a valid amount.')
+    }
+
     // if pseudonym, conver to stealth
     var s
     try {
