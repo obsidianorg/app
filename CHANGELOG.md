@@ -8,6 +8,7 @@
 - refactored config file handling to improve Linux support
 - upgraded build process (uses latest Electron version. Bumps to `v0.29.1` from `v0.21.2`)
 - resize main window to fix issue on Windows
+- bug fix on fetching old blocks if upgrading without pseudonym support
 
 0.3.0 / 2015-06-01
 ----------------------

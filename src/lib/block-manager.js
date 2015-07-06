@@ -69,6 +69,12 @@ blockManager.checkBlocks = function () {
 }
 
 blockManager.getLastKnownBlockCount = function (callback) {
+  if (!storage.getItem('hasAliasSupport')) {
+    storage.setItem('hasAliasSupport', true)
+    storage.setItem(LS_KEY, 710300)
+    return callback(null, 710300)
+  }
+
   if (storage.getItem(LS_KEY)) {
     return callback(null, parseInt(storage.getItem(LS_KEY), 10))
   }
@@ -93,6 +99,14 @@ blockManager.stop = function () {
 
 blockManager.updateLastKnown = function (blockHeight) {
   assert(blockHeight)
+
+  // possible bug?
+  var oldVal = parseInt(storage.getItem(LS_KEY), 10)
+  if (oldVal > blockHeight) {
+    console.log('Setting old value: %s, new value: %s ?', oldVal, blockHeight)
+    return
+  }
+
   storage.setItem(LS_KEY, blockHeight)
 }
 
