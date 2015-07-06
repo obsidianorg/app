@@ -1327,6 +1327,11 @@
       "from": "lodash@latest",
       "resolved": "https://registry.npmjs.org/lodash/-/lodash-3.9.1.tgz"
     },
+    "object-assign": {
+      "version": "3.0.0",
+      "from": "object-assign@*",
+      "resolved": "https://registry.npmjs.org/object-assign/-/object-assign-3.0.0.tgz"
+    },
     "ospath": {
       "version": "1.1.0",
       "from": "ospath@*"

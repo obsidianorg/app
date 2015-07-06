@@ -1,45 +1,36 @@
 var dialog = require('dialog')
 var cp = require('child_process')
-var fs = require('fs')
 var ipc = require('ipc')
-var util = require('util')
 var app = require('./app')
 var connectingWindow = require('./connecting-window')
 var log = require('../logger')
 var mainWindow = require('./main-window')
 var settings = require('./settings')
-var exe = require('./settings/exe')
 var qtclient = require('./qtclient')
 var spawn = cp.spawn
 
 log.info('starting...')
 require('../logger/main').listener()
-var cfg = settings.initSync()
 
 app.ready(function (app) {
-  if (!fs.existsSync(cfg.settings.exePath)) {
-    dialog.showErrorBox('Error', util.format("Can't find %s-qt. Please locate it.", cfg.settings.test ? 'Bitcoin' : 'BlackCoin'))
-    exe.showFindDialog({test: cfg.settings.test}, function (newPath) {
-      if (!newPath) {
-        dialog.showErrorBox('Error', 'You must make a selection to continue.')
-        process.exit()
-      }
+  settings.init(function (err, settings) {
+    if (err) {
+      log.error(err, 'error loading settings')
+      dialog.showErrorBox('Error', 'Error loading settings.')
+      require('app').quit()
+    }
 
-      cfg.settings.exePath = newPath
-      cfg.settings.saveSync()
-      start()
-    })
-  } else {
-    start()
-  }
+    start(settings)
+  })
 })
 
-function start () {
+// cfg = settings
+function start (cfg) {
   // this done intentionally so that renderer (client) can access them
   global.CONFIG = cfg
 
   connectingWindow.initAndShow(cfg.settings.test, function (connectingWindow) {
-    verifyConnected(function (err, rpcClient) {
+    verifyConnected(cfg, function (err, rpcClient) {
       if (err) {
         dialog.showErrorBox('Error', "Can't connect to the QT client.")
         process.exit()
@@ -51,7 +42,7 @@ function start () {
   })
 }
 
-function verifyConnected (callback) {
+function verifyConnected (cfg, callback) {
   var started = false
   var checker = setInterval(check, 1000)
 
@@ -67,7 +58,7 @@ function verifyConnected (callback) {
     qtclient.connect(cfg.rpc, function (err, rpcClient) {
       connectingToQt = false
       if (err && !started) {
-        spawn(cfg.settings.exePath)
+        spawn(cfg.settings.exe)
         started = true
       } else if (!err) {
         breakOut(null, rpcClient)
@@ -82,10 +73,10 @@ function verifyConnected (callback) {
   }
 }
 
-function initMain (rpcClient) {
+function initMain (rpcClient, settings) {
   installIPCforQT(rpcClient)
 
-  mainWindow.initAndShow(function (mainWindow) {})
+  mainWindow.initAndShow(settings, function (mainWindow) {})
 }
 
 // so client JS can easily query RPC commands

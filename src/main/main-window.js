@@ -1,8 +1,7 @@
 var path = require('path')
 var window = require('electron-window')
-var CONFIG = require('./settings').initSync()
 
-function initAndShow (callback) {
+function initAndShow (settings, callback) {
   var mainWindow = window.createWindow({
     width: 1000,
     height: 385,
@@ -12,7 +11,7 @@ function initAndShow (callback) {
     }
   })
 
-  mainWindow.showUrl(path.join(__dirname, '..', '..', 'static', 'index.html'), {CONFIG: CONFIG}, function () {
+  mainWindow.showUrl(path.join(__dirname, '..', '..', 'static', 'index.html'), {CONFIG: settings}, function () {
     callback(mainWindow)
   })
 }

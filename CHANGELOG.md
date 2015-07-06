@@ -5,6 +5,7 @@
 - changed copy stealth address icon
 - added type-ahead support for pseudonyms
 - logging
+- refactored config file handling to improve Linux support
 
 0.3.0 / 2015-06-01
 ----------------------

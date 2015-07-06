@@ -1,14 +1,46 @@
 var ospath = require('ospath')
+var path = require('path')
 
-function datadir () {
-  return ospath.data()
+if (!process.NODE_ENV) process.NODE_ENV = 'prod'
+
+function dataDir () {
+  return path.join(ospath.data(), 'obsidian')
 }
 
-function homedir () {
-  return ospath.home()
+function logDir () {
+  return path.join(dataDir(), 'logs')
+}
+
+function obsidianConfFile () {
+  return path.join(dataDir(), 'obsidian.conf.json')
+}
+
+function qtConfFile () {
+  switch (process.platform) {
+    case 'win32':
+    case 'darwin':
+      return path.join(ospath.data(), 'BlackCoin', 'blackcoin.conf')
+    case 'linux':
+      return path.join(ospath.home(), '.blackcoin', 'blackcoin.conf')
+  }
+}
+
+function qtBinFile () {
+  switch (process.platform) {
+    case 'win32':
+      return 'C:\\Program Files\\Bitcoin\\blackcoin-qt.exe'
+    case 'darwin':
+      return '/Applications/BlackCoin-Qt.app/Contents/MacOS/BlackCoin-Qt'
+    case 'linux':
+      return '/usr/local/bin/blackcoin-qt'
+  }
 }
 
 module.exports = Object.freeze({
-  datadir: datadir(),
-  homedir: homedir()
+  dataDir: dataDir(),
+  logDir: logDir(),
+  qtBinFile: qtBinFile(),
+  qtConfFile: qtConfFile(),
+  obsidianConfFile: obsidianConfFile(),
+  mode: process.NODE_ENV
 })

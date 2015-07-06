@@ -1,73 +1,101 @@
+// var assign = require('object-assign')
 var fs = require('fs-extra')
 var path = require('path-extra')
-var exe = require('./exe')
-var qtconfig = require('./qtconfig')
+var env = require('../../env')
+var findDialog = require('./find-dialog')
+var qtcfg = require('./qtconfig')
 
-var SETTINGS_FILE = path.join(path.datadir('obsidian'), 'obsidian.conf.json')
+var SETTINGS_FILE = env.obsidianConfFile
 
-function initSync () {
-  var settingsExist = fs.existsSync(SETTINGS_FILE)
-  var settings = {}
-  if (!settingsExist) {
-    // default: no test
-    settings.test = false
-    settings.blockCheckInterval = 30 * 1000
-    settings.mempoolCheckInterval = 10 * 1000
-    settings.exe = {
-      test: exe.qtapp(true),
-      prod: exe.qtapp(false)
+function init (callback) {
+  fs.exists(SETTINGS_FILE, function (settingsExist) {
+    if (!settingsExist) {
+      fs.outputJson(SETTINGS_FILE, require('./default'), readSettings)
+    } else {
+      readSettings()
     }
-  } else {
-    settings = fs.readJsonSync(SETTINGS_FILE)
-  }
 
-  settings.exe = settings.exe || {}
+    function readSettings (err) {
+      if (err) return callback(err)
 
-  settings.saveSync = function () {
-    fs.outputJsonSync(SETTINGS_FILE, settings)
-  }
-
-  // 'exe' property won't be saved, which is what we want
-  Object.defineProperty(settings, 'exePath', {
-    enumerable: false,
-    get: function () {
-      return settings.test ? settings.exe.test : settings.exe.prod
-    },
-    set: function (newPath) {
-      if (settings.test) settings.exe.test = newPath
-      else settings.exe.prod = newPath
+      fs.readJson(SETTINGS_FILE, function (err, settings) {
+        if (err) return callback(err)
+        checkExePath(settings, function (settings) {
+          checkConfPath(settings, function (settings) {
+            fs.writeJson(SETTINGS_FILE, settings, function (err) {
+              if (err) return callback(err)
+              readQTConfig(settings.conf, function (err, rpcConfig) {
+                callback(null, {
+                  settings: settings,
+                  rpc: rpcConfig
+                })
+              })
+            })
+          })
+        })
+      })
     }
   })
-
-  settings.saveSync()
-
-  var qtconfig = readQtConfig(settings.test)
-
-  return {
-    settings: settings,
-    rpc: {
-      host: 'localhost',
-      // 18333 => bitcoin testnet
-      port: settings.test ? 18333 : 15715,
-      user: qtconfig.rpcuser,
-      pass: qtconfig.rpcpassword,
-      timeout: 30 * 1000
-    }
-  }
 }
 
-function readQtConfig (isTest) {
-  var data = qtconfig.readSync(isTest)
+function checkExePath (settings, callback) {
+  // normalize legacy way
+  var binPath
+  if (settings.exe) {
+    if (typeof settings.exe === 'string') {
+      binPath = settings.exe
+    } else if (typeof settings.exe === 'object') {
+      binPath = settings.exe.prod
+    }
+  }
 
-  // rpc info may already be set
-  data.rpcuser = data.rpcuser || 'rpcuser'
-  data.rpcpassword = data.rpcpassword || 'obsidian'
+  if (!binPath) binPath = env.qtBinFile
+  fs.exists(binPath, function (itExists) {
+    if (itExists) {
+      settings.exe = binPath
+      return callback(settings)
+    }
 
-  qtconfig.saveSync(data, isTest)
+    findDialog.showFindDialog('BlackCoin-qt', function (binPath) {
+      if (process.platform === 'darwin') {
+        var base = path.basename(binPath).replace(path.extname(binPath), '')
+        binPath = path.join(binPath, 'Contents', 'MacOS', base)
+      }
 
-  return data
+      settings.exe = binPath
+      callback(settings)
+    })
+  })
+}
+
+function checkConfPath (settings, callback) {
+  if (!settings.conf) settings.conf = env.qtConfFile
+
+  // quick hack to ensure it exists always
+  fs.ensureFileSync(settings.conf)
+
+  fs.exists(settings.conf, function (itExists) {
+    if (itExists) return callback(settings)
+
+    findDialog.showFindDialog('blackcoin.conf', function (confPath) {
+      settings.exe = confPath
+      callback(settings)
+    })
+  })
+}
+
+function readQTConfig (confPath, callback) {
+  var qtconfig = qtcfg.readSaveSync(confPath)
+  callback(null, {
+    host: 'localhost',
+    // 18333 => bitcoin testnet
+    port: 15715,
+    user: qtconfig.rpcuser,
+    pass: qtconfig.rpcpassword,
+    timeout: 30 * 1000
+  })
 }
 
 module.exports = {
-  initSync: initSync
+  init: init
 }
