@@ -1,5 +1,6 @@
 {
   "name": "obsidian",
+  "productName": "Obsidian",
   "version": "0.3.0",
   "main": "./src/main/index.js",
   "license": "MIT",
@@ -44,6 +45,10 @@
     "ymd": "^0.1.0"
   },
   "devDependencies": {
+    "electron-download": "^1.0.5",
+    "electron-packager": "^5.0.0",
+    "extract-zip": "^1.0.3",
+    "github-latest-release": "^0.1.1",
     "gulp": "^3.8.11",
     "gulp-asar": "0.0.2",
     "gulp-atom": "0.0.5",
@@ -52,6 +57,7 @@
     "gulp-util": "^3.0.4",
     "gulp-watch": "^3.0.0",
     "jest-cli": "^0.2.1",
+    "minimist": "^1.1.1",
     "mocha": "^2.2.0",
     "proxyquire": "^1.4.0",
     "quire": "0.0.2",

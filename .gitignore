@@ -9,6 +9,10 @@ node_modules/**/component.json
 node_modules/**/Makefile
 
 node_modules/.bin/gulp
+node_modules/electron-download
+node_modules/electron-packager
+node_modules/extract-zip
+node_modules/github-latest-release
 node_modules/gulp
 node_modules/gulp-asar
 node_modules/gulp-atom-shell
@@ -17,6 +21,7 @@ node_modules/gulp-sass
 node_modules/gulp-util
 node_modules/gulp-watch
 node_modules/jest-cli
+node_modules/minimist
 node_modules/mocha
 node_modules/proxyquire
 node_modules/quire

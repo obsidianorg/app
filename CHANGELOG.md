@@ -6,6 +6,7 @@
 - added type-ahead support for pseudonyms
 - logging
 - refactored config file handling to improve Linux support
+- upgraded build process (uses latest Electron version. Bumps to `v0.29.1` from `v0.21.2`)
 
 0.3.0 / 2015-06-01
 ----------------------
