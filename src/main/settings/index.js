@@ -25,6 +25,7 @@ function init (callback) {
             fs.writeJson(SETTINGS_FILE, settings, function (err) {
               if (err) return callback(err)
               readQTConfig(settings.conf, function (err, rpcConfig) {
+                if (err) return callback(err)
                 callback(null, {
                   settings: settings,
                   rpc: rpcConfig
