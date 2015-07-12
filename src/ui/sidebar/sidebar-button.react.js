@@ -23,7 +23,7 @@ var SidebarButton = React.createClass({
 
     return (
       <OverlayTrigger placement='right' overlay={toolTip}>
-        {/*<a {title={ this.props.hoverText } onClick={ this.props.onClick }>*/}
+        {/* <a {title={ this.props.hoverText } onClick={ this.props.onClick }>*/}
         <a onClick={ this.props.onClick }>
           <i className={ classString }></i>
         </a>

@@ -61,7 +61,7 @@ var ReceiverInput = React.createClass({
         </li>
       )
 
-      /*return (
+      /* return (
         <MenuItem key={ i } onClick={() => this.setState({ value: item, matchResults: [], validation: this.validate(item) })}>
           { item }
         </MenuItem>
