@@ -1,6 +1,6 @@
 {
   "name": "obsidian",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "dependencies": {
     "accounting": {
       "version": "0.4.1",
@@ -1222,8 +1222,9 @@
       "from": "ecurve@latest"
     },
     "electron-window": {
-      "version": "0.3.0",
-      "from": "electron-window@latest"
+      "version": "0.4.2",
+      "from": "electron-window@latest",
+      "resolved": "https://registry.npmjs.org/electron-window/-/electron-window-0.4.2.tgz"
     },
     "flux": {
       "version": "2.0.1",
