@@ -39,6 +39,7 @@
     "react": "^0.13.3",
     "react-bootstrap": "^0.23.0",
     "secure-random": "^1.1.1",
+    "source-map-support": "^0.3.2",
     "stealth": "^0.3.0",
     "string": "^3.0.0",
     "superagent": "^0.21.0",
