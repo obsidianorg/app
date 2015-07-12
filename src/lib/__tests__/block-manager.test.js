@@ -24,7 +24,9 @@ describe('block-manager', function () {
     describe('> when app has not ran and data comes from qt client', function () {
       it('should return value', function (done) {
         var stubs = {}
-        stubo(stubs, '../domwindow', 'localStorage.getItem()', null)
+        // had to change output because pseudonym checkpoint
+        stubo(stubs, '../domwindow', 'localStorage.getItem', (key) => key === 'hasAliasSupport')
+        stubo(stubs, '../domwindow', 'localStorage.setItem', Function())
         stubo(stubs, './blkqt', 'getBlockCount', cb => { cb(null, 453100) })
         stubo(stubs, './blkqt', '@noCallThru', true)
         var blockManager = proxyquire('../block-manager', stubs)
