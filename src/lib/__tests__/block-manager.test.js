@@ -1,6 +1,6 @@
 var assert = require('assert')
 var proxyquire = require('proxyquire')
-var stubo = require('stubo')
+var field = require('field')
 
 /* global describe, it */
 
@@ -9,8 +9,8 @@ describe('block-manager', function () {
     describe('> when app has ran and data in storage', function () {
       it('should return value', function (done) {
         var stubs = {}
-        stubo(stubs, '../domwindow', 'localStorage.getItem', () => 653100)
-        stubo(stubs, './blkqt', '@noCallThru', true)
+        field.set(stubs, '../domwindow:localStorage.getItem', () => 653100)
+        field.set(stubs, './blkqt:@noCallThru', true)
         var blockManager = proxyquire('../block-manager', stubs)
 
         blockManager.getLastKnownBlockCount(function (err, n) {
@@ -25,10 +25,10 @@ describe('block-manager', function () {
       it('should return value', function (done) {
         var stubs = {}
         // had to change output because pseudonym checkpoint
-        stubo(stubs, '../domwindow', 'localStorage.getItem', (key) => key === 'hasAliasSupport')
-        stubo(stubs, '../domwindow', 'localStorage.setItem', Function())
-        stubo(stubs, './blkqt', 'getBlockCount', cb => { cb(null, 453100) })
-        stubo(stubs, './blkqt', '@noCallThru', true)
+        field.set(stubs, '../domwindow:localStorage.getItem', (key) => key === 'hasAliasSupport')
+        field.set(stubs, '../domwindow:localStorage.setItem', Function())
+        field.set(stubs, './blkqt:getBlockCount', cb => { cb(null, 453100) })
+        field.set(stubs, './blkqt:@noCallThru', true)
         var blockManager = proxyquire('../block-manager', stubs)
 
         blockManager.getLastKnownBlockCount(function (err, n) {

@@ -12,6 +12,7 @@ node_modules/.bin/gulp
 node_modules/electron-download
 node_modules/electron-packager
 node_modules/extract-zip
+node_modules/field
 node_modules/github-latest-release
 node_modules/gulp
 node_modules/gulp-asar
