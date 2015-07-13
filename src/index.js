@@ -1,7 +1,4 @@
-// JSX only for now
-require('babel/register')({
-  only: '*.react.js'
-})
+require('./babel/hook')
 
 require('./devtools')
 

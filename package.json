@@ -72,6 +72,6 @@
   },
   "scripts": {
     "app": "gulp electron:run",
-    "test": "standard && find ./src/ -name *.test.js | xargs ./node_modules/.bin/mocha --compilers js:babel/register"
+    "test": "standard && find ./src/ -name *.test.js | xargs ./node_modules/.bin/mocha --require ./src/babel/hook"
   }
 }
