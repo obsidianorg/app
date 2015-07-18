@@ -8,7 +8,7 @@ describe('lang', function () {
     describe('> when nothing is set', function () {
       it('should default to en', function () {
         var stubs = {
-          '../domwindow': {
+          '@domwindow': {
             '__args__': {},
             '@noCallThru': true
           }
@@ -22,7 +22,7 @@ describe('lang', function () {
     describe('> when browser language is set and not settings', function () {
       it('should return browser language', function () {
         var stubs = {
-          '../domwindow': {
+          '@domwindow': {
             navigator: {
               language: 'es-MX'
             },
@@ -41,7 +41,7 @@ describe('lang', function () {
     describe('> when config/settings', function () {
       it('should always use config', function () {
         var stubs = {
-          '../domwindow': {
+          '@domwindow': {
             navigator: {
               language: 'es-MX'
             },

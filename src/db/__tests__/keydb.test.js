@@ -1,6 +1,7 @@
 var assert = require('assert')
 var proxyquire = require('proxyquire')
 var stubo = require('stubo')
+var babel = require('../../babel/resolve')
 // var _ = require('lodash')
 
 /* global describe, it */
@@ -10,8 +11,9 @@ describe('keydb', function () {
     describe('> when localStorage empty', function () {
       it('should return a new one', function () {
         var stubs = {}
-        stubo(stubs, '../domwindow', 'localStorage.getItem()', null)
-        stubo(stubs, '../domwindow', 'localStorage.setItem()', null)
+        stubo(stubs, '@domwindow', 'localStorage.getItem()', null)
+        stubo(stubs, '@domwindow', 'localStorage.setItem()', null)
+        babel.mapResolveKeys(stubs)
         var keydb = proxyquire('../keydb', stubs)
         var stealth = keydb.load()
         assert.equal(stealth.version, 39)
@@ -31,7 +33,8 @@ describe('keydb', function () {
         }
 
         var stubs = {}
-        stubo(stubs, '../domwindow', 'localStorage.getItem()', JSON.stringify(sk))
+        stubo(stubs, '@domwindow', 'localStorage.getItem()', JSON.stringify(sk))
+        babel.mapResolveKeys(stubs)
         var keydb = proxyquire('../keydb', stubs)
         var stealth = keydb.load()
         assert.equal(stealth.version, 39)

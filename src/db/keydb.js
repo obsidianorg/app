@@ -1,5 +1,5 @@
 var Stealth = require('stealth')
-var window = require('../domwindow')
+import window from '@domwindow'
 
 var STEALTH_CONSTANT = 39
 var LS_KEY = 'sk'

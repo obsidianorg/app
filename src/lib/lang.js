@@ -1,4 +1,4 @@
-var window = require('../domwindow')
+import window from '@domwindow'
 
 function getLanguage () {
   var CONFIG = window.__args__.CONFIG

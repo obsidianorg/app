@@ -1,6 +1,7 @@
 var assert = require('assert')
 var proxyquire = require('proxyquire')
 var field = require('field')
+var babel = require('../../babel/resolve')
 
 /* global describe, it */
 
@@ -9,10 +10,10 @@ describe('block-manager', function () {
     describe('> when app has ran and data in storage', function () {
       it('should return value', function (done) {
         var stubs = {}
-        field.set(stubs, '../domwindow:localStorage.getItem', () => 653100)
+        field.set(stubs, '@domwindow:localStorage.getItem', () => 653100)
         field.set(stubs, './blkqt:@noCallThru', true)
+        babel.mapResolveKeys(stubs)
         var blockManager = proxyquire('../block-manager', stubs)
-
         blockManager.getLastKnownBlockCount(function (err, n) {
           assert.ifError(err)
           assert.strictEqual(n, 653100)
@@ -25,10 +26,12 @@ describe('block-manager', function () {
       it('should return value', function (done) {
         var stubs = {}
         // had to change output because pseudonym checkpoint
-        field.set(stubs, '../domwindow:localStorage.getItem', (key) => key === 'hasAliasSupport')
-        field.set(stubs, '../domwindow:localStorage.setItem', Function())
+        field.set(stubs, '@domwindow:localStorage.getItem', (key) => key === 'hasAliasSupport')
+        field.set(stubs, '@domwindow:localStorage.setItem', Function())
+        field.set(stubs, '@domwindow:@noCallThru', true)
         field.set(stubs, './blkqt:getBlockCount', cb => { cb(null, 453100) })
         field.set(stubs, './blkqt:@noCallThru', true)
+        babel.mapResolveKeys(stubs)
         var blockManager = proxyquire('../block-manager', stubs)
 
         blockManager.getLastKnownBlockCount(function (err, n) {

@@ -5,7 +5,9 @@ var blkqt = require('./blkqt')
 var blockChecker = require('./block-checker')
 var pdb = require('../db/pdb')
 var blockCheckInterval = 30000 // CONFIG.settings.blockCheckInterval
-var storage = require('../domwindow').localStorage
+
+import window from '@domwindow'
+var storage = window.localStorage
 
 var LS_KEY = 'lastBlockCount'
 var TWELVE_MINS = 12 * 60 * 1000

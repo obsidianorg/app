@@ -9,7 +9,8 @@ var lang = require('../../common/lang').getLanguageData(userLang).getContext('se
 var ModalTrigger = require('react-bootstrap').ModalTrigger
 
 // todo, refactor
-var localStorage = require('../../domwindow').localStorage
+import window from '@domwindow'
+var localStorage = window.localStorage
 
 // only onefor now
 var sk = stealth.load()
