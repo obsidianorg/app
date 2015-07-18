@@ -1,13 +1,12 @@
-// var assign = require('object-assign')
-var fs = require('fs-extra')
-var path = require('path-extra')
-var env = require('../../env')
-var findDialog = require('./find-dialog')
-var qtcfg = require('./qtconfig')
+import env from '@env'
+import fs from 'fs-extra'
+import path from 'path-extra'
+import findDialog from './find-dialog'
+import qtcfg from './qtconfig'
 
 var SETTINGS_FILE = env.obsidianConfFile
 
-function init (callback) {
+export function init (callback) {
   fs.exists(SETTINGS_FILE, function (settingsExist) {
     if (!settingsExist) {
       fs.outputJson(SETTINGS_FILE, require('./default'), readSettings)
@@ -95,8 +94,4 @@ function readQTConfig (confPath, callback) {
     pass: qtconfig.rpcpassword,
     timeout: 30 * 1000
   })
-}
-
-module.exports = {
-  init: init
 }

@@ -1,13 +1,13 @@
-var path = require('path')
-var fs = require('fs-extra')
-var Stealth = require('stealth')
-var env = require('../env')
+import env from '@env'
+import fs from 'fs-extra'
+import path from 'path'
+import Stealth from 'stealth'
 
 // only one for now
 // should only be ref'd from createPdb
-var PDB = {}
+export var PDB = {}
 
-function createPdb (config) {
+export function createPdb (config) {
   config = config || {}
   var file = config.file || path.join(env.dataDir, 'pdb.db')
 
@@ -66,9 +66,4 @@ function matchSync (search) {
 function resolveSync (name) {
   if (this.data == null) throw new Error('You forgot to call init()')
   return name in this.data.names ? this.data.names[name] : null
-}
-
-module.exports = {
-  createPdb: createPdb,
-  PDB: PDB // temporary hack
 }

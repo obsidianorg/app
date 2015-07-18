@@ -1,5 +1,5 @@
 var assert = require('assert')
-var env = require('../index')
+var env = require('../')
 
 /* global describe, it */
 

@@ -1,3 +1,5 @@
+require('../babel/hook')
+
 var dialog = require('dialog')
 var cp = require('child_process')
 var ipc = require('ipc')
