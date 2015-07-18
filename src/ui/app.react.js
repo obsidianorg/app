@@ -1,9 +1,9 @@
-var React = require('react')
-var Sidebar = require('./sidebar')
-var Header = require('./header.react')
-var SendForm = require('./send-form')
+import React from 'react'
+import Sidebar from './sidebar'
+import Header from './header.react'
+import SendForm from './send-form'
 
-var App = React.createClass({
+let App = React.createClass({
   displayName: 'App',
 
   render: function () {
@@ -20,4 +20,4 @@ var App = React.createClass({
   }
 })
 
-module.exports = App
+export default App
