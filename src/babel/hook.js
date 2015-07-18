@@ -3,9 +3,9 @@ require('source-map-support').install()
 
 require('babel/register')({
   resolveModuleSource: function (src) {
-    if (src.indexOf('local/') === 0) {
+    if (src.indexOf('@') === 0) {
       // assuming __dirname => src/babel/
-      var localModuleName = src.split('local/')[1]
+      var localModuleName = src.split('@')[1]
       var localModule = path.join(__dirname, '..', '_local_modules', localModuleName)
       return localModule
     }
@@ -14,6 +14,10 @@ require('babel/register')({
   only: 'src/',
   extensions: ['.js'],
   sourceMap: 'inline',
-  optional: ['es7.decorators', 'es7.asyncFunctions'],
+  optional: [
+    'es7.decorators',
+    'es7.asyncFunctions',
+    'es7.objectRestSpread'
+  ],
   cache: false
 })
