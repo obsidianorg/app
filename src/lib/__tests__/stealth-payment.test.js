@@ -1,5 +1,6 @@
 var assert = require('assert')
 var CoinKey = require('coinkey')
+var field = require('field')
 var proxyquire = require('proxyquire')
 var Stealth = require('stealth')
 var _ = require('lodash')
@@ -20,17 +21,12 @@ describe('stealth-payment', function () {
   describe('+ prepareSend()', function () {
     it('should prepare', function (done) {
       var f1 = fixtures.prepareSend.valid[0]
+      var stubs = {}
 
-      var blkqt = _.assign({
-        getUnspents: function (address, callback) {
-          callback(null, f1.output.utxos)
-        }
-      }, blkqtStub)
-
-      var stubs = {
-        '../lib/blkqt': blkqt,
-        '../common/cryptocoin': cryptocoin
-      }
+      field.set(stubs, '../lib/blkqt:getUnspents', (address, callback) => {
+        callback(null, f1.output.utxos)
+      })
+      stubs['../common/cryptocoin'] = cryptocoin
 
       var stealthPayment = proxyquire('../stealth-payment', stubs)
       stealthPayment.prepareSend(f1.input, function (err, data) {

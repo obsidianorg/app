@@ -24,8 +24,8 @@ export function load () {
 }
 
 export function loadSync () {
-  if (fs.existsSync(env.keyFile())) {
-    let data = fs.readJsonSync(env.keyFile())
+  if (fs.existsSync(env.keyFile)) {
+    let data = fs.readJsonSync(env.keyFile)
     return Stealth.fromJSON(JSON.stringify(data.keys[0]))
   } else {
     let sk = loadFromLocalStorage()

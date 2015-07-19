@@ -94,7 +94,7 @@ gulp.task('electron:build:windows', _args.v ? [] : ['electron:build:prepare', 'e
 gulp.task('electron:build:prepare', function () {
   var buildDir = path.join(os.tmpdir(), pkg.name)
   fs.emptyDirSync(buildDir)
-  fs.emptyDirSync(path.join(process.cwd(), '/release'))
+  // fs.emptyDirSync(path.join(process.cwd(), '/release'))
 
   fs.copySync('./package.json', path.join(buildDir, 'package.json'))
   fs.copySync('./src', path.join(buildDir, 'src'))
