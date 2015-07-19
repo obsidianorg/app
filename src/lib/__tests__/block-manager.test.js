@@ -12,7 +12,7 @@ describe('block-manager', function () {
         var stubs = {}
         field.set(stubs, '@domwindow:localStorage.getItem', () => 653100)
         field.set(stubs, './blkqt:@noCallThru', true)
-        babel.mapResolveKeys(stubs)
+        stubs = babel.mapKeys(stubs)
         var blockManager = proxyquire('../block-manager', stubs)
         blockManager.getLastKnownBlockCount(function (err, n) {
           assert.ifError(err)
@@ -31,7 +31,7 @@ describe('block-manager', function () {
         field.set(stubs, '@domwindow:@noCallThru', true)
         field.set(stubs, './blkqt:getBlockCount', cb => { cb(null, 453100) })
         field.set(stubs, './blkqt:@noCallThru', true)
-        babel.mapResolveKeys(stubs)
+        stubs = babel.mapKeys(stubs)
         var blockManager = proxyquire('../block-manager', stubs)
 
         blockManager.getLastKnownBlockCount(function (err, n) {

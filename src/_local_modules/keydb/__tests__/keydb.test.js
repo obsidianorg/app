@@ -27,8 +27,9 @@ describe('keydb', function () {
 
         var stubs = {}
         field.set(stubs, '@domwindow:localStorage.getItem', () => JSON.stringify(sk))
-        babel.mapResolveKeys(stubs)
+        stubs = babel.mapKeys(stubs)
         var keydb = proxyquire('../', stubs)
+
         var stealth = keydb.loadFromLocalStorage()
         assert.equal(stealth.version, 39)
         assert.strictEqual(stealth.toString(), 'rVwCCvsH83LavaJLxYzArexJMij8eqFJaNgzVsw7FVxPNhXQQs8RgdRWdq6X8U9DvX2EK6Z2JB7P6ZdcTgk723Ew3WHmzhYwojDayZ')

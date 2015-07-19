@@ -12,7 +12,7 @@ describe('lang', function () {
         var stubs = {}
         field.set(stubs, '@domwindow:__args__', {})
         field.set(stubs, '@domwindow:@noCallThru', true)
-        babel.mapResolveKeys(stubs)
+        stubs = babel.mapKeys(stubs)
 
         var lang = proxyquire('../lang', stubs)
         assert.equal(lang.getLanguage(), 'en')
@@ -25,7 +25,7 @@ describe('lang', function () {
         field.set(stubs, '@domwindow:navigator.language', 'es-MX')
         field.set(stubs, '@domwindow:__args__:CONFIG', {})
         field.set(stubs, '@domwindow:@noCallThru', true)
-        babel.mapResolveKeys(stubs)
+        stubs = babel.mapKeys(stubs)
 
         var lang = proxyquire('../lang', stubs)
         assert.equal(lang.getLanguage(), 'es')
@@ -38,7 +38,7 @@ describe('lang', function () {
         field.set(stubs, '@domwindow:navigator.language', 'es-MX')
         field.set(stubs, '@domwindow:__args__:CONFIG.settings.language', 'zh-CN')
         field.set(stubs, '@domwindow:@noCallThru', true)
-        babel.mapResolveKeys(stubs)
+        stubs = babel.mapKeys(stubs)
 
         var lang = proxyquire('../lang', stubs)
         assert.equal(lang.getLanguage(), 'zh')

@@ -99,7 +99,7 @@ describe('stealth-payment', function () {
           }
         }
       }
-      babel.mapResolveKeys(stubs)
+      stubs = babel.mapKeys(stubs)
 
       var stealthPayment = proxyquire('../stealth-payment', stubs)
       var keyPair = stealthPayment.checkTx(f1chtx.txHex)
