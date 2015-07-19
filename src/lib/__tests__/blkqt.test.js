@@ -1,7 +1,7 @@
-var assert = require('assert')
-var proxyquire = require('proxyquire')
-var _ = require('lodash')
-var fixtures = require('./blkqt.fixtures')
+import assert from 'assert'
+import proxyquire from 'proxyquire'
+import _ from 'lodash'
+import fixtures from './blkqt.fixtures'
 
 /* global describe, it */
 

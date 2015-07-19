@@ -1,12 +1,12 @@
-var assert = require('assert')
-var CoinKey = require('coinkey')
-var field = require('field')
-var proxyquire = require('proxyquire')
-var Stealth = require('stealth')
-var _ = require('lodash')
-var txUtils = require('../../blockchain/txutils')
+import assert from 'assert'
+import CoinKey from 'coinkey'
+import field from 'field'
+import proxyquire from 'proxyquire'
+import Stealth from 'stealth'
+import _ from 'lodash'
+import txUtils from '../../blockchain/txutils'
 // the fixtures will almost certainly require refactoring
-var fixtures = require('./stealth-payment.fixtures')
+import fixtures from './stealth-payment.fixtures'
 var babel = require('../../babel/resolve')
 
 /* global describe, it */

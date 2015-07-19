@@ -1,9 +1,9 @@
-var assert = require('assert')
-var proxyquire = require('proxyquire')
-var stubo = require('stubo')
-var Stealth = require('stealth')
-var txUtils = require('../../blockchain/txutils')
-var fixtures = require('./stealth-pseudonym.fixtures')
+import assert from 'assert'
+import proxyquire from 'proxyquire'
+import stubo from 'stubo'
+import Stealth from 'stealth'
+import txUtils from '../../blockchain/txutils'
+import fixtures from './stealth-pseudonym.fixtures'
 
 /* global describe, it */
 

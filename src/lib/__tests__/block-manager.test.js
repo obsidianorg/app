@@ -1,6 +1,6 @@
-var assert = require('assert')
-var proxyquire = require('proxyquire')
-var field = require('field')
+import assert from 'assert'
+import proxyquire from 'proxyquire'
+import field from 'field'
 var babel = require('../../babel/resolve')
 
 /* global describe, it */

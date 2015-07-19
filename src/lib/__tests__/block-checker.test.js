@@ -1,7 +1,7 @@
-var assert = require('assert')
-var proxyquire = require('proxyquire')
-var stubo = require('stubo')
-var blockFixtures = require('../../_fixtures/blocks')
+import assert from 'assert'
+import proxyquire from 'proxyquire'
+import stubo from 'stubo'
+import blockFixtures from '../../_fixtures/blocks'
 
 /* global describe, it */
 
