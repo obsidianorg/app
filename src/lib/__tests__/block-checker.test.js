@@ -1,7 +1,7 @@
 import assert from 'assert'
 import proxyquire from 'proxyquire'
 import stubo from 'stubo'
-import blockFixtures from '../../_fixtures/blocks'
+import blockFixtures from '@_fixtures/blocks'
 
 /* global describe, it */
 
