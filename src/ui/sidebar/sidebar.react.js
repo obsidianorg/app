@@ -3,7 +3,7 @@ var remote = require('remote')
 var React = require('react')
 var SidebarButton = require('./sidebar-button.react')
 var PseudonymModal = require('../pseudonym-modal.react')
-var stealth = require('../../db/keydb')
+import * as stealth from '@keydb'
 var userLang = require('../../lib/lang').getLanguage()
 var lang = require('../../common/lang').getLanguageData(userLang).getContext('send-form')
 var ModalTrigger = require('react-bootstrap').ModalTrigger

@@ -4,7 +4,7 @@ var ci = require('coininfo')
 var cointx = require('cointx')
 var Decimal = require('decimal.js')
 var Stealth = require('stealth')
-var LocalStealth = require('../db/keydb')
+import * as LocalStealth from '@keydb'
 var blkqt = require('../lib/blkqt')
 var txUtils = require('../blockchain/txutils')
 var Script = cointx.Script

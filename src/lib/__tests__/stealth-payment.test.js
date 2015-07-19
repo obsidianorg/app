@@ -6,6 +6,7 @@ var _ = require('lodash')
 var txUtils = require('../../blockchain/txutils')
 // the fixtures will almost certainly require refactoring
 var fixtures = require('./stealth-payment.fixtures')
+var babel = require('../../babel/resolve')
 
 /* global describe, it */
 
@@ -92,12 +93,13 @@ describe('stealth-payment', function () {
       var stubs = {
         '../lib/blkqt': blkqtStub,
         '../common/cryptocoin': cryptocoin,
-        '../db/keydb': {
+        '@keydb': {
           load: function () {
             return Stealth.fromJSON(JSON.stringify(f1chtx.stealth))
           }
         }
       }
+      babel.mapResolveKeys(stubs)
 
       var stealthPayment = proxyquire('../stealth-payment', stubs)
       var keyPair = stealthPayment.checkTx(f1chtx.txHex)

@@ -7,7 +7,7 @@ var logger = require('../logger')
 var PaymentActions = require('../actions/payment-actions')
 var stealthPseudonym = require('../lib/stealth-pseudonym')
 var pdb = require('../db/pdb').PDB // temporary hack
-var stealth = require('../db/keydb')
+import * as stealth from '@keydb'
 
 import window from '@domwindow'
 var localStorage = window.localStorage
