@@ -29,15 +29,15 @@ export function loadSync () {
     return Stealth.fromJSON(JSON.stringify(data.keys[0]))
   } else {
     let sk = loadFromLocalStorage()
-    if (sk) return sk
-
-    // not in key file or localStorage, must need to create it
-    sk = generateStealthKey()
+    if (!sk) {
+      // not in key file or localStorage, must need to create it
+      sk = generateStealthKey()
+    }
     var keyObj = JSON.parse(sk.toJSON())
     var keyFileData = {
       keys: [ keyObj ]
     }
-    fs.outputJsonSync(env.keyFile(), keyFileData)
+    fs.outputJsonSync(env.keyFile, keyFileData)
     return sk
   }
 }
