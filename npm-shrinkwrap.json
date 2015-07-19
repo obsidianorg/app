@@ -1607,6 +1607,11 @@
         }
       }
     },
+    "sweetalert": {
+      "version": "1.0.1",
+      "from": "sweetalert@*",
+      "resolved": "https://registry.npmjs.org/sweetalert/-/sweetalert-1.0.1.tgz"
+    },
     "ymd": {
       "version": "0.1.0",
       "from": "ymd@*",
