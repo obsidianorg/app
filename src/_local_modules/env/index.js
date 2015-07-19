@@ -15,6 +15,10 @@ function obsidianConfFile () {
   return path.join(dataDir(), 'obsidian.conf.json')
 }
 
+function keyFile () {
+  return path.join(dataDir(), 'keys.db')
+}
+
 function qtConfFile () {
   switch (process.platform) {
     case 'win32':
@@ -39,6 +43,7 @@ function qtBinFile () {
 module.exports = Object.freeze({
   dataDir: dataDir(),
   logDir: logDir(),
+  keyFile: keyFile(),
   qtBinFile: qtBinFile(),
   qtConfFile: qtConfFile(),
   obsidianConfFile: obsidianConfFile(),
