@@ -1218,6 +1218,11 @@
       "from": "classnames@*",
       "resolved": "https://registry.npmjs.org/classnames/-/classnames-2.1.2.tgz"
     },
+    "clone": {
+      "version": "1.0.2",
+      "from": "clone@*",
+      "resolved": "https://registry.npmjs.org/clone/-/clone-1.0.2.tgz"
+    },
     "coininfo": {
       "version": "0.3.1",
       "from": "coininfo@latest"
