@@ -131,3 +131,9 @@ ul.sidebar-menu li a.active i {
     color: white; }
   .dropdown-menu a:focus {
     outline: none; }
+
+.sweet-alert-obsidian {
+  background-color: #333;
+  color: #eee; }
+  .sweet-alert-obsidian h2, .sweet-alert-obsidian p {
+    color: #eee; }
