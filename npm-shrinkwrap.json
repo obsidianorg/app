@@ -1279,6 +1279,11 @@
       "version": "1.0.1",
       "from": "ecurve@latest"
     },
+    "electron-debug": {
+      "version": "0.1.1",
+      "from": "electron-debug@*",
+      "resolved": "https://registry.npmjs.org/electron-debug/-/electron-debug-0.1.1.tgz"
+    },
     "electron-window": {
       "version": "0.4.2",
       "from": "electron-window@latest",

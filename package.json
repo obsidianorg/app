@@ -28,6 +28,7 @@
     "ecdsa": "^0.6.0",
     "eckey": "^0.8.0",
     "ecurve": "^1.0.1",
+    "electron-debug": "^0.1.1",
     "electron-window": "^0.4.2",
     "flux": "^2.0.1",
     "fs-extra": "^0.18.0",
