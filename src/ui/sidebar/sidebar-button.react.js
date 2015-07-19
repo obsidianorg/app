@@ -1,10 +1,10 @@
-var React = require('react')
-var {OverlayTrigger, Tooltip} = require('react-bootstrap')
+import React from 'react'
+import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 
-var SidebarButton = React.createClass({
+const SidebarButton = React.createClass({
   displayName: 'SidebarButton',
 
-  getDefaultProps: function () {
+  getDefaultProps () {
     return {
       onClick: Function()
     }
@@ -16,10 +16,9 @@ var SidebarButton = React.createClass({
     icon: React.PropTypes.string
   },
 
-  render: function () {
-    var classString = 'fa fa-' + this.props.icon
-
-    var toolTip = <Tooltip>{ this.props.hoverText }</Tooltip>
+  render () {
+    let classString = 'fa fa-' + this.props.icon
+    let toolTip = <Tooltip>{ this.props.hoverText }</Tooltip>
 
     return (
       <OverlayTrigger placement='right' overlay={toolTip}>
@@ -32,4 +31,4 @@ var SidebarButton = React.createClass({
   }
 })
 
-module.exports = SidebarButton
+export default SidebarButton
