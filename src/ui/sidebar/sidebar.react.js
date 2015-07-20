@@ -1,26 +1,26 @@
-var clipboard = require('clipboard')
-var remote = require('remote')
-var React = require('react')
-var SidebarButton = require('./sidebar-button.react')
-var PseudonymModal = require('../pseudonym-modal.react')
+import clipboard from 'clipboard'
+import { ModalTrigger } from 'react-bootstrap'
+import remote from 'remote'
 import * as stealth from '@keydb'
+import React from 'react'
+import window from '@domwindow'
+import SidebarButton from './sidebar-button.react'
+import DeregisterSidebarButton from './deregister-sidebar-button.react'
+import PseudonymModal from '../pseudonym-modal.react'
+
 var userLang = require('../../lib/lang').getLanguage()
 var lang = require('../../common/lang').getLanguageData(userLang).getContext('send-form')
-var ModalTrigger = require('react-bootstrap').ModalTrigger
-
-// todo, refactor
-import window from '@domwindow'
-var localStorage = window.localStorage
 
 // only onefor now
 var sk = stealth.load()
+var pseudonym = stealth.getCurrentP()
 
 var Sidebar = React.createClass({
   displayName: 'Sidebar',
 
   getInitialState: function () {
     return {
-      registerButtonVisible: !localStorage.pseudonym
+      registerButtonVisible: !pseudonym
     }
   },
 
@@ -53,7 +53,9 @@ var Sidebar = React.createClass({
               icon='user-plus'/>
           </ModalTrigger>
         </li>
-      : <span></span>
+      : <li>
+          <DeregisterSidebarButton />
+        </li>
 
     return (
       <aside>
