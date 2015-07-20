@@ -2,7 +2,9 @@ var assert = require('assert')
 var async = require('async')
 var ci = require('coininfo')
 var cointx = require('cointx')
+var ecdsa = require('ecdsa')
 var Decimal = require('decimal.js')
+var Stealth = require('stealth')
 var blkqt = require('../lib/blkqt')
 var txUtils = require('../blockchain/txutils')
 var Script = cointx.Script
@@ -91,6 +93,48 @@ function createRegistryTx (pseudonym, stealthKey, registryAmountBLK, callback) {
   })
 }
 
+function createDeregistryTx (pseudonym, stealthKey, registryTxId, callback) {
+  blkqt.getRawTransaction(registryTxId, function (err, txHex) {
+    if (err) return callback(err)
+    var keyData = checkTx(txHex)
+    if (!keyData) return callback(new Error('checkTx() failed.'))
+
+    // verify we have correct info
+    var newSk = new Stealth({ ...keyData, version: 39 })
+    if (stealthKey.toString() !== newSk.toString()) {
+      return callback(new Error('Stealth key does not match transaction.'))
+    }
+
+    blkqt.getNewAddress(function (err, address) {
+      if (err) return callback(err)
+
+      var tx = new Transaction()
+      txUtils.setCurrentTime(tx)
+
+      var feeRat = 10000
+      var sumRat = keyData.scanPubKeyData.value + keyData.payloadPubKeyData.value
+      var totalRat = sumRat - feeRat
+
+      tx.addOutput(txUtils.addressToOutputScript(address), totalRat)
+      tx.addInput(registryTxId, keyData.payloadPubKeyData.vout)
+      tx.addInput(registryTxId, keyData.scanPubKeyData.vout)
+
+      sign(tx, 0, keyData.payloadPubKeyData, stealthKey.payloadPrivKey)
+      sign(tx, 1, keyData.scanPubKeyData, stealthKey.scanPrivKey)
+      
+      callback(null, tx)
+    })
+  })
+
+  function sign (tx, index, keyData, privKey) {
+    var hash = txUtils.hashForSignature(tx, index, keyData.script, Transaction.SIGHASH_ALL)
+    var signature = ecdsa.serializeSig(ecdsa.sign(new Buffer(hash), privKey))
+    signature.push(Transaction.SIGHASH_ALL)
+    // notice no pubkey? not necessary on pay-to-pubkey
+    tx.setInputScript(index, Script.fromChunks([new Buffer(signature)]))
+  }
+}
+
 function checkTx (hex) {
   var tx = txUtils.parseFromHex(hex)
 
@@ -126,9 +170,12 @@ function checkTx (hex) {
       out.script.chunks[0].length === 33
     )
   }).map(function (out) {
+    var n = tx.outs.indexOf(out)
     return {
       pubKey: out.script.chunks[0],
-      value: out.value
+      value: out.value,
+      vout: n,
+      script: out.script
     }
   })
 
@@ -140,19 +187,23 @@ function checkTx (hex) {
   var sum = pkd0.value + pkd1.value
   if (new Decimal(sum).dividedBy(BLK_INFO.per1).toNumber() < MIN_BLK) return null
 
-  var payloadPubKey = pkd0.value > pkd1.value ? pkd0.pubKey : pkd1.pubKey
-  var scanPubKey = pkd0.value < pkd1.value ? pkd0.pubKey : pkd1.pubKey
+  var payloadPubKeyData = pkd0.value > pkd1.value ? pkd0 : pkd1
+  var scanPubKeyData = pkd0.value < pkd1.value ? pkd0 : pkd1
 
   // no match
   return {
     pseudonym: pseudonym,
-    payloadPubKey: payloadPubKey,
-    scanPubKey: scanPubKey
+    // leaving these for compatibility for now
+    payloadPubKey: payloadPubKeyData.pubKey,
+    scanPubKey: scanPubKeyData.pubKey,
+    // new fields
+    payloadPubKeyData: payloadPubKeyData,
+    scanPubKeyData: scanPubKeyData
   }
 }
 
 module.exports = {
   createRegistryTx: createRegistryTx,
+  createDeregistryTx: createDeregistryTx,
   checkTx: checkTx
 }
-
