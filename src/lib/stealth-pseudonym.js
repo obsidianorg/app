@@ -121,7 +121,7 @@ function createDeregistryTx (pseudonym, stealthKey, registryTxId, callback) {
 
       sign(tx, 0, keyData.payloadPubKeyData, stealthKey.payloadPrivKey)
       sign(tx, 1, keyData.scanPubKeyData, stealthKey.scanPrivKey)
-      
+
       callback(null, tx)
     })
   })
