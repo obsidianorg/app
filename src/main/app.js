@@ -1,3 +1,4 @@
+require('electron-debug')()
 var app = require('app')
 
 function ready (callback) {
