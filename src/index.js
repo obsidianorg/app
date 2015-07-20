@@ -3,8 +3,9 @@ require('./babel/hook')
 require('./devtools')
 
 // annoying popup an error box instead of silent console output
-window.onerror = function (message, url, line) {
-  window.alert('ERROR: \n' + message + ' (' + line + ')')
+window.onerror = function (message, url, lineno, colno, error) {
+  console.error(error)
+  window.alert('ERROR: \n' + message + ' (' + lineno + ')' + '\n:' + error.stack)
 }
 
 require('./stores/payments-store')
