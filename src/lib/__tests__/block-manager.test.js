@@ -4,6 +4,7 @@ import field from 'field'
 var babel = require('../../babel/resolve')
 
 /* global describe, it */
+// trinity: mocha
 
 describe('block-manager', function () {
   describe('getLastKnownBlockCount()', function () {

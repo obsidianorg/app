@@ -4,6 +4,7 @@ import _ from 'lodash'
 import fixtures from './blkqt.fixtures'
 
 /* global describe, it */
+// trinity: mocha
 
 var ipcStub = {
   '@noCallThru': true

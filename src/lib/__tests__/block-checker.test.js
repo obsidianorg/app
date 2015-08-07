@@ -4,6 +4,7 @@ import stubo from 'stubo'
 import blockFixtures from '@_fixtures/blocks'
 
 /* global describe, it */
+// trinity: mocha
 
 describe('block-checker', function () {
   describe('checkBlock', function () {

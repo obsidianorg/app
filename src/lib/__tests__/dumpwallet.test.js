@@ -4,6 +4,7 @@ var dumpwallet = require('../dumpwallet')
 var fixtures = require('./dumpwallet.fixtures')
 
 /* global describe, it */
+// trinity: mocha
 
 describe('dumpwallet', function () {
   fixtures.valid.forEach(function (f) {

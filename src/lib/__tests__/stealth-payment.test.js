@@ -10,6 +10,7 @@ import fixtures from './stealth-payment.fixtures'
 var babel = require('../../babel/resolve')
 
 /* global describe, it */
+// trinity: mocha
 
 var blkqtStub = {
   '@noCallThru': true // for proxyquire
