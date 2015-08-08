@@ -1,4 +1,4 @@
-import env from '@env'
+import env from '#env'
 import fs from 'fs-extra'
 import path from 'path-extra'
 import findDialog from './find-dialog'

@@ -1,7 +1,7 @@
-import * as env from '@env'
+import * as env from '#env'
 import * as fs from 'fs-extra'
 import * as Stealth from 'stealth'
-import window from '@domwindow'
+import window from '#domwindow'
 
 // temporary, renderer only
 // if (process.type !== 'renderer') throw new Error('SHOULD BE RENDERER ONLY FOR NOW')

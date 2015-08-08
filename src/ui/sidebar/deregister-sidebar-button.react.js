@@ -1,5 +1,5 @@
 import React from 'react'
-import swal from '@swal'
+import swal from '#swal'
 import SidebarButton from './sidebar-button.react'
 import stealthPseudonym from '../../lib/stealth-pseudonym'
 import * as pdb from '../../db/pdb'
@@ -8,7 +8,7 @@ import alert from '../alert'
 import PaymentActions from '../../actions/payment-actions'
 
 // temporary
-import * as stealth from '@keydb'
+import * as stealth from '#keydb'
 var sk = stealth.load()
 var pseudonym = stealth.getCurrentP()
 var PDB = pdb.PDB

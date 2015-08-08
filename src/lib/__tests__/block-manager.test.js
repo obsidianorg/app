@@ -11,7 +11,8 @@ describe('block-manager', function () {
     describe('> when app has ran and data in storage', function () {
       it('should return value', function (done) {
         var stubs = {}
-        field.set(stubs, '@domwindow:localStorage.getItem', () => 653100)
+        field.set(stubs, '#domwindow:localStorage.getItem', () => 653100)
+        field.set(stubs, '#domwindow:@noCallThru', true)
         field.set(stubs, './blkqt:@noCallThru', true)
         stubs = babel.mapKeys(stubs)
         var blockManager = proxyquire('../block-manager', stubs)
@@ -27,9 +28,9 @@ describe('block-manager', function () {
       it('should return value', function (done) {
         var stubs = {}
         // had to change output because pseudonym checkpoint
-        field.set(stubs, '@domwindow:localStorage.getItem', (key) => key === 'hasAliasSupport')
-        field.set(stubs, '@domwindow:localStorage.setItem', Function())
-        field.set(stubs, '@domwindow:@noCallThru', true)
+        field.set(stubs, '#domwindow:localStorage.getItem', (key) => key === 'hasAliasSupport')
+        field.set(stubs, '#domwindow:localStorage.setItem', Function())
+        field.set(stubs, '#domwindow:@noCallThru', true)
         field.set(stubs, './blkqt:getBlockCount', cb => { cb(null, 453100) })
         field.set(stubs, './blkqt:@noCallThru', true)
         stubs = babel.mapKeys(stubs)

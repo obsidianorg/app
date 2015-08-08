@@ -90,7 +90,7 @@ describe('stealth-payment', function () {
       var stubs = {
         '../lib/blkqt': blkqtStub,
         '../common/cryptocoin': cryptocoin,
-        '@keydb': {
+        '#keydb': {
           load: function () {
             return Stealth.fromJSON(JSON.stringify(f1chtx.stealth))
           }

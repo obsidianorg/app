@@ -10,8 +10,8 @@ describe('lang', function () {
     describe('> when nothing is set', function () {
       it('should default to en', function () {
         var stubs = {}
-        field.set(stubs, '@domwindow:__args__', {})
-        field.set(stubs, '@domwindow:@noCallThru', true)
+        field.set(stubs, '#domwindow:__args__', {})
+        field.set(stubs, '#domwindow:@noCallThru', true)
         stubs = babel.mapKeys(stubs)
 
         var lang = proxyquire('../lang', stubs)
@@ -22,9 +22,9 @@ describe('lang', function () {
     describe('> when browser language is set and not settings', function () {
       it('should return browser language', function () {
         var stubs = {}
-        field.set(stubs, '@domwindow:navigator.language', 'es-MX')
-        field.set(stubs, '@domwindow:__args__:CONFIG', {})
-        field.set(stubs, '@domwindow:@noCallThru', true)
+        field.set(stubs, '#domwindow:navigator.language', 'es-MX')
+        field.set(stubs, '#domwindow:__args__:CONFIG', {})
+        field.set(stubs, '#domwindow:@noCallThru', true)
         stubs = babel.mapKeys(stubs)
 
         var lang = proxyquire('../lang', stubs)
@@ -35,9 +35,9 @@ describe('lang', function () {
     describe('> when config/settings', function () {
       it('should always use config', function () {
         var stubs = {}
-        field.set(stubs, '@domwindow:navigator.language', 'es-MX')
-        field.set(stubs, '@domwindow:__args__:CONFIG.settings.language', 'zh-CN')
-        field.set(stubs, '@domwindow:@noCallThru', true)
+        field.set(stubs, '#domwindow:navigator.language', 'es-MX')
+        field.set(stubs, '#domwindow:__args__:CONFIG.settings.language', 'zh-CN')
+        field.set(stubs, '#domwindow:@noCallThru', true)
         stubs = babel.mapKeys(stubs)
 
         var lang = proxyquire('../lang', stubs)

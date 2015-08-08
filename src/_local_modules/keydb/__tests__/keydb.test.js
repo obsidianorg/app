@@ -26,7 +26,7 @@ describe('keydb', function () {
         }
 
         var stubs = {}
-        field.set(stubs, '@domwindow:localStorage.getItem', () => JSON.stringify(sk))
+        field.set(stubs, '#domwindow:localStorage.getItem', () => JSON.stringify(sk))
         stubs = babel.mapKeys(stubs)
         var keydb = proxyquire('../', stubs)
 

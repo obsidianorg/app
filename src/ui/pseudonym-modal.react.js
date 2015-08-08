@@ -7,9 +7,9 @@ var logger = require('../logger')
 var PaymentActions = require('../actions/payment-actions')
 var stealthPseudonym = require('../lib/stealth-pseudonym')
 var pdb = require('../db/pdb').PDB // temporary hack
-import * as stealth from '@keydb'
+import * as stealth from '#keydb'
 
-import window from '@domwindow'
+import window from '#domwindow'
 var localStorage = window.localStorage
 
 // already init'd in index.js/blockManager (this is hacky to rely upon that, TODO, fix)

@@ -2,9 +2,9 @@ var clone = require('clone')
 var path = require('path')
 
 function resolve (src) {
-  if (src.indexOf('@') === 0) {
+  if (src.indexOf('#') === 0) {
     // assuming __dirname => src/babel/
-    var localModuleName = src.split('@')[1]
+    var localModuleName = src.split('#')[1]
     var localModule = path.join(__dirname, '..', '_local_modules', localModuleName)
     return localModule
   }
