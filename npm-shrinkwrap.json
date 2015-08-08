@@ -1030,6 +1030,10 @@
         }
       }
     },
+    "babel-resolve": {
+      "version": "0.1.0",
+      "from": "babel-resolve@*"
+    },
     "bigi": {
       "version": "1.4.0",
       "from": "bigi@latest",
@@ -1468,25 +1472,6 @@
       "version": "1.1.1",
       "from": "secure-random@latest",
       "resolved": "https://registry.npmjs.org/secure-random/-/secure-random-1.1.1.tgz"
-    },
-    "source-map-support": {
-      "version": "0.3.2",
-      "from": "source-map-support@*",
-      "resolved": "https://registry.npmjs.org/source-map-support/-/source-map-support-0.3.2.tgz",
-      "dependencies": {
-        "source-map": {
-          "version": "0.1.32",
-          "from": "source-map@0.1.32",
-          "resolved": "https://registry.npmjs.org/source-map/-/source-map-0.1.32.tgz",
-          "dependencies": {
-            "amdefine": {
-              "version": "1.0.0",
-              "from": "amdefine@>=0.0.4",
-              "resolved": "https://registry.npmjs.org/amdefine/-/amdefine-1.0.0.tgz"
-            }
-          }
-        }
-      }
     },
     "stealth": {
       "version": "0.3.0",
