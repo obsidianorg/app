@@ -1,4 +1,4 @@
-require('babel/register')({
+require('babel-core/register')({
   resolveModuleSource: require('./resolve').resolve,
   only: 'src/',
   extensions: ['.js'],
