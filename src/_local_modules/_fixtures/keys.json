@@ -1,0 +1,12 @@
+{
+  "valid": [
+    {
+      "payloadPrivKey": "ad7c17a0540a5867c90df9f5fb8d70e2cee37ecf17e5b6bb6c85182a5667c91e",
+      "payloadPubKey": "02c90a458645cd5d0f624f6242c0aa9240afd291f31653456a015d66ad9be30cb5",
+      "scanPrivKey": "0867f9ed0bb492b54bcb2eef58f17b23f2dd203b9663451ce46e06ce8e75aaae",
+      "scanPubKey": "0369f6bfe5421e60730a95944263e47ce599800bf5ad5c1a657010d3a26edcf6cd",
+      "version": 39,
+      "alias": "obsidian-test"
+    }
+  ]
+}
