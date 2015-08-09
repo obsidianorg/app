@@ -137,3 +137,21 @@ ul.sidebar-menu li a.active i {
   color: #eee; }
   .sweet-alert-obsidian h2, .sweet-alert-obsidian p {
     color: #eee; }
+
+#footer {
+  position: fixed;
+  bottom: 0;
+  margin-left: 55px;
+  padding: 5px;
+  width: calc(100% - 55px);
+  background: #666; }
+  #footer .progress {
+    margin-bottom: 0px;
+    height: 20px;
+    background-color: #aaa; }
+    #footer .progress div {
+      background-color: #333; }
+    #footer .progress span {
+      font-size: 12px;
+      color: #daac53;
+      line-height: 20px; }

@@ -1,0 +1,27 @@
+#footer {
+  position: fixed;
+  bottom: 0;
+  margin-left: $sidebar-width;
+  padding: 5px;
+  width: calc(100% - #{$sidebar-width});
+  //border-top: 1px solid #ccc;
+  background: #666;
+
+  .progress {
+    margin-bottom: 0px;
+    height: 20px;
+    background-color: #aaa;
+
+    // progress
+    div {
+      background-color: #333;
+    }
+
+    // label
+    span {
+      font-size: 12px;
+      color: $gold;
+      line-height: 20px;
+    }
+  }
+}
