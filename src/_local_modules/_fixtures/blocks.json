@@ -1,7 +1,10 @@
 {
   "valid": [
     {
-      "_comment": "Valid stealth transaction.",
+      "_meta": {
+        "comment": "Valid stealth transaction.",
+        "tx": "f73728b9ced007d2b290418dabc0ef82ca993151241b947cb1ff78d4e227cc2f"
+      },
       "height": 605977,
       "hash": "0a619f0cf649c5c671c30829f3205f0b1013161c59ca2e5bd69c18a7e02ba676",
       "timestamp": 1426236512,
@@ -17,7 +20,10 @@
       }
     },
     {
-      "_comment": "Valid stealth pseudonym registry transaction.",
+      "_meta": {
+        "comment": "Valid stealth pseudonym registry transaction.",
+        "tx": "e4cf05df7efa023b0c9854b7da4e6b93cc10938293b0bf420050c942711567de"
+      },
       "height": 692087,
       "hash": "f4fadffd133c9e4da0814bf7c484322a42216e18862811594434c6f823f8b0e5",
       "timestamp": 1431982320,
@@ -31,7 +37,12 @@
       }
     },
     {
-      "_comment": "Stealth pseudonym deregistered.",
+      "_meta": {
+        "comment": "Stealth pseudonym deregistered.",
+        "tx": "9b65a747f66fbe8d5ee96b2c2a727981a9544f0c716948bb34575abab4b65b96",
+        "txTimestamp": 1437420511,
+        "recoverAddress": "BJ9yj1JVk6QLuj6hB7aU4iV4vEWFeiQ8gM"
+      },
       "height": 773462,
       "hash": "427b8fef5581b0b7b47cd3b8007e20e8a952ce07032a2025731d5fa8a8be4d54",
       "timestamp": 1437420576,
