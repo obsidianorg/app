@@ -1,13 +1,14 @@
 import React from 'react'
+import { provide } from 'react-redux'
+import { store } from '#flux'
 import Sidebar from './sidebar'
 import Header from './header.react'
 import Footer from './footer/index.react'
 import SendForm from './send-form'
 
-let App = React.createClass({
-  displayName: 'App',
-
-  render: function () {
+@provide(store)
+export default class App extends React.Component {
+  render () {
     return (
       <div id='container' >
         <Sidebar />
@@ -19,6 +20,6 @@ let App = React.createClass({
       </div>
     )
   }
-})
+}
 
 export default App

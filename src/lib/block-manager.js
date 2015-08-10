@@ -42,6 +42,8 @@ blockManager.checkBlocks = function () {
 
     blkqt.getBlockCount(function (err, current) {
       if (err) return doneChecking(err)
+      // 'current' in this context is actually the top of height
+      blockManager.emit('block:top', current) // <--- weird naming scheme 'current', 'top', etc... todo: find something better
 
       if (start === current) return doneChecking()
 
@@ -52,6 +54,8 @@ blockManager.checkBlocks = function () {
             console.log('checking ' + blockHeight)
             blockManager.updateLastKnown(blockHeight)
           }
+          // 'current' variable is top, and 'blockHeight' is the current
+          blockManager.emit('block:current', blockHeight, current)
         })
         .on('stealth:payment:received', function (keys) {
           console.log('got %d payments', keys.length)

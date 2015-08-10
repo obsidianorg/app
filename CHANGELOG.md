@@ -2,6 +2,7 @@
 ------------------
 - moved from `localStorage` to `obsidian/keys.db` to store keys
 - added a progress footer
+- started conversion from vanilla flux to redux
 
 0.4.0 / 2015-07-06
 ------------------
