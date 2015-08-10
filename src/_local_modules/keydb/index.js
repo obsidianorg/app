@@ -60,3 +60,14 @@ export function resolveKeysFromP (alias) {
   let data = fs.readJsonSync(env.keyFile)
   return data.keys[0]
 }
+
+// temporary
+export function loadAllSync () {
+  // hack to create key file if it doesn't exist
+  loadSync()
+
+  let data = fs.readJsonSync(env.keyFile)
+  return data.keys.map((key) => {
+    return {stealth: Stealth.fromJSON(JSON.stringify(key)), ...key}
+  })
+}

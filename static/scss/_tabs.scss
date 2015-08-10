@@ -1,0 +1,14 @@
+.nav-tabs {
+  li, li.active {
+    a, a:hover, a:focus {
+      background-color: #444;
+      color: $gold;
+    }
+  }
+
+  li {
+    a {
+      border-bottom: 1px solid #ddd;
+    }
+  }
+}

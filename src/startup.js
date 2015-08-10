@@ -1,7 +1,8 @@
 import * as actions from '#flux/actions'
 
 export function run () {
-
+  // will implicitly populate stealth key table
+  actions.keys.load()
 }
 
 var blockManager = require('./lib/block-manager')

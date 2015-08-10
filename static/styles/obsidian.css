@@ -126,6 +126,13 @@ ul.sidebar-menu li a.active i {
 .has-feedback label ~ .form-control-feedback {
   top: 40px; }
 
+.nav-tabs li a, .nav-tabs li a:hover, .nav-tabs li a:focus, .nav-tabs li.active a, .nav-tabs li.active a:hover, .nav-tabs li.active a:focus {
+  background-color: #444;
+  color: #daac53; }
+
+.nav-tabs li a {
+  border-bottom: 1px solid #ddd; }
+
 .dropdown-menu {
   background-color: #333;
   font-size: 18px; }
@@ -133,6 +140,9 @@ ul.sidebar-menu li a.active i {
     color: white; }
   .dropdown-menu a:focus {
     outline: none; }
+
+#stealth-key-view {
+  font-size: 12px; }
 
 .sweet-alert-obsidian {
   background-color: #333;
