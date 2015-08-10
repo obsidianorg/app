@@ -5,7 +5,7 @@ import * as stealth from '#keydb'
 import React from 'react'
 import window from '#domwindow'
 import SidebarButton from './sidebar-button.react'
-import DeregisterSidebarButton from './deregister-sidebar-button.react'
+// import DeregisterSidebarButton from './deregister-sidebar-button.react'
 import PseudonymModal from '../pseudonym-modal.react'
 
 var userLang = require('../../lib/lang').getLanguage()
@@ -53,9 +53,10 @@ var Sidebar = React.createClass({
               icon='user-plus'/>
           </ModalTrigger>
         </li>
-      : <li>
-          <DeregisterSidebarButton />
-        </li>
+      : null
+
+    let x = {/* <li> <DeregisterSidebarButton /> </li> */}
+    x ? '1' : '0'
 
     return (
       <aside>
