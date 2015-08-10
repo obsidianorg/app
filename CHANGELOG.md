@@ -1,4 +1,4 @@
-0.5.0 / 2015-xx-yy
+0.5.0 / 2015-08-10
 ------------------
 - moved from `localStorage` to `obsidian/keys.db` to store keys
 - added a progress footer
