@@ -4,6 +4,7 @@
 - added a progress footer
 - started conversion from vanilla flux to redux
 - added tabs (stealth keys view)
+- built with electron `0.30.4`
 
 0.4.0 / 2015-07-06
 ------------------

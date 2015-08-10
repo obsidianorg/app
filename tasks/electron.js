@@ -18,7 +18,7 @@ var _args = minimist(process.argv.slice(2))
 
 var CACHE_PATH = path.join(ospath.home(), '.cache', 'electron', os.platform())
 var _latestElectronVersion
-var CURRENT = '0.28.3'
+var CURRENT = '0.30.4'
 
 gulp.task('electron:build:mac', _args.v ? [] : ['electron:build:prepare', 'electron:latest'], function (done) {
   var version = _args.v || _latestElectronVersion || CURRENT
