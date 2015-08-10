@@ -8,6 +8,9 @@ body {
   color: #eee;
   font-family: 'Ruda', sans-serif;
   font-size: 20px;
+  // prevent scrolling:
+  height: 100%;
+  overflow: hidden;
 }
 
 .top-plus {
@@ -139,4 +142,3 @@ ul.sidebar-menu li a.active i {
 .has-feedback label ~ .form-control-feedback {
   top: 40px;
 }
-

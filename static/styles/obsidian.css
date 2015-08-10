@@ -16,7 +16,9 @@ body {
   /*color: #daac53;*/
   color: #eee;
   font-family: 'Ruda', sans-serif;
-  font-size: 20px; }
+  font-size: 20px;
+  height: 100%;
+  overflow: hidden; }
 
 .top-plus {
   margin-right: 1%;
