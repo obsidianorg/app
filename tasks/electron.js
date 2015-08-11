@@ -5,6 +5,7 @@ var ospath = require('ospath')
 var path = require('path')
 var download = require('electron-download')
 var gulp = require('gulp')
+var babel = require('gulp-babel')
 var gutil = require('gulp-util')
 var latest = require('github-latest-release')
 var extract = require('extract-zip')
@@ -77,7 +78,7 @@ gulp.task('electron:build:windows', _args.v ? [] : ['electron:build:prepare', 'e
     platform: 'win32',
     version: version,
     arch: 'x64',
-    out: path.join(process.cwd(), '/release', pkg.name + '-win32-' + pkg.version),
+    out: path.join(process.cwd(), '/release', pkg.name + '-windows-' + pkg.version),
     icon: './static/res/icon.ico',
     asar: true
   }
@@ -91,10 +92,40 @@ gulp.task('electron:build:windows', _args.v ? [] : ['electron:build:prepare', 'e
   })
 })
 
-gulp.task('electron:build:prepare', function () {
+function createResolver (dir, base) {
+  dir = path.relative(base, path.resolve(base, dir))
+  return function resolve (mod, file) {
+    if (mod.indexOf('#') !== 0) return mod
+    var localModuleName = mod.split('#')[1]
+    var modPath = path.join(dir, localModuleName)
+    var d = path.dirname(file)
+    var rel = path.relative(base, d)
+    var localModule = path.relative(rel, modPath)
+
+    // hack
+    if (!localModule.startsWith('.')) localModule = './' + localModule
+    return localModule
+  }
+}
+
+var r = createResolver('./src/_local_modules', '/var/folders/f0/3bf0bqj54fl6b3g0__nymw_m0000gn/T/obsidian/')
+var m = r('#keydb', '/var/folders/f0/3bf0bqj54fl6b3g0__nymw_m0000gn/T/obsidian/src/ui/sidebar/sidebar.react.js')
+console.log(m)
+
+var m2 = r('#flux', '/var/folders/f0/3bf0bqj54fl6b3g0__nymw_m0000gn/T/obsidian/src/startup.js')
+console.log(m2)
+
+gulp.task('electron:build:prepare', function (done) {
   var buildDir = path.join(os.tmpdir(), pkg.name)
   fs.emptyDirSync(buildDir)
-  // fs.emptyDirSync(path.join(process.cwd(), '/release'))
+  console.log(buildDir)
+
+  var opts = require('../src/babel/options')
+  delete opts.only
+  delete opts.cache
+  delete opts.extensions
+
+  opts.resolveModuleSource = createResolver('./src/_local_modules', buildDir)
 
   fs.copySync('./package.json', path.join(buildDir, 'package.json'))
   fs.copySync('./src', path.join(buildDir, 'src'))
@@ -102,6 +133,16 @@ gulp.task('electron:build:prepare', function () {
   Object.keys(pkg.dependencies).forEach(function (dep) {
     fs.copySync(path.join('./node_modules', dep), path.join(buildDir, 'node_modules', dep))
   })
+
+  gulp.src(path.join(buildDir, 'src') + '/**/*.js')
+    .pipe(babel(opts))
+    .pipe(gulp.dest(path.join(buildDir, 'src-babel')))
+    .on('end', function () {
+      fs.copy(path.join(buildDir, 'src-babel'), path.join(buildDir, 'src'), { clobber: true }, function (err) {
+        if (err) console.error(err)
+        fs.remove(path.join(buildDir, 'src-babel'), done)
+      })
+    })
 })
 
 gulp.task('electron:download', _args.v ? [] : ['electron:latest'], function (done) {
