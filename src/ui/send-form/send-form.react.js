@@ -84,7 +84,7 @@ var SendForm = React.createClass({
               return alert.showError(err)
             }
             PaymentActions.send({tx: tx})
-            alert.showMessageBox(null, lang.sentMB, Function())
+            alert.showMessageBox(null, lang.sentMB, function () {})
             self.setState(self.getInitialState())
           })
         }

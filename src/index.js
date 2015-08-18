@@ -12,7 +12,7 @@ console.dir = function () {
   remoteConsole.dir.apply(remoteConsole, arguments)
 }
 
-console.error =function () {
+console.error = function () {
   remoteConsole.error.apply(remoteConsole, arguments)
 }
 

@@ -22,7 +22,7 @@ const PseudonymModal = React.createClass({
 
   getDefaultProps: function () {
     return {
-      handlePseudonymRegistered: Function()
+      handlePseudonymRegistered: function () {}
     }
   },
 

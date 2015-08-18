@@ -6,7 +6,7 @@ const SidebarButton = React.createClass({
 
   getDefaultProps () {
     return {
-      onClick: Function()
+      onClick: function () {}
     }
   },
 

@@ -11,7 +11,7 @@ var ReceiverInput = React.createClass({
 
   getDefaultProps () {
     return {
-      onChange: Function()
+      onChange: function () {}
     }
   },
 
