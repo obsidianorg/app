@@ -2,10 +2,11 @@ var assert = require('assert')
 var os = require('os')
 var path = require('path')
 var fs = require('fs-extra')
-var pdb = require('../pdb')
+var pdb = require('../')
 var fixtures = require('./pdb.fixtures')
 
 /* global beforeEach, describe, it */
+// trinity: mocha
 
 describe('pdb', function () {
   var TEST_DIR, TEST_FILE

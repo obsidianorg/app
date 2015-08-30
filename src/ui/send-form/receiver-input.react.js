@@ -2,9 +2,11 @@ var {Input} = require('react-bootstrap')
 var DropdownMenu = require('./DropdownMenu.react')
 var React = require('react')
 var Stealth = require('stealth')
-var pdb = require('../../db/pdb').PDB // temporary hack
+import { PDB } from '#pdb'
 var userLang = require('../../lib/lang').getLanguage()
 var lang = require('../../common/lang').getLanguageData(userLang).getContext('send-form.react.js')
+
+const pdb = PDB
 
 var ReceiverInput = React.createClass({
   displayName: 'ReceiverInput',

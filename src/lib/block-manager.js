@@ -3,7 +3,7 @@ var EventEmitter = require('events').EventEmitter
 var _ = require('lodash')
 var blkqt = require('./blkqt')
 var blockChecker = require('./block-checker')
-var pdb = require('../db/pdb')
+import * as pdb from '#pdb'
 var blockCheckInterval = 30000 // CONFIG.settings.blockCheckInterval
 
 import window from '#domwindow'

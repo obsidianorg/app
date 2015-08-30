@@ -8,9 +8,11 @@ var PaymentActions = require('../../actions/payment-actions')
 var stealthPayment = require('../../lib/stealth-payment')
 var userLang = require('../../lib/lang').getLanguage()
 var lang = require('../../common/lang').getLanguageData(userLang).getContext(__filename)
-var pdb = require('../../db/pdb').PDB // temporary hack
+import { PDB } from '#pdb'
 var Stealth = require('stealth')
 var ReceiverInput = require('./receiver-input.react')
+
+const pdb = PDB
 
 var SendForm = React.createClass({
   displayName: 'SendForm',
