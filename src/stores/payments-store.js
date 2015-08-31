@@ -4,7 +4,7 @@ var Constants = require('../constants/payment-constants')
 var AppDispatcher = require('../dispatcher/app-dispatcher')
 var alert = require('../ui/alert')
 var blkqt = require('../lib/blkqt')
-var logger = require('../logger')
+import logger from '#logger'
 import txUtils from '#txutils'
 
 // WRONG PLACE FOR THIS CODE. TODO: refactor

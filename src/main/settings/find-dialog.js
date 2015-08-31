@@ -1,7 +1,7 @@
 var app = require('app')
 var dialog = require('dialog')
 var util = require('util')
-var logger = require('../../logger')
+import logger from '#logger'
 
 function showFindDialog (item, callback) {
   dialog.showErrorBox('Error', util.format("Can't find %s, please select it in the next popup.", item))

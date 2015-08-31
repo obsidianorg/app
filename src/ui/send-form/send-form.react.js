@@ -3,7 +3,7 @@ var React = require('react')
 var _ = require('lodash')
 var accounting = require('../../common/accounting')
 var alert = require('../alert')
-var logger = require('../../logger')
+import logger from '#logger'
 var PaymentActions = require('../../actions/payment-actions')
 var stealthPayment = require('../../lib/stealth-payment')
 var userLang = require('../../lib/lang').getLanguage()

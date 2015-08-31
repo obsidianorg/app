@@ -5,14 +5,14 @@ var cp = require('child_process')
 var ipc = require('ipc')
 var app = require('./app')
 var connectingWindow = require('./connecting-window')
-var log = require('../logger')
+var log = require('../_local_modules/logger')
 var mainWindow = require('./main-window')
 var settings = require('./settings')
 var qtclient = require('./qtclient')
 var spawn = cp.spawn
 
 log.info('starting...')
-require('../logger/main').listener()
+require('../_local_modules/logger/main').listener()
 
 app.ready(function (app) {
   settings.init(function (err, settings) {

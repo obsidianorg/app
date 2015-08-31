@@ -3,7 +3,7 @@ var Modal = require('react-bootstrap').Modal
 var Button = require('react-bootstrap').Button
 var Input = require('react-bootstrap').Input
 var alert = require('./alert')
-var logger = require('../logger')
+import logger from '#logger'
 var PaymentActions = require('../actions/payment-actions')
 var stealthPseudonym = require('../lib/stealth-pseudonym')
 var pdb = require('../db/pdb').PDB // temporary hack
