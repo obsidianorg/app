@@ -2,10 +2,11 @@ var assert = require('assert')
 var CoinKey = require('coinkey')
 var cointx = require('cointx')
 var Transaction = cointx.Transaction
-var txUtils = require('../txutils')
+var txUtils = require('../')
 var fixtures = require('./txutils.fixtures')
 
 /* global describe, it */
+// trinity: mocha
 
 describe('txutils', function () {
   describe('serializeToHex()', function () {

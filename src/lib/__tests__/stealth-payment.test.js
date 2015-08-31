@@ -4,7 +4,7 @@ import field from 'field'
 import proxyquire from 'proxyquire'
 import Stealth from 'stealth'
 import _ from 'lodash'
-import txUtils from '../../blockchain/txutils'
+import txUtils from '#txutils'
 // the fixtures will almost certainly require refactoring
 import fixtures from './stealth-payment.fixtures'
 var babel = require('../../babel/resolve')
@@ -66,12 +66,13 @@ describe('stealth-payment', function () {
             }
           }
         }),
-        '../blockchain/txutils': {
+        '#txutils': {
           setCurrentTime: function (tx) {
             tx.timestamp = f1ctx.timestamp
           }
         }
       }
+      stubs = babel.mapKeys(stubs)
 
       var stealthPayment = proxyquire('../stealth-payment', stubs)
       stealthPayment.createTx(f1ps.output, function (err, tx) {

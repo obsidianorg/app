@@ -1,7 +1,7 @@
 var assert = require('assert')
 var cs = require('coinstring')
 var blackCoinInfo = require('coininfo')('BLK')
-var bufferutils = require('./cointx/bufferutils')
+var bufferutils = require('./bufferutils')
 import { hash256 } from '#crypto'
 var ecdsa = require('ecdsa')
 var scripts = require('cointx').scripts

@@ -6,7 +6,7 @@ var Decimal = require('decimal.js')
 var Stealth = require('stealth')
 import * as LocalStealth from '#keydb'
 var blkqt = require('../lib/blkqt')
-var txUtils = require('../blockchain/txutils')
+import txUtils from '#txutils'
 var Script = cointx.Script
 var Transaction = cointx.Transaction
 var BLK_INFO = ci('BLK')

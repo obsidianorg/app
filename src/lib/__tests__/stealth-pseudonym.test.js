@@ -3,11 +3,11 @@ import proxyquire from 'proxyquire'
 import field from 'field'
 import stubo from 'stubo'
 import Stealth from 'stealth'
-import txUtils from '../../blockchain/txutils'
+import txUtils from '#txutils'
 import oldFixtures from './stealth-pseudonym.fixtures'
-
 import keyFixtures from '#_fixtures/keys'
 import blockFixtures from '#_fixtures/blocks'
+var babel = require('../../babel/resolve')
 
 /* global describe, it */
 // trinity: mocha
@@ -22,7 +22,9 @@ describe('stealth-pseudonym', function () {
       stubo(stubs, '../lib/blkqt', 'getUnspents', (address, callback) => callback(null, f0.utxos))
       stubo(stubs, '../lib/blkqt', 'getNewAddress', (callback) => callback(null, f0.standardOutputs[0].address))
       stubo(stubs, '../lib/blkqt', 'getWif', (address, callback) => callback(null, f0.utxoKeys[0]))
-      stubo(stubs, '../blockchain/txutils', 'setCurrentTime', (tx) => tx.timestamp = f0.timestamp)
+      stubo(stubs, '#txutils', 'setCurrentTime', (tx) => tx.timestamp = f0.timestamp)
+
+      stubs = babel.mapKeys(stubs)
 
       var stealthPseudonym = proxyquire('../stealth-pseudonym', stubs)
       var stealthKey = Stealth.fromJSON(JSON.stringify(f0.stealth))
@@ -68,7 +70,9 @@ describe('stealth-pseudonym', function () {
         txId === registryTxId ? callback(null, registerBlockData.txs[txId]) : callback(new Error('TX not found'))
       })
       field.set(stubs, '../lib/blkqt:getNewAddress', (callback) => callback(null, recoverAddress))
-      field.set(stubs, '../blockchain/txutils:setCurrentTime', (tx) => tx.timestamp = ts)
+      field.set(stubs, '#txutils.setCurrentTime', (tx) => tx.timestamp = ts)
+
+      stubs = babel.mapKeys(stubs)
 
       const stealthPseudonym = proxyquire('../stealth-pseudonym', stubs)
 
