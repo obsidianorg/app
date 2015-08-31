@@ -2,7 +2,7 @@ var assert = require('assert')
 var cs = require('coinstring')
 var blackCoinInfo = require('coininfo')('BLK')
 var bufferutils = require('./cointx/bufferutils')
-var crypto = require('./cointx/crypto')
+import { hash256 } from '#crypto'
 var ecdsa = require('ecdsa')
 var scripts = require('cointx').scripts
 var Script = require('cointx').Script
@@ -73,7 +73,7 @@ function hashForSignature (tx, inIndex, prevOutScript, hashType) {
   // todo, implement a new TX class or serializeToBuffer
   var txTmpBuffer = new Buffer(serializeToHex(txTmp), 'hex')
   var buffer = Buffer.concat([txTmpBuffer, hashTypeBuffer])
-  return crypto.hash256(buffer)
+  return hash256(buffer)
 }
 
 function sign (tx, index, keyPair) {
