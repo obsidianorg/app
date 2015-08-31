@@ -1111,9 +1111,9 @@
       }
     },
     "react-redux": {
-      "version": "0.2.2",
-      "from": "react-redux@0.2.2",
-      "resolved": "https://registry.npmjs.org/react-redux/-/react-redux-0.2.2.tgz",
+      "version": "0.9.0",
+      "from": "react-redux@latest",
+      "resolved": "https://registry.npmjs.org/react-redux/-/react-redux-0.9.0.tgz",
       "dependencies": {
         "invariant": {
           "version": "2.1.0",
@@ -1186,7 +1186,7 @@
       "resolved": "https://registry.npmjs.org/secure-random/-/secure-random-1.1.1.tgz"
     },
     "stealth": {
-      "version": "0.3.0",
+      "version": "0.4.0",
       "from": "stealth@latest"
     },
     "string": {

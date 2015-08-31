@@ -46,7 +46,7 @@
     "redux-thunk": "^0.1.0",
     "reselect": "0.0.2",
     "secure-random": "^1.1.1",
-    "stealth": "^0.3.0",
+    "stealth": "^0.4.0",
     "string": "^3.0.0",
     "superagent": "^0.21.0",
     "sweetalert": "^1.0.1",
