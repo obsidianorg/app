@@ -1,4 +1,3 @@
-var async = require('async')
 var CoinKey = require('coinkey')
 var ci = require('coininfo')
 var cointx = require('cointx')
@@ -7,6 +6,7 @@ var Stealth = require('stealth')
 import * as LocalStealth from '#keydb'
 var blkqt = require('../lib/blkqt')
 import txUtils from '#txutils'
+import { addInputsAndSign } from '#txutils/sign'
 var Script = cointx.Script
 var Transaction = cointx.Transaction
 var BLK_INFO = ci('BLK')
@@ -83,38 +83,15 @@ function createTx (data, callback) {
   tx.addOutput(txUtils.addressToOutputScript(a), data.amounts.sendRat)
 
   if (!data.amounts.changeRat) {
-    addInputsAndSign()
+    tx.addOutput(opReturn, data.amounts.opretRat)
+    addInputsAndSign(tx, data.utxos, blkqt.getWif, callback)
   } else {
     blkqt.getNewAddress(function (err, address) {
       if (err) return callback(err)
       tx.addOutput(txUtils.addressToOutputScript(address), data.amounts.changeRat)
-      addInputsAndSign()
+      tx.addOutput(opReturn, data.amounts.opretRat)
+      addInputsAndSign(tx, data.utxos, blkqt.getWif, callback)
     })
-  }
-
-  function addInputsAndSign () {
-    // make OP_RETURN first
-    tx.addOutput(opReturn, data.amounts.opretRat)
-
-    async.mapSeries(data.utxos, function (utxo, done) {
-      tx.addInput(utxo.txId, utxo.vout)
-      blkqt.getWif(utxo.address, function (err, wif) {
-        if (err) return done(err)
-        var key = cc.CoinKey.fromWif(wif)
-        done(null, key)
-      })
-    }, signInputs)
-
-    function signInputs (err, keys) {
-      if (err) return callback(err)
-      for (var i = 0; i < data.utxos.length; ++i) {
-        var key = keys[i]
-        txUtils.sign(tx, i, key)
-      }
-
-      // all done
-      callback(null, tx)
-    }
   }
 }
 

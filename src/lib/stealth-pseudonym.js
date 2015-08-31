@@ -1,5 +1,4 @@
 var assert = require('assert')
-var async = require('async')
 var ci = require('coininfo')
 var cointx = require('cointx')
 var ecdsa = require('ecdsa')
@@ -7,11 +6,10 @@ var Decimal = require('decimal.js')
 var Stealth = require('stealth')
 var blkqt = require('../lib/blkqt')
 import txUtils from '#txutils'
+import { addInputsAndSign } from '#txutils/sign'
 var Script = cointx.Script
 var Transaction = cointx.Transaction
 var BLK_INFO = ci('BLK')
-
-var cc = require('../common/cryptocoin').create()
 
 var MIN_BLK = 100
 
@@ -60,35 +58,13 @@ function createRegistryTx (pseudonym, stealthKey, registryAmountBLK, callback) {
     var changeRat = totalUtxoRat - totalRat
 
     if (!changeRat) {
-      addInputsAndSign()
+      addInputsAndSign(tx, utxos, blkqt.getWif, callback)
     } else {
       blkqt.getNewAddress(function (err, address) {
         if (err) return callback(err)
         tx.addOutput(txUtils.addressToOutputScript(address), changeRat)
-        addInputsAndSign()
+        addInputsAndSign(tx, utxos, blkqt.getWif, callback)
       })
-    }
-
-    function addInputsAndSign () {
-      async.mapSeries(utxos, function (utxo, done) {
-        tx.addInput(utxo.txId, utxo.vout)
-        blkqt.getWif(utxo.address, function (err, wif) {
-          if (err) return done(err)
-          var key = cc.CoinKey.fromWif(wif)
-          done(null, key)
-        })
-      }, signInputs)
-
-      function signInputs (err, keys) {
-        if (err) return callback(err)
-        for (var i = 0; i < utxos.length; ++i) {
-          var key = keys[i]
-          txUtils.sign(tx, i, key)
-        }
-
-        // all done
-        callback(null, tx)
-      }
     }
   })
 }
