@@ -1,39 +1,91 @@
 import assert from 'assert'
-import field from 'field'
-import * as keydb from '../'
-import proxyquire from 'proxyquire'
-var babel = require('../../../babel/resolve')
+import fs from 'fs-extra'
+import KeyDB from '../'
+import os from 'os'
+import path from 'path'
 
-/* global describe it */
+/* global it */
+// trinity: mocha
 
-describe('keydb', function () {
-  describe('generateStealthKey()', function () {
-    it('should generate a new stealth key', function () {
-      var sk = keydb.generateStealthKey()
-      assert(sk)
-    })
+// NOTE: style changed from Mocha BDD so as to easily move to tape later
+
+function setup () {
+  let testDir = path.join(os.tmpdir(), 'obsidian-keydb-load')
+  fs.emptyDirSync(testDir)
+  return testDir
+}
+
+function teardown (testDir) {
+  fs.removeSync(testDir)
+}
+
+it('keydb: loadSync() should load database when it does not exist', function () {
+  let testDir = setup()
+  let testdb = path.join(testDir, 'keys.db')
+  let keydb = KeyDB.create(testdb)
+
+  keydb.loadSync()
+  assert.strictEqual(keydb.keys.length, 1)
+
+  teardown(testDir)
+})
+
+it('keydb: loadSync() should load database when it does exist', function () {
+  let fixtureFile = path.join(__dirname, 'fixtures', 'keys.db.json')
+  let keydb = KeyDB.create(fixtureFile)
+  keydb.loadSync()
+  assert.deepEqual(keydb._rawData, fs.readJsonSync(fixtureFile))
+
+  // test .keys
+  assert.strictEqual(keydb.keys.length, 2)
+
+  // test immutability
+  keydb.keys.pop()
+  keydb.keys.pop()
+  assert.strictEqual(keydb.keys.length, 2)
+})
+
+it('keydb: addAlias() should add alias and create new stealth key', function () {
+  let testDir = setup()
+  let testdb = path.join(testDir, 'keys.db')
+  let keydb = KeyDB.create(testdb)
+
+  keydb.loadSync()
+  assert.strictEqual(keydb.keys.length, 1)
+
+  let sk = keydb.addAlias('stealthy-user')
+  assert.strictEqual(sk.alias, 'stealthy-user')
+  assert.strictEqual(keydb.keys.length, 2)
+  assert.strictEqual(keydb.keys[1].alias, 'stealthy-user')
+  assert(sk.toString().length > 50) // <= make sure something is actually there
+  assert.strictEqual(keydb.keys[1].toString(), sk.toString())
+
+  // should throw exception if exists
+  assert.throws(function () {
+    keydb.addAlias('stealthy-user')
   })
 
-  describe('loadFromLocalStorage()', function () {
-    describe('> when localStorage contains stealth', function () {
-      it('should return it', function () {
-        var sk = {
-          'payloadPrivKey': 'ad7c17a0540a5867c90df9f5fb8d70e2cee37ecf17e5b6bb6c85182a5667c91e',
-          'payloadPubKey': '02c90a458645cd5d0f624f6242c0aa9240afd291f31653456a015d66ad9be30cb5',
-          'scanPrivKey': '0867f9ed0bb492b54bcb2eef58f17b23f2dd203b9663451ce46e06ce8e75aaae',
-          'scanPubKey': '0369f6bfe5421e60730a95944263e47ce599800bf5ad5c1a657010d3a26edcf6cd',
-          'version': 39
-        }
+  teardown(testDir)
+})
 
-        var stubs = {}
-        field.set(stubs, '#domwindow:localStorage.getItem', () => JSON.stringify(sk))
-        stubs = babel.mapKeys(stubs)
-        var keydb = proxyquire('../', stubs)
+it('keydb: saveSync() should save', function () {
+  let testDir = setup()
+  let testdb = path.join(testDir, 'keys.db')
+  let keydb = KeyDB.create(testdb)
 
-        var stealth = keydb.loadFromLocalStorage()
-        assert.equal(stealth.version, 39)
-        assert.strictEqual(stealth.toString(), 'rVwCCvsH83LavaJLxYzArexJMij8eqFJaNgzVsw7FVxPNhXQQs8RgdRWdq6X8U9DvX2EK6Z2JB7P6ZdcTgk723Ew3WHmzhYwojDayZ')
-      })
-    })
-  })
+  keydb.loadSync()
+  assert.strictEqual(keydb.keys.length, 1)
+
+  for (let i = 1; i <= 9; ++i) {
+    keydb.addAlias('stealthy-user' + i)
+  }
+  assert.strictEqual(keydb.keys.length, 10)
+
+  keydb.saveSync()
+  let keydb2 = KeyDB.create(testdb)
+  keydb2.loadSync()
+
+  assert.deepEqual(keydb.data, keydb2.data)
+
+  teardown(testDir)
 })

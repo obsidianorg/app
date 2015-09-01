@@ -1,0 +1,20 @@
+{
+  "keys": [
+    {
+      "payloadPrivKey": "c1a45e8eceb68dd38ffa8017e2aec5c0e2bbb5dd23ddb7ff71798fc182c9232b",
+      "payloadPubKey": "02830cb1211aeee2922b0d9ea7a2dc94d238822b84cba080482edbc02eb8b24fbf",
+      "scanPrivKey": "a832792d9a40fb712ec94667c3ab8ec192d22fed95f25fb2b57f0c71a26c7bd8",
+      "scanPubKey": "03d16bbeac7b3d4c9c7b029936b0028cda539ae14bf6928abe27228923d7cf8e68",
+      "version": 39,
+      "alias": "jp1"
+    },
+    {
+      "payloadPrivKey": "9dd094f0e93f2563511106921304858e654d492d741e8b4fb0bf71f3577229e9",
+      "payloadPubKey": "0301af3222979f26c0f6901e0d8e50a7761de20763f1d41e7ac61d30436575cd52",
+      "scanPrivKey": "915cd74e89daf4b90c4b66d94637d0581c8446a46a4ed4b9e4beedd956118b20",
+      "scanPubKey": "03220e19c9f053bddfd395caeb728090d638e9b0d7e86b213f41f79deac8d24e16",
+      "version": 39,
+      "alias": "jp2"
+    }
+  ]
+}

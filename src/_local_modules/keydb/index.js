@@ -1,73 +1,53 @@
-import * as env from '#env'
-import * as fs from 'fs-extra'
-import * as Stealth from 'stealth'
-import window from '#domwindow'
+import { keyFile } from '#env'
+import fs from 'fs-extra'
+import { generateStealthKey } from './stealth'
+import Stealth from 'stealth'
 
-// temporary, renderer only
-// if (process.type !== 'renderer') throw new Error('SHOULD BE RENDERER ONLY FOR NOW')
-// todo: fix stealth to/from JSON
+export default class KeyDB {
+  static create (file) {
+    return new KeyDB(file)
+  }
 
-const STEALTH_CONSTANT = 39
-const LS_KEY = 'sk' // localStorage only for old compatibility
+  constructor (file) {
+    this.file = file
+  }
 
-export function generateStealthKey () {
-  return Stealth.fromRandom({ version: STEALTH_CONSTANT })
-}
-
-export function loadFromLocalStorage () {
-  var skData = window.localStorage.getItem(LS_KEY)
-  if (!skData) return null
-  return Stealth.fromJSON(skData)
-}
-
-export function load () {
-  return loadSync()
-}
-
-export function loadSync () {
-  var p = window.localStorage.getItem('pseudonym')
-
-  if (fs.existsSync(env.keyFile)) {
-    let data = fs.readJsonSync(env.keyFile)
-    return Stealth.fromJSON(JSON.stringify(data.keys[0]))
-  } else {
-    let sk = loadFromLocalStorage()
-    if (!sk) {
-      // not in key file or localStorage, must need to create it
-      sk = generateStealthKey()
-    }
-    var keyObj = JSON.parse(sk.toJSON())
-
-    if (p) {
-      keyObj.alias = p
+  addAlias (alias) {
+    // verify alias does not exist
+    if (this._rawData.keys.some(key => key.alias === alias)) {
+      throw new Error(alias + ' exists already.')
     }
 
-    var keyFileData = {
-      keys: [ keyObj ]
-    }
-    fs.outputJsonSync(env.keyFile, keyFileData)
+    let sk = generateStealthKey()
+    let skObj = sk.toJSON()
+    skObj.alias = alias
+    sk.alias = alias
+    this._rawData.keys.push(skObj)
+    this._keys.push(sk)
+
     return sk
+  }
+
+  loadSync () {
+    if (!fs.existsSync(this.file)) {
+      let sk = generateStealthKey()
+      let skObj = sk.toJSON()
+      skObj.alias = ''
+      fs.outputJsonSync(this.file, { keys: [skObj] })
+    }
+    this._rawData = fs.readJsonSync(this.file)
+    this._keys = this._rawData.keys.map((key) => Stealth.fromJSON(key))
+    this._rawData.keys.forEach((key, i) => { this._keys[i].alias = this._rawData.keys[i].alias })
+  }
+
+  saveSync () {
+    fs.writeJsonSync(this.file, this._rawData)
+  }
+
+  // immutable
+  get keys () {
+    return [...this._keys]
   }
 }
 
-// temporary method
-export function getCurrentP () {
-  let data = fs.readJsonSync(env.keyFile)
-  return data.keys ? data.keys[0].alias : null
-}
-
-export function resolveKeysFromP (alias) {
-  let data = fs.readJsonSync(env.keyFile)
-  return data.keys[0]
-}
-
-// temporary
-export function loadAllSync () {
-  // hack to create key file if it doesn't exist
-  loadSync()
-
-  let data = fs.readJsonSync(env.keyFile)
-  return data.keys.map((key) => {
-    return {stealth: Stealth.fromJSON(JSON.stringify(key)), ...key}
-  })
-}
+export const keydb = new KeyDB(keyFile)
