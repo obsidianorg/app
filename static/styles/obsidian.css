@@ -145,10 +145,15 @@ ul.sidebar-menu li a.active i {
   font-size: 12px; }
 
 .sweet-alert-obsidian {
-  background-color: #333;
+  background-color: #444;
   color: #eee; }
   .sweet-alert-obsidian h2, .sweet-alert-obsidian p {
     color: #eee; }
+  .sweet-alert-obsidian input {
+    color: #fff;
+    background-color: #aaa; }
+  .sweet-alert-obsidian .sa-error-container {
+    background-color: #333; }
 
 #footer {
   position: fixed;

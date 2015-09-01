@@ -1,9 +1,18 @@
 // sweet-alert, not bootstrap
 .sweet-alert-obsidian {
-  background-color: $really-dark;
+  background-color: $dark;
   color: $light;
 
   h2, p {
     color: $light;
+  }
+
+  input {
+    color: #fff;
+    background-color: #aaa;
+  }
+
+  .sa-error-container {
+    background-color: $really-dark;
   }
 }
